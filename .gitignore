@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Folder metadata
+.DS_Store
+
+# Setup
+.eggs
+
+# Tests & Documentation
+tests/
+docs/build/
+docs/source/_build
+
+# dotenv
+*.env
+
+# Virtual Environment
+.venv/
+
+# Logging
+logging/
+*.log
+
+
+

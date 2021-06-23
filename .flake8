@@ -1,0 +1,11 @@
+[flake8]
+ignore = E203, E266, E501, W503, F403, F401
+max-line-length = 79
+max-doc-length = 72
+max-complexity = 18
+select = B,C,E,F,W,T4,B9
+extend-ignore =
+    # RST201 and RST304 to ignore two-space indentiation for "* keyword"
+    # dictionary parameter documentation
+    # RST304 ignoring sphinx-specific text roles, e.g. :func:
+    RST201,RST301,RST304
