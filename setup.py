@@ -5,19 +5,24 @@ from setuptools import find_packages, setup
 here = pathlib.Path(__file__).parent.resolve()
 
 # Get the long description from the README file
-long_description = (here / "README.rst").read_text(encoding="utf-8")
+long_description = (here / "README.md").read_text(encoding="utf-8")
+
+
+def local_scheme(version):
+    return ""
 
 
 setup(
     name="pyedgeconnect",
     use_scm_version={
+        "local_scheme": local_scheme,
         "write_to": "_version.py",
         "write_to_template": 'version = "{version}"\n',
     },
     setup_requires=["setuptools_scm"],
     description="A Python wrapper for Aruba Orchestrator and Edge Connect API",
     long_description=long_description,
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     url="https://github.com/SPOpenSource/edgeconnect-python",
     author="Zach Camara",
     author_email="zachary.camara@hpe.com",
