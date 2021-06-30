@@ -8,14 +8,10 @@ here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / "README.md").read_text(encoding="utf-8")
 
 
-def local_scheme(version):
-    return ""
-
-
 setup(
     name="pyedgeconnect",
     use_scm_version={
-        "local_scheme": local_scheme,
+        "local_scheme": "no-local-version",
         "write_to": "_version.py",
         "write_to_template": 'version = "{version}"\n',
     },
@@ -31,7 +27,7 @@ setup(
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Information Technology",
         "Intended Audience :: System Administrators",
-        "Intended Audience :: Telecommunications Industry"
+        "Intended Audience :: Telecommunications Industry",
         "Topic :: System :: Networking",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
