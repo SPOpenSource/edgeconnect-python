@@ -29,8 +29,10 @@ setup(
     license="MIT",
     classifiers=[
         "Development Status :: 3 - Alpha",
-        "Intended Audience :: DevOps / Network Engineers",
-        "Topic :: Automation Development :: Aruba Edge Connect",
+        "Intended Audience :: Information Technology",
+        "Intended Audience :: System Administrators",
+        "Intended Audience :: Telecommunications Industry"
+        "Topic :: System :: Networking",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.9",
