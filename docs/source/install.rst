@@ -44,6 +44,14 @@ Now you can install the package and run your python code
     pyedgeconnect         0.13.0a1.dev1+g45fd843.d20210428
     urllib3               1.26.4
 
+Install from PyPI
+-------------------
+
+.. code:: bash
+
+    $ pip install pyedgeconnect
+
+
 Install from GitHub
 -------------------
 
