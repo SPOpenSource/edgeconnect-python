@@ -56,7 +56,7 @@ Now you can install the package and run your python code
     urllib3               1.26.4
 ```
 
-### Install with pip
+### Install from PyPI
 
 ```bash
     $ pip install pyedgeconnect
@@ -96,7 +96,11 @@ following syntax:
 
 ## Docs
 
-To build the documentation, clone the repository, install with ``[dev]`` option
+[![Documentation Status](https://readthedocs.org/projects/pyedgeconnect/badge/?version=latest)](https://pyedgeconnect.readthedocs.io/en/latest/?badge=latest)
+
+Docs are viewable on [Read the Docs](https://pyedgeconnect.readthedocs.io)
+
+To build the documentation locally, clone the repository, install with ``[dev]`` option
 to include sphinx and related packages, then in the docs directory run ``make html``
 
 ```bash
