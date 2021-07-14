@@ -10,7 +10,7 @@ Edge Connect web interfaces under "Support > Rest API"
 Many, but not all API functions have been implemented yet. Development
 is underway to continue to add further functions.
 
-As of 0.13.0+ ~62% of non-deprecated Swagger functions are covered.
+As of 0.14.0+ 64% of non-deprecated Swagger functions are covered.
 
 
 ## Install
