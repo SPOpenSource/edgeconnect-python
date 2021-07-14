@@ -696,6 +696,16 @@ class Orchestrator(HttpCommon):
     from .orch._broadcast_cli import broadcast_cli
     from .orch._built_in_policies import get_built_in_policies
     from .orch._custom_appliance_tags import get_custom_appliance_tags
+    from .orch._custom_certs import (
+        check_custom_certs_appliances_to_portal,
+        check_custom_certs_orchestrator_to_portal,
+        delete_custom_cert,
+        get_custom_certs,
+        get_custom_certs_enabled,
+        set_custom_certs_enabled,
+        update_custom_certs,
+        verify_custom_cert,
+    )
     from .orch._db_partition import delete_db_partition, get_db_partition
     from .orch._debug_files import (
         cancel_debug_file_download,
@@ -803,6 +813,16 @@ class Orchestrator(HttpCommon):
         get_ip_allow_list,
         get_ip_allow_list_drops,
         update_ip_allow_list,
+    )
+    from .orch._license import (
+        change_appliance_license,
+        delete_appliance_license_token,
+        get_nx_licensed_appliances,
+        get_portal_licensed_appliances,
+        get_portal_licensed_summary,
+        get_vx_licensed_appliances,
+        grant_appliance_base_license,
+        revoke_appliance_base_license,
     )
     from .orch._link_integrity import get_link_integrity_test_result
     from .orch._location import get_location_coordinates_from_address
@@ -1078,6 +1098,7 @@ class Orchestrator(HttpCommon):
     from .orch._vrrp import get_vrrp_interfaes
     from .orch._vti import get_vti_interfaes
     from .orch._vxoa_hostname import update_appliance_hostname
+    from .orch._wan_next_hop_health import get_wan_next_hop_health_config
     from .orch._wccp import (
         get_wccp_service_group_settings,
         get_wccp_state,
