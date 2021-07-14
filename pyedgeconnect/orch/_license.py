@@ -173,8 +173,8 @@ def get_portal_licensed_appliances(self) -> dict:
 
     :return: Returns list of licensed appliances from Cloud Portal \n
         [`dict`]: Appliance license information object \n
-            * keyword **applianceId** (`str`): Appliance id in the format of
-              integer.NE e.g. ``3.NE``
+            * keyword **applianceId** (`str`): Appliance id in the
+              format of integer.NE e.g. ``3.NE``
             * keyword **id** (`str`): Not documented
             * keyword **enabled** (`bool`): If appliance active
             * keyword **hostname** (`str`): Hostname of appliance
@@ -183,13 +183,13 @@ def get_portal_licensed_appliances(self) -> dict:
             * keyword **licenses** (`dict`): License state object \n
                 * keyword **fx** (`dict`): Standard license object \n
                     * keyword **base** (`dict`): Base license state \n
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                     * keyword **mini** (`dict`): Mini license state \n
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                     * keyword **plus** (`dict`): Plus license state \n
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                     * keyword **tier** (`dict`): Tier license state \n
                         * keyword **bandwidth** (`int`): Bandwidth
@@ -199,13 +199,13 @@ def get_portal_licensed_appliances(self) -> dict:
                     * keyword **boost** (`dict`): Boost license state \n
                         * keyword **bandwidth** (`int`): Amount of boost
                           bandwidth in Mbps
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                 * keyword **metered** (`dict`): Metered license object \n
                     * keyword **boost** (`dict`): Boost license state \n
                         * keyword **bandwidth** (`int`): Amount of boost
                           bandwidth in Mbps
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                 * keyword **ecsp** (`dict`): Not documented \n
                     * keyword **licenseId** (`str`): Not documented \n
@@ -213,13 +213,13 @@ def get_portal_licensed_appliances(self) -> dict:
               state object \n
                 * keyword **fx** (`dict`): Standard license object \n
                     * keyword **base** (`dict`): Base license state \n
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                     * keyword **mini** (`dict`): Mini license state \n
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                     * keyword **plus** (`dict`): Plus license state \n
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
                     * keyword **tier** (`dict`): Tier license state \n
                         * keyword **bandwidth** (`int`): Bandwidth
@@ -229,12 +229,12 @@ def get_portal_licensed_appliances(self) -> dict:
                     * keyword **boost** (`dict`): Boost license state \n
                         * keyword **bandwidth** (`int`): Amount of boost
                           bandwidth in Mbps
-                        * keyword **enabled** (`bool`): ``True`` if active
+                        * keyword **enable** (`bool`): ``True`` if active
                 * keyword **metered** (`dict`): Metered license object \n
                     * keyword **boost** (`dict`): Boost license state \n
                         * keyword **bandwidth** (`int`): Amount of boost
                           bandwidth in Mbps
-                        * keyword **enabled** (`bool`): ``True`` if
+                        * keyword **enable** (`bool`): ``True`` if
                           active
             * keyword **model** (`str`): Hardware model, e.g. ``EC-M-B``
             * keyword **portalLicenseType** (`int`): Not documented

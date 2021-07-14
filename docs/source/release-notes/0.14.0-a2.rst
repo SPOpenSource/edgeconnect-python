@@ -1,0 +1,11 @@
+0.14.0-a2 -- 2021-07-14
+-----------------------
+
+
+📚 Documentation
+~~~~~~~~~~~~~~~~~~
+
+- Fix typo for return dictionary keys in _license.py submodule for
+  :func:`~pyedgeconnect.Orchestrator.get_portal_licensed_appliances` for
+  licenses as ``enable`` rather than ``enabled``.
+
