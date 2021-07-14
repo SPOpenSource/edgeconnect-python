@@ -1,0 +1,40 @@
+0.14.0-a1 -- 2021-07-13
+-----------------------
+
+
+🚀 Features
+~~~~~~~~~~~~~
+
+Added the following Orchestrator functions from Swagger
+
+from .orch._license
+  - get_nx_licensed_appliances
+  - get_vx_licensed_appliances
+  - get_portal_licensed_summary
+  - get_portal_licensed_appliances
+  - change_appliance_license
+  - grant_appliance_base_license
+  - revoke_appliance_base_license
+  - delete_appliance_license_token
+
+from .orch._wan_next_hop_health
+  - get_wan_next_hop_health_config
+
+
+# Custom certs introduced in Orchestrator 9.0.4+ and Edge Connect 9+
+
+from .orch._custom_certs
+  - get_custom_certs
+  - update_custom_certs
+  - delete_custom_cert
+  - get_custom_certs_enabled
+  - set_custom_certs_enabled
+  - check_custom_certs_orchestrator_to_portal
+  - check_custom_certs_appliances_to_portal
+  - verify_custom_cert
+
+
+📚 Documentation
+~~~~~~~~~~~~~~~~~~
+
+- Updated README with Swagger coverage %
