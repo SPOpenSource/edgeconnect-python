@@ -1,5 +1,7 @@
 # Aruba Edge Connect Python SDK
 
+[![Downloads](https://static.pepy.tech/personalized-badge/pyedgeconnect?period=total&units=none&left_color=grey&right_color=orange&left_text=PyPI%20Downloads)](https://pepy.tech/project/pyedgeconnect)
+
 
 This package is a python wrapper for leveraging the API for Aruba
 Orchestrator and Edge Connect SDWAN systems.
@@ -11,6 +13,7 @@ Many, but not all API functions have been implemented yet. Development
 is underway to continue to add further functions.
 
 As of 0.14.0+ 64% of non-deprecated Swagger functions are covered.
+
 
 
 ## Install
