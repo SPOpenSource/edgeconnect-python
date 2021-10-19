@@ -108,7 +108,7 @@ to include sphinx and related packages, then in the docs directory run ``make ht
 
 ```bash
     $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
-    $ cd pyedgeconnect
+    $ cd edgeconnect-python
     $ pip install .[dev]
     $ cd docs
     $ make html
