@@ -1013,6 +1013,24 @@ class Orchestrator(HttpCommon):
         select_templates_for_template_group,
         set_template_groups_priorities,
     )
+    from .orch._third_party_services import (
+        clearpass_add_account,
+        clearpass_delete_account,
+        clearpass_filter_events,
+        clearpass_get_configured_account,
+        clearpass_get_configured_account_details,
+        clearpass_get_configured_accounts,
+        clearpass_get_connectivity,
+        clearpass_get_pause_orchestration_status,
+        clearpass_get_service_endpoint_status,
+        clearpass_get_user_roles_for_ip,
+        clearpass_pause_individual_orchestration,
+        clearpass_post_login_event,
+        clearpass_post_logout_event,
+        clearpass_reset_service_endpoint,
+        clearpass_set_pause_orchestration_status,
+        clearpass_update_account,
+    )
     from .orch._third_party_tunnels_configuration import (
         get_passthrough_tunnel_details,
         get_passthrough_tunnel_details_for_appliance,
