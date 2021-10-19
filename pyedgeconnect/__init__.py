@@ -1022,6 +1022,7 @@ class Orchestrator(HttpCommon):
     from .orch._timeseries_stats import (
         get_timeseries_stats_appliance_process_state,
         get_timeseries_stats_appliances,
+        get_timeseries_stats_appliances_ne_pk_list,
         get_timeseries_stats_appliances_single_appliance,
         get_timeseries_stats_application,
         get_timeseries_stats_application_ne_pk_list,
