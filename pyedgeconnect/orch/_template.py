@@ -155,7 +155,6 @@ def create_template_group(
 
     :param template_group_body: Nested dictionary of template group
         details\n
-        * keyword **name** (`str`): Name of template group
         * keyword **templates** (`list[dict]`): List of template detail
           dictionaries \n
             * keyword **name** (`str`): Name of template
