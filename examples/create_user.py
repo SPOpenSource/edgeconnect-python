@@ -25,6 +25,12 @@ orch = Orchestrator(
     verify_ssl=False,
 )
 
+# if not using API key, login to Orchestrator
+if orchestrator_api_key == "":
+    orch.login(orch_user, orch_password)
+else:
+    pass
+
 # set user password details
 username = "API_CREATED_USER"
 password = 1
