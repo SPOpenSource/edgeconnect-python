@@ -57,7 +57,7 @@ def update_zones(
     :rtype: bool
     """
     return self._post(
-        "/zones",
+        "/zones?deleteDependencies={}".format(delete_dependencies),
         data=zones,
         expected_status=[204],
         return_type="bool",
