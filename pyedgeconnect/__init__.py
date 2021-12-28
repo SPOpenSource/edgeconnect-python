@@ -884,6 +884,12 @@ class Orchestrator(HttpCommon):
     from .orch._peer_priority import get_peer_priority_configuration
     from .orch._port_forwarding import get_appliance_port_fowarding
     from .orch._qos_policy import get_qos_policy
+    from .orch._rbac_appliance_access_group import (
+        delete_appliance_access_group,
+        get_all_appliance_access_groups,
+        get_appliance_access_group,
+        update_appliance_access_group,
+    )
     from .orch._rbac_assignment import (
         delete_rbac_user_assignment,
         get_rbac_assignments,
