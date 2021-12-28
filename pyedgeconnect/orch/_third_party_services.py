@@ -473,7 +473,8 @@ def clearpass_post_login_event(
           - POST
           - /thirdPartyServices/clearpass/event/login
 
-    :param timestamp: ClearPass policy manager event timestamp
+    :param timestamp: ClearPass policy manager event timestamp.
+      Timestamp format : yyyy-MM-dd HH:mm:ss
     :type timestamp: str
     :param event_type: Event type (login/logout)
     :type event_type: str
@@ -634,15 +635,16 @@ def clearpass_filter_events(
     :param end_time: Long(Signed 64 bits) value of milliseconds since
       EPOCH time indicating the ending time boundary of data time range
     :type end_time: int
-    :param ip_address: IP address to filter for, e.g. ``10.1.1.100``
-    :type ip_address: str
-    :param username: Username to filter for
-    :type username: str
+    :param ip_address: IP address to filter for, e.g. ``10.1.1.100``,
+      defaults to None
+    :type ip_address: str, optional
+    :param username: Username to filter for, defaults to None
+    :type username: str, optional
     :param limit: Limit number of returned results, defaults to ``10000``
-    :type limit: int
+    :type limit: int, optional
     :param event_type: Event filter type. Please specify one of these
-      values ``All``, ``Active``, ``Historical``
-    :type event_type: str
+      values ``All``, ``Active``, ``Historical``, defaults to None
+    :type event_type: str, optional
     :return: Returns list of ClearPass Policy Manager events \n
         [`dict`]: ClearPass event object \n
             * keyword **timestamp** (`str`): ClearPass policy manager
@@ -703,12 +705,13 @@ def clearpass_get_user_roles_for_ip(
     :param ip_address: IP address to filter for, e.g. ``10.1.1.100``
     :type ip_address: str
     :param start_time: Long(Signed 64 bits) value of milliseconds since
-      EPOCH time indicating the starting time boundary of data time range
-    :type start_time: int
+      EPOCH time indicating the starting time boundary of data time
+      range, defaults to None
+    :type start_time: int, optional
     :param end_time: Long(Signed 64 bits) value of milliseconds since
-      EPOCH time indicating the ending time boundary of data time range
-    :type end_time: int
-
+      EPOCH time indicating the ending time boundary of data time range,
+      defaults to None
+    :type end_time: int, optional
     :return: Returns dictionary of usernames and roles matching a given
       IP address within the specified time range \n
         * keyword **roles** (`list[str]`): list of roles
@@ -728,3 +731,187 @@ def clearpass_get_user_roles_for_ip(
 
 
 # Aruba Central
+def central_get_subscription(
+    self,
+) -> dict:
+    """Returns Aruba Central subscription
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - thirdPartyServices
+          - GET
+          - /thirdPartyServices/arubaCentral/subscription
+
+    :return: Returns dictionary of aruba central subscription
+      information \n
+        * keyword **customerId** (`str`): The Customer ID of Aruba
+          Central
+        * keyword **username** (`str`): The username of Aruba Central
+        * keyword **password** (`str`, optional): The password of Aruba
+          Central
+        * keyword **clientId** (`str`): clientId to use for Orchestrator
+          mapping
+        * keyword **clientSecret** (`str`): clientSecret to use for
+          Orchestrator mapping
+        * keyword **domain** (`str`): Domain to use for Orchestrator
+          mapping
+    :rtype: dict
+    """
+    return self._get("/thirdPartyServices/arubaCentral/subscription")
+
+
+def central_add_subscription(
+    self,
+    customer_id: str,
+    username: str,
+    password: str,
+    client_id: str,
+    client_secret: str,
+    domain: str,
+) -> bool:
+    """Add/Update Aruba Central subscription
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - thirdPartyServices
+          - POST
+          - /thirdPartyServices/arubaCentral/subscription
+
+    :param customer_id: The Customer ID of Aruba Central
+    :type customer_id: str
+    :param username: The username of Aruba Central
+    :type username: str
+    :param password: The password of Aruba Central
+    :type password: str
+    :param client_id:clientId to use for Orchestrator mapping
+    :type client_id: str
+    :param client_secret: clientSecret to use for Orchestrator mapping
+    :type client_secret: str
+    :param domain: Domain to use for Orchestrator
+    :type domain: str
+    :return: Returns True/False based on successful call
+    :rtype: bool
+    """
+    data = {
+        "customerId": customer_id,
+        "username": username,
+        "password": password,
+        "clientId": client_id,
+        "clientSecret": client_secret,
+        "domain": domain,
+    }
+
+    return self._post(
+        "/thirdPartyServices/arubaCentral/subscription",
+        data=data,
+        expected_status=[204],
+        return_type="bool",
+    )
+
+
+def central_delete_subscription(
+    self,
+) -> bool:
+    """Delete Aruba Central subscription
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - thirdPartyServices
+          - DELETE
+          - /thirdPartyServices/arubaCentral/subscription
+
+    :return: Returns True/False based on successful call
+    :rtype: bool
+    """
+
+    return self._delete(
+        "/thirdPartyServices/arubaCentral/subscription",
+        expected_status=[204],
+        return_type="bool",
+    )
+
+
+def central_get_site_mapping(
+    self,
+) -> list:
+    """Get Aruba Central site and appliances mapping
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - thirdPartyServices
+          - GET
+          - /thirdPartyServices/arubaCentral/sitesMapping
+
+    :return: Returns list of dictionaries with site mapping
+      to Edge Connect appliance relationships \n
+        * [`dict`]: List of site to appliance relationship objects \n
+          * keyword <site_id_#> (`list[dict]`): Key is Site ID string integer,
+            list of appliance object dictionaries related to site \n
+            * keyword **nePk** (`str`): Appliance ID
+            * keyword **applianceName** (`str`): Appliance hostname
+            * keyword **recommendSite** (`str`): Recommended site ID
+            * keyword **gmsMarked** (`bool`): ``True`` if set by
+              Orchestrator
+    :rtype: List
+    """
+
+    return self._get("/thirdPartyServices/arubaCentral/sitesMapping")
+
+
+def central_assign_appliance_to_site(
+    self,
+    ne_pk: str,
+    origin_site: str = None,
+    new_site: str = None,
+) -> bool:
+    """Manually assign appliance to the aruba central site
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - thirdPartyServices
+          - POST
+          - /thirdPartyServices/arubaCentral/sitesMapping/{nePk}
+
+
+    :param ne_pk: Network Primary Key (nePk) of appliance, e.g. ``3.NE``
+    :type ne_pk: str
+    :param origin_site: Aruba Central site ID appliance originally
+      associated to, defaults to None
+    :type origin_site: str, optional
+    :param new_site: New Aruba Central site ID to associate appliance
+      to, defaults to None
+    :type new_site: str, optional
+    :return: Returns True/False based on successful call
+    :rtype: bool
+    """
+    data = {
+        "origin": origin_site,
+        "siteId": new_site,
+    }
+
+    return self._post(
+        "/thirdPartyServices/arubaCentral/sitesMapping/{}".format(ne_pk),
+        data=data,
+        expected_status=[204],
+        return_type="bool",
+    )

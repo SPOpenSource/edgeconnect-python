@@ -1014,6 +1014,11 @@ class Orchestrator(HttpCommon):
         set_template_groups_priorities,
     )
     from .orch._third_party_services import (
+        central_add_subscription,
+        central_assign_appliance_to_site,
+        central_delete_subscription,
+        central_get_site_mapping,
+        central_get_subscription,
         clearpass_add_account,
         clearpass_delete_account,
         clearpass_filter_events,
