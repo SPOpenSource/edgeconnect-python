@@ -824,6 +824,7 @@ class Orchestrator(HttpCommon):
         grant_appliance_base_license,
         revoke_appliance_base_license,
     )
+    from .orch._link_aggregation import get_link_aggregation_data
     from .orch._link_integrity import get_link_integrity_test_result
     from .orch._location import get_location_coordinates_from_address
     from .orch._logging import get_appliance_syslog_config
