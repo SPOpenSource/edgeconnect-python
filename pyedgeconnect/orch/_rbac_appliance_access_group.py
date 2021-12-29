@@ -1,7 +1,8 @@
 # MIT License
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
-# rbacApplianceAccessGroup : RBAC: Get, Add, Update, Delete appliance access groups / assets
+# rbacApplianceAccessGroup : RBAC: Get, Add, Update, Delete appliance
+# access groups / assets
 
 
 def get_all_appliance_access_groups(
