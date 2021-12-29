@@ -994,7 +994,7 @@ class Orchestrator(HttpCommon):
         get_all_nonstats_retention,
         get_all_stats_collection,
         get_all_stats_retention,
-        get_stats_appriximate_disk_space,
+        get_stats_approximate_disk_space,
         update_nonstats_retention,
         update_stats_collection,
         update_stats_retention,

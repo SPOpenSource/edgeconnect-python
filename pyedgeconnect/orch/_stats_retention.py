@@ -210,7 +210,7 @@ def update_stats_collection(
     )
 
 
-def get_stats_appriximate_disk_space(
+def get_stats_approximate_disk_space(
     self,
     appliance_count: int,
     number_of_tunnels: int = None,
