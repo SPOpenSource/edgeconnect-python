@@ -616,6 +616,7 @@ class Orchestrator(HttpCommon):
     from .orch._appliance import (
         add_and_approve_discovered_appliances,
         add_discovered_appliances,
+        appliance_delete_api,
         appliance_get_api,
         appliance_post_api,
         change_appliance_credentials,
@@ -623,6 +624,7 @@ class Orchestrator(HttpCommon):
         default_appliance_stats_config,
         delete_appliance,
         delete_appliance_for_rediscovery,
+        delete_denied_appliances,
         deny_appliance,
         get_all_approved,
         get_all_denied_appliances,
@@ -635,6 +637,7 @@ class Orchestrator(HttpCommon):
         get_appliances_queued_for_deletion,
         modify_appliance,
         modify_appliance_stats_config,
+        rediscover_denied_appliance,
         update_discovered_appliances,
     )
     from .orch._appliance_backup import (

@@ -437,6 +437,40 @@ def get_all_denied_appliances(self) -> list:
     return self._get("/appliance/denied")
 
 
+def delete_denied_appliances(
+    self,
+    appliances: list[str],
+) -> bool:
+    """This API is to permanently delete denied appliances. The portal
+    object ID can be found from
+    :func:`~pyedgeconnect.Orchestrator.get_all_denied_appliances`
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - appliance
+          - POST
+          - /appliance/denied/delete
+
+    :param appliances: List of strings of appliance portal object id's
+      to permanently delete, e.g. ``["6193c766026ea2b776b038ac",...]``
+    :type appliances: list[str]
+    :return: Returns True/False based on successful call.
+    :rtype: bool
+    """
+    data = {"portalObjectIds": appliances}
+
+    return self._post(
+        "/appliance/denied/delete",
+        data=data,
+        expected_status=[204],
+        return_type="bool",
+    )
+
+
 def add_and_approve_discovered_appliances(
     self,
     id_key: int,
@@ -572,6 +606,34 @@ def update_discovered_appliances(self) -> bool:
     )
 
 
+def rediscover_denied_appliance(
+    self,
+    id_key: int,
+) -> bool:
+    """Discover denied appliance
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - appliance
+          - POST
+          - /appliance/rediscoverAppliance/{id}
+
+    :param ne_pk: Network Primary Key (nePk) of existing appliance,
+        e.g. ``3.NE``
+    :type ne_pk: str
+    :return: Returns True/False based on successful call.
+    :rtype: bool
+    """
+    return self._post(
+        "/appliance/rediscoverAppliance/{}".format(id_key),
+        return_type="bool",
+    )
+
+
 def change_appliance_credentials(
     self,
     ne_pk: str,
@@ -664,12 +726,46 @@ def appliance_post_api(
     :param data: The data to pass in body of call. Can be a ``list`` or
       ``dict``
     :type data: list or dict
-    :return: Returns response of appliance POST API call
-    :rtype: dict
+    :return: Returns True/False based on successful call
+    :rtype: bool
     """
     return self._post(
         "/appliance/rest/{}/{}".format(ne_pk, url),
         data=data,
+        expected_status=[200, 204],
+        return_type="bool",
+    )
+
+
+def appliance_delete_api(
+    self,
+    ne_pk: str,
+    url: str,
+    data,
+) -> dict:
+    """Pass along a POST API call to an appliance
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - appliance
+          - DELETE
+          - /appliance/rest/{nePk}/{url : (.*)}
+
+    :param ne_pk: Network Primary Key (nePk) of existing appliance,
+        e.g. ``3.NE``
+    :type ne_pk: str
+    :param url: The API url call to pass to the appliance. This should
+        be the path after 'rest/json/' of the appliance API call.
+    :type url: str
+    :return: Returns True/False based on successful call
+    :rtype: bool
+    """
+    return self._delete(
+        "/appliance/rest/{}/{}".format(ne_pk, url),
         expected_status=[200, 204],
         return_type="bool",
     )
