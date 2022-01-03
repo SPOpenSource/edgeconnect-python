@@ -24,7 +24,7 @@ def backup_appliance_config(
     The response of this operation is a client key which can be polled
     to get progress of the requested operation. To poll for status,
     perform
-    :func:`silverpeak_python_sdk.Orchestrator.get_audit_log_task_status`
+    :func:`pyedgeconnect.Orchestrator.get_audit_log_task_status`
 
     :param ne_pk_list: List of one or more appliance Network Primary
         Keys (nePk), e.g. ``["3.NE","5.NE"]``

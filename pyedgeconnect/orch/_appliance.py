@@ -177,7 +177,7 @@ def change_appliance_group(
 ) -> bool:
     """Modify an appliance's group membership. To get primary key of
     Orchestrator group, use
-    :func:`~silverpeak_python_sdk.Orchestrator.get_gms_groups`
+    :func:`~pyedgeconnect.Orchestrator.get_gms_groups`
 
     .. list-table::
         :header-rows: 1
