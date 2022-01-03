@@ -58,11 +58,12 @@ def set_loopback_orchestration(
           - POST
           - /loopbackOrch
 
-    WARNING: - this overwrites all loopback Orchestration, must use
-    :func:`~pyedgeconnect.Orchestrator.get_loopback_orchestration`
-    to get existing loopback orchestration details and then use optional
-    parameter ``multiple_segments`` to load multiple segment loopback
-    pools.
+    .. warning::
+        This overwrites all loopback Orchestration, must use
+        :func:`~pyedgeconnect.Orchestrator.get_loopback_orchestration`
+        to get existing loopback orchestration details and then use
+        optional parameter ``multiple_segments`` to load multiple
+        segment loopback pools.
 
     :param segment_id: Segment ID, ``0`` for Default segment. Ignored
         if ``multiple_segments`` is used.
