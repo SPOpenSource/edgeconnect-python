@@ -1123,6 +1123,7 @@ class Orchestrator(HttpCommon):
         reset_user_password,
         user_forgot_password,
     )
+    from .orch._user_account import get_appliance_user_accounts
     from .orch._vrf import (
         add_routing_segmentation_segment,
         delete_routing_segmentation_maps_from_source_segment,
