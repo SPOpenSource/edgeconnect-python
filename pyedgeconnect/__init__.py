@@ -1010,6 +1010,11 @@ class Orchestrator(HttpCommon):
         update_stats_collection,
         update_stats_retention,
     )
+    from .orch._subnets import (
+        get_appliance_subnets,
+        get_discovered_appliance_subnets,
+        set_appliance_subnet_sharing_options,
+    )
     from .orch._tca import get_appliance_tca, get_appliance_tunnel_tca
     from .orch._tcpdump import (
         tcpdump_run,
