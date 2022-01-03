@@ -833,6 +833,14 @@ class Orchestrator(HttpCommon):
     from .orch._logging import get_appliance_syslog_config
     from .orch._login import login, logout, send_mfa
     from .orch._loopback import get_loopback_interfaes
+    from .orch._loopback_orch import (
+        get_deleted_loopback_orchestration_ips,
+        get_loopback_orchestration,
+        get_loopback_orchestration_pool_detail,
+        reclaim_delete_loopback_orchestration_ips,
+        reclaim_single_deleted_loopback_orchestration_ip,
+        set_loopback_orchestration,
+    )
     from .orch._maintenance_mode import (
         get_maintenance_mode_appliances,
         update_maintenance_mode_appliances,
