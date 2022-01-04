@@ -353,6 +353,7 @@ def get_discovered_appliance_subnets(
 
 def set_appliance_subnet_sharing_options(
     self,
+    ne_id: str,
     use_sdwan_routes: bool,
     advertise_local: bool,
     advertise_local_lan: bool,
@@ -370,6 +371,8 @@ def set_appliance_subnet_sharing_options(
           - GET
           - /subnets/setSubnetSharingOptions/{neId}
 
+    :param ne_id: Appliance id in the format of integer.NE e.g. ``3.NE``
+    :type ne_id: str
     :param use_sdwan_routes: Whether or not to Use SD-WAN Fabric Learned
         Routes
     :type use_sdwan_routes: bool
