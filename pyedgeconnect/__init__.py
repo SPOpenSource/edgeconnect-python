@@ -1023,6 +1023,10 @@ class Orchestrator(HttpCommon):
         update_portal_registration_status,
     )
     from .orch._ssl import get_appliance_ssl_certs
+    from .orch._ssl_substitute_cert import (
+        get_appliance_ssl_substitute_certs,
+        validate_ssl_substitute_cert,
+    )
     from .orch._stats_retention import (
         get_all_nonstats_retention,
         get_all_stats_collection,

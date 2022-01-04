@@ -48,7 +48,9 @@ def get_appliance_ssl_certs(
                       assigns to the certificate,
                     * keyword **id** (`str`): Unique key that identify
                       the cert
-                    * keyword **builtin** (`str`): NEEDS DESCRIPTION
+                    * keyword **builtin** (`str`): If certificate is
+                      builtin on appliance, boolean string,
+                      e.g. ``true``
                     * keyword **valid_from** (`str`): The beginning date
                       for the period in which the certificate is valid
                     * keyword **issuer** (`str`): Information regarding
