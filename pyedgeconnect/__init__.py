@@ -968,6 +968,10 @@ class Orchestrator(HttpCommon):
         get_gms_third_party_services,
         update_gms_internet_policy_services,
     )
+    from .orch._session_timeout import (
+        get_orch_session_timeout,
+        set_orch_session_timeout,
+    )
     from .orch._shaper import get_appliance_shaper
     from .orch._shell import get_shell_access_setting, set_shell_access_setting
     from .orch._sp_portal import (
