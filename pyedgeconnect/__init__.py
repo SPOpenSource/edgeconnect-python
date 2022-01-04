@@ -817,6 +817,22 @@ class Orchestrator(HttpCommon):
         get_ip_allow_list_drops,
         update_ip_allow_list,
     )
+    from .orch._ip_objects import (
+        bulk_upload_address_group,
+        bulk_upload_service_group,
+        create_address_group,
+        create_service_group,
+        delete_address_group,
+        delete_service_group,
+        get_address_group,
+        get_all_address_groups,
+        get_all_service_groups,
+        get_service_group,
+        merge_address_groups,
+        merge_service_groups,
+        update_address_group,
+        update_service_group,
+    )
     from .orch._license import (
         change_appliance_license,
         delete_appliance_license_token,
@@ -1001,6 +1017,7 @@ class Orchestrator(HttpCommon):
         update_portal_registration_config,
         update_portal_registration_status,
     )
+    from .orch._ssl import get_appliance_ssl_certs
     from .orch._stats_retention import (
         get_all_nonstats_retention,
         get_all_stats_collection,
