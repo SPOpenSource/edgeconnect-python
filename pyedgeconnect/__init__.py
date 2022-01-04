@@ -613,6 +613,11 @@ class Orchestrator(HttpCommon):
         get_api_keys,
         update_api_key,
     )
+    from .orch._app_system_deploy_info import (
+        get_appliance_system_deployment_info,
+        get_discovered_appliance_system_deployment_info,
+    )
+    from .orch._app_system_state_info import get_appliance_system_state_info
     from .orch._appliance import (
         add_and_approve_discovered_appliances,
         add_discovered_appliances,
