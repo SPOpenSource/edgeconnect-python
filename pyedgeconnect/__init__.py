@@ -953,6 +953,12 @@ class Orchestrator(HttpCommon):
         update_region_appliance_association,
         update_region_name,
     )
+    from .orch._releases import (
+        delay_release_notification,
+        dismiss_release_notification,
+        get_releases_for_orchestrator_and_ecos,
+        get_releases_notifications,
+    )
     from .orch._rest_api_config import get_rest_api_config, set_rest_api_config
     from .orch._rest_request_time_stats import (
         get_appliance_rest_stats,
