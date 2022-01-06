@@ -1,0 +1,157 @@
+0.15.0-a1 -- 2022-01-18
+-----------------------
+
+
+🚀 Features
+~~~~~~~~~~~~~
+
+531 functions
+
+Added the following Orchestrator functions from Swagger:
+
+from .orch._app_system_deploy_info
+  - get_appliance_system_deployment_info
+  - get_discovered_appliance_system_deployment_info
+
+from .orch._app_system_state_info
+  - get_appliance_system_state_info
+
+from .orch._appliance
+  - appliance_delete_api
+  - delete_denied_appliances
+  - rediscover_denied_appliance
+
+from .orch._link_aggregation
+  - get_link_aggregation_data
+
+from .orch._loopback_orch
+  - get_loopback_orchestration
+  - set_loopback_orchestration
+  - get_loopback_orchestration_pool_detail
+  - reclaim_delete_loopback_orchestration_ips
+  - reclaim_single_deleted_loopback_orchestration_ip
+  - get_deleted_loopback_orchestration_ips *** NOT IN SWAGGER
+
+from .orch._network_role_and_site
+  - get_appliance_network_role_and_site
+
+########
+
+
+
+
+
+
+
+
+from .orch._rbac_appliance_access_group
+  - get_all_appliance_access_groups
+  - update_appliance_access_group
+  - get_appliance_access_group
+  - delete_appliance_access_group
+
+from .orch._releases
+  - get_releases_for_orchestrator_and_ecos
+  - get_releases_notifications
+  - delay_release_notification
+  - dismiss_release_notification
+
+from .orch._session
+  - get_orchestrator_sessions
+
+from .orch._session_timeout
+  - get_orch_session_timeout
+  - set_orch_session_timeout
+
+from .orch._ssl
+  - get_appliance_ssl_certs
+
+from .orch._ssl_substitute_cert
+  - get_appliance_ssl_substitute_certs
+  - validate_ssl_substitute_cert
+
+from .orch._stats_retention
+  - get_stats_approximate_disk_space
+
+from .orch._subnets
+  - get_appliance_subnets
+  - get_discovered_appliance_subnets
+  - set_appliance_subnet_sharing_options
+
+from .orch._user_account
+  - get_appliance_user_accounts
+
+
+
+# IP Objects (Address Groups and Service Groups) introduced in Orchestrator 9.1+
+
+from .orch._ip_objects
+  - get_all_address_groups
+  - create_address_group
+  - update_address_group
+  - get_address_group
+  - delete_address_group
+  - bulk_upload_address_group **** NEED TO TEST ON LOCAL LAB ORCH
+  - merge_address_groups **** NEED TO TEST ON LOCAL LAB ORCH
+  - get_all_service_groups
+  - create_service_group
+  - update_service_group
+  - get_service_group
+  - delete_service_group
+  - bulk_upload_service_group **** NEED TO TEST ON LOCAL LAB ORCH
+  - merge_service_groups **** NEED TO TEST ON LOCAL LAB ORCH
+
+# Clearpass id integration introduced in Orchestrator 9.1+
+
+from .orch._third_party_services
+  - clearpass_add_account
+  - clearpass_delete_account
+  - clearpass_filter_events
+  - clearpass_get_configured_account
+  - clearpass_get_configured_account_details
+  - clearpass_get_configured_accounts
+  - clearpass_get_connectivity
+  - clearpass_get_pause_orchestration_status
+  - clearpass_get_service_endpoint_status
+  - clearpass_get_user_roles_for_ip
+  - clearpass_pause_individual_orchestration
+  - clearpass_post_login_event
+  - clearpass_post_logout_event
+  - clearpass_reset_service_endpoint
+  - clearpass_set_pause_orchestration_status
+  - clearpass_update_account
+  - central_get_subscription
+  - central_add_subscription
+  - central_delete_subscription
+  - central_get_site_mapping
+  - central_assign_appliance_to_site
+
+# Existing Function Updates:
+
+ - :func:`~pyedgeconnect.Orchestrator.change_appliance_license` to
+   account for new Advance Security licensing
+ - :func:`~pyedgeconnect.Orchestrator.get_zones` to account for new
+   option to filter for unique zone names vs. all zones accross segments
+
+
+📚 Documentation
+~~~~~~~~~~~~~~~~~~
+
+- Include PyPI download stats to README
+- Updated README with Swagger coverage %
+- Added .readthedocs.yaml configuration for hosted ReadTheDocs build
+  to account for python3.9 support in the online docs.
+
+🐛 Bug Fixes
+~~~~~~~~~~~~~~
+
+- init.py was missing import of
+  :func:`~pyedgeconnect.Orchestrator.get_timeseries_stats_appliances_ne_pk_list`
+  from `_timeseries_stats` submodule
+- Functions in _timeseries_stats submodule with paramter ``traffic_type``
+  defaulting to ``None`` updated to proper value of ``all_traffic``
+- Fix missing orch.login() function in create_user.py in examples
+- Add query parameter delete_dependencies for
+  :func:`~pyedgeconnect.Orchestrator.update_zones`, variable was defined
+  but not included in POST
+

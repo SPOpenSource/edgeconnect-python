@@ -286,8 +286,9 @@ def get_appliance_info(
           configuration/state on the appliance),
           ``5`` - Synchronization in Progress (Orchestrator is currently
           synchronizing appliances's configuration and state)
-        * keyword **dynamicUuid** (`str`): No description in Swagger
-        * keyword **portalObjectId** (`str`): No description in Swagger
+        * keyword **dynamicUuid** (`str`): NEEDS DESCRIPTION
+        * keyword **portalObjectId** (`str`): Appliance hash ID in
+          Cloud Portal
         * keyword **discoveredFrom** (`int`): How the appliance was
           added to Orchestrator. ``1`` = MANUAL, ``2`` = PORTAL, ``3`` =
           APPLIANCE
@@ -741,7 +742,6 @@ def appliance_delete_api(
     self,
     ne_pk: str,
     url: str,
-    data,
 ) -> dict:
     """Pass along a POST API call to an appliance
 
