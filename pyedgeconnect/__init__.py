@@ -886,6 +886,10 @@ class Orchestrator(HttpCommon):
     )
     from .orch._net_flow import get_net_flow_configuration
     from .orch._network_memory import erase_appliance_network_memory
+    from .orch._network_role_and_site import (
+        get_appliance_network_role_and_site,
+        update_appliance_network_role_and_site,
+    )
     from .orch._optimization_policy import get_optimization_policy
     from .orch._ospf import (
         get_appliance_ospf_config,

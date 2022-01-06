@@ -108,8 +108,46 @@ def get_appliance_network_role_and_site(
     return self._get("/appliance/networkRoleAndSite/{}".format(ne_id))
 
 
-
 def update_appliance_network_role_and_site(
     self,
     ne_id: str,
+    network_role: int,
+    site: str,
+    site_priority: int = 0,
 ) -> dict:
+    """Update an appliance Network Role and Site information
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - networkRoleAndSite
+          - POST
+          - /appliance/networkRoleAndSite/{neid}
+
+    :param ne_id: Appliance id in the format of integer.NE e.g. ``3.NE``
+    :type ne_id: str
+    :param network_role: Appliance role, ``1`` for Hub, ``0`` for spoke,
+        ``2`` for mesh
+    :type network_role: int
+    :param site: Appliance site
+    :type site: str
+    :param site_priority: Site priority, needs further description
+    :type site_priority: int
+    :return: Returns True/False based on successful call.
+    :rtype: bool
+    """
+    data = {
+        "id": ne_id,
+        "networkRole": network_role,
+        "site": site,
+        "sitePriority": site_priority,
+    }
+
+    return self._post(
+        "/appliance/networkRoleAndSite/{}".format(ne_id),
+        data=data,
+        return_type="bool",
+    )
