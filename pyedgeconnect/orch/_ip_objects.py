@@ -254,17 +254,16 @@ def bulk_upload_address_group(
         * keyword **existingGroupNames** (`list[str]`):
     :rtype: dict
     """
-    # TODO - implement ``files`` paramter handling for POST function in
-    # base Orchestrator class, likely also related to uploading branding
-    # images
-    # Currently testing broken in SEWAN in trying to upload file even in
-    # UI, need to test further before completing code
-    return self._post(
-        "/ipObjects/addressGroup/bulkUpload",
-        files={"file": open(csv_filename, "rb")},
-        expected_status=[204],
-        return_type="bool",
-    )
+    # TODO - validate function, currently testing broken in SEWAN in
+    # trying to upload file even in UI, need to test further before
+    # completing code
+    with open(csv_filename, "rb") as upload_data:
+        return self._post(
+            "/ipObjects/addressGroup/bulkUpload",
+            files={"data": (csv_filename, upload_data, "text/xml")},
+            expected_status=[204],
+            return_type="bool",
+        )
 
 
 def merge_address_groups(
@@ -602,17 +601,16 @@ def bulk_upload_service_group(
         * keyword **existingGroupNames** (`list[str]`):
     :rtype: dict
     """
-    # TODO - implement ``files`` paramter handling for POST function in
-    # base Orchestrator class, likely also related to uploading branding
-    # images
-    # Currently testing broken in SEWAN in trying to upload file even in
-    # UI, need to test further before completing code
-    return self._post(
-        "/ipObjects/serviceGroup/bulkUpload",
-        files={"file": open(csv_filename, "rb")},
-        expected_status=[204],
-        return_type="bool",
-    )
+    # TODO - validate function, currently testing broken in SEWAN in
+    # trying to upload file even in UI, need to test further before
+    # completing code
+    with open(csv_filename, "rb") as upload_data:
+        return self._post(
+            "/ipObjects/serviceGroup/bulkUpload",
+            files={"data": (csv_filename, upload_data, "text/xml")},
+            expected_status=[204],
+            return_type="bool",
+        )
 
 
 def merge_service_groups(

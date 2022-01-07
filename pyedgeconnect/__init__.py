@@ -19,6 +19,7 @@ class HttpCommon:
         self,
         url: str,
         data,
+        files,
     ) -> requests.Response:
         """Assemble and send Requests request for HTTP POST method
 
@@ -33,6 +34,7 @@ class HttpCommon:
         return self.session.post(
             self.url_prefix + url + apiSrcStr,
             json=data,
+            files=files,
             verify=self.verify,
             timeout=120,
             headers=self.headers,
@@ -190,6 +192,7 @@ class HttpCommon:
         self,
         api_path: str,
         data="",
+        files={},
         expected_status: list = [200],
         return_type: str = "json",
     ):
@@ -219,7 +222,7 @@ class HttpCommon:
                 )
             )
         try:
-            response = self._req_post(api_path, data)
+            response = self._req_post(api_path, data, files)
             return self._handle_response(
                 api_path, response, expected_status, return_type
             )
@@ -231,12 +234,6 @@ class HttpCommon:
                 )
             )
             return False
-
-        self.logger.error(
-            "Reached end without returning for POST "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
 
     def _get(
         self,
@@ -281,12 +278,6 @@ class HttpCommon:
             )
             return False
 
-        self.logger.error(
-            "Reached end without returning for GET "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
-
     def _delete(
         self,
         api_path: str,
@@ -329,12 +320,6 @@ class HttpCommon:
                 )
             )
             return False
-
-        self.logger.error(
-            "Reached end without returning for DELETE "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
 
     def _put(
         self,
@@ -381,12 +366,6 @@ class HttpCommon:
                 )
             )
             return False
-
-        self.logger.error(
-            "Reached end without returning for PUT "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
 
 
 # Aruba Orchestrator
