@@ -645,6 +645,7 @@ class Orchestrator(HttpCommon):
         validate_preconfig,
     )
     from .orch._appliance_reboot_history import get_appliance_reboot_history
+    from .orch._appliance_upgrade import delete_ecos_image, get_ecos_images
     from .orch._appliances_software_versions import (
         get_appliance_software_version,
     )
@@ -969,6 +970,7 @@ class Orchestrator(HttpCommon):
     )
     from .orch._shaper import get_appliance_shaper
     from .orch._shell import get_shell_access_setting, set_shell_access_setting
+    from .orch._snmp import get_appliance_snmp
     from .orch._sp_portal import (
         assign_account_license_ecsp,
         create_case_with_portal,
@@ -1133,6 +1135,10 @@ class Orchestrator(HttpCommon):
         initiate_tunnel_traceroute,
     )
     from .orch._ui_usage_stats import add_ui_usage_count
+    from .orch._upgrade_appliances import (
+        upgrade_appliances,
+        validate_appliance_upgrade,
+    )
     from .orch._user import (
         change_user_password,
         create_or_update_user,
