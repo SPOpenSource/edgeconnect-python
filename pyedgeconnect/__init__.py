@@ -953,6 +953,10 @@ class Orchestrator(HttpCommon):
         save_changes_ne_pk_list,
         save_changes_single_appliance,
     )
+    from .orch._schedule_timezone import (
+        get_schedule_timezone,
+        set_schedule_timezone,
+    )
     from .orch._security_maps import get_appliance_security_maps
     from .orch._security_settings import (
         get_security_settings,
