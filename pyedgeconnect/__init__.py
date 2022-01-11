@@ -744,6 +744,10 @@ class Orchestrator(HttpCommon):
         get_gms_notification,
         update_gms_notification,
     )
+    from .orch._gms_registration import (
+        get_orchestrator_registration_setting,
+        set_orchestrator_registration_setting,
+    )
     from .orch._gms_server import (
         get_orchestrator_hello,
         get_orchestrator_server_brief,
