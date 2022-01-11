@@ -645,6 +645,7 @@ class Orchestrator(HttpCommon):
         validate_preconfig,
     )
     from .orch._appliance_reboot_history import get_appliance_reboot_history
+    from .orch._appliance_resync import appliance_resync
     from .orch._appliance_upgrade import delete_ecos_image, get_ecos_images
     from .orch._appliances_software_versions import (
         get_appliance_software_version,
