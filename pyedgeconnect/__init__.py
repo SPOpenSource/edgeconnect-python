@@ -681,6 +681,9 @@ class Orchestrator(HttpCommon):
         get_bonded_tunnels_for_physical_tunnel,
         get_bonded_tunnels_state,
     )
+    from .orch._bridge_interface_state import (
+        get_appliance_bridge_interface_state,
+    )
     from .orch._broadcast_cli import broadcast_cli
     from .orch._built_in_policies import get_built_in_policies
     from .orch._custom_appliance_tags import get_custom_appliance_tags
