@@ -631,6 +631,11 @@ class Orchestrator(HttpCommon):
         restore_appliance_from_backup,
     )
     from .orch._appliance_crash_history import appliance_crash_history
+    from .orch._appliance_extra_info import (
+        delete_appliance_extra_info,
+        get_appliance_extra_info,
+        set_appliance_extra_info,
+    )
     from .orch._appliance_preconfig import (
         apply_preconfig_to_existing,
         approve_and_apply_preconfig,
