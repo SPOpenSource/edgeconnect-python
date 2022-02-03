@@ -498,6 +498,11 @@ class Orchestrator(HttpCommon):
     )
     from .orch._active_sessions import get_active_sessions_orchestrator
     from .orch._admin_distance import get_appliance_admin_distance
+    from .orch._advanced_properties import (
+        get_orchestrator_advanced_properties,
+        get_orchestrator_advanced_properties_metadata,
+        update_orchestrator_advanced_properties,
+    )
     from .orch._aggregate_stats import (
         get_aggregate_stats_active_flows,
         get_aggregate_stats_appliances,
