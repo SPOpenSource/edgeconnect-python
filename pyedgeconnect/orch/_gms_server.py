@@ -20,7 +20,10 @@ def get_orchestrator_hello(self) -> str:
     :return: Returns str hash message
     :rtype: str
     """
-    return self._get("/gmsserver/hello")
+    return self._get(
+        "/gmsserver/hello",
+        return_type="text",
+    )
 
 
 def get_orchestrator_server_info(self) -> dict:
