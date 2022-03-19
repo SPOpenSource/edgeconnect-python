@@ -327,60 +327,6 @@ def get_appliance_info(
     return self._get("/appliance/{}".format(ne_pk))
 
 
-def get_appliance_extra_info(
-    self,
-    ne_pk: str,
-) -> dict:
-    """Get appliance information of location, contact, and general
-    overlay settings
-
-    .. note::
-
-      This API Call is not in current Swagger as of Orch 9.0.3
-
-    .. list-table::
-        :header-rows: 1
-
-        * - Swagger Section
-          - Method
-          - Endpoint
-        * - n/a
-          - GET
-          - /appliance/extraInfo/{nePk}
-
-    :param ne_pk: Network Primary Key (nePk) of existing appliance,
-        e.g. ``3.NE``
-    :type ne_pk: str
-    :return: Returns dictionary of appliance information \n
-        * keyword **location** (`dict`): Location info object \n
-            * keyword **address** (`str`): Primary address line
-            * keyword **address2** (`str`): Secondary address line
-            * keyword **city** (`str`): City
-            * keyword **state** (`str`): State
-            * keyword **zipCode** (`str`): Zip Code
-            * keyword **country** (`str`): Country
-        * keyword **contact** (`dict`): Contact info object \n
-            * keyword **name** (`str`): Contact name
-            * keyword **email** (`str`): Contact email
-            * keyword **phoneNumber** (`str`): Contact phone number
-        * keyword **overlaySettings** (`dict`): Overlay config object \n
-            * keyword **ipsecUdpPort** (`str`): UDP port to use,
-              e.g. ``12000``
-            * keyword **isUserDefinedIPSecUDPPort** (`bool`): Has the
-              user changed the IPSEC UDP port to use
-    :rtype: dict
-    :raises ValueError: Checks format of provided NePK value containing
-        ".NE"
-    """
-    valid = ".NE"
-    if valid not in ne_pk:
-        raise ValueError(
-            "nePk must be in format '0.NE', but %r was provided" % ne_pk
-        )
-
-    return self._get("/appliance/extraInfo/{}".format(ne_pk))
-
-
 def get_all_discovered(self) -> list:
     """Get all appliances currently discovered
 

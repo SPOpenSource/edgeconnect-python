@@ -619,7 +619,6 @@ class Orchestrator(HttpCommon):
         get_all_denied_appliances,
         get_all_discovered,
         get_appliance_dns_cache_config,
-        get_appliance_extra_info,
         get_appliance_info,
         get_appliance_stats_config,
         get_appliances,
