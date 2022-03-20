@@ -27,7 +27,7 @@ def get_loopback_orchestration(self) -> dict:
                   object ID, arbitrary value of ``20x00`` where ``x``
                   is the segment id \n
                     * keyword **mgmtIP** (`bool`): Is used for mgmt
-                    * keyword **label* (`str`): Interface Label ID,
+                    * keyword **label** (`str`): Interface Label ID,
                       e.g. ``149``
                     * keyword **zone** (`int`): Firewall Zone ID,
                       e.g. ``27``
@@ -100,7 +100,7 @@ def set_loopback_orchestration(
                   object ID, arbitrary value of ``20x00`` where ``x``
                   is the segment id \n
                     * keyword **mgmtIP** (`bool`): Is used for mgmt
-                    * keyword **label* (`str`): Interface Label ID,
+                    * keyword **label** (`str`): Interface Label ID,
                       e.g. ``149``
                     * keyword **zone** (`int`): Firewall Zone ID,
                       e.g. ``27``
@@ -250,10 +250,10 @@ def get_deleted_loopback_orchestration_ips(
             * keyword **status** (`int`): ``0`` indicated deleted
             * keyword **detail** (`dict`): Loopback object \n
                 * keyword **mgmtIP** (`bool`): Is used for mgmt
-                * keyword **label* (`str`): Interface Label ID,
-                    e.g. ``149``
+                * keyword **label** (`str`): Interface Label ID,
+                  e.g. ``149``
                 * keyword **zone** (`int`): Firewall Zone ID,
-                    e.g. ``27``
+                  e.g. ``27``
     :rtype: list
     """
     return self._get(

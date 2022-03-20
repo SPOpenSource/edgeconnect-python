@@ -312,7 +312,7 @@ def get_all_service_groups(self) -> list:
             * keyword **name** (`str`): ACL group name
             * keyword **rules** (`list[dict]`): Array of rules objects\n
                 * keyword **protocol** (`str`): Protocol type specified,
-                e.g. ``UDP``, ``TCP``, or ``ICMP``.
+                  e.g. ``UDP``, ``TCP``, or ``ICMP``.
                 * keyword **icmpTypes** (`list[str]`): List of included
                   icmp types, e.g. ``["0","8"]``
                 * keyword **includedPorts** (`list[str]`): List of
@@ -520,25 +520,25 @@ def get_service_group(
         * keyword **name** (`str`): ACL group name
         * keyword **rules** (`list[dict]`): Array of rules objects \n
             * keyword **protocol** (`str`): Protocol type specified,
-            e.g. ``UDP``, ``TCP``, or ``ICMP``.
+              e.g. ``UDP``, ``TCP``, or ``ICMP``.
             * keyword **icmpTypes** (`list[str]`): List of included
-                icmp types, e.g. ``["0","8"]``
+              icmp types, e.g. ``["0","8"]``
             * keyword **includedPorts** (`list[str]`): List of
-                included ports, ranges of ports,
-                e.g. ``["443","8000-8002"]``, will be ignored if
-                ``protocol`` is set to ``ICMP``.
+              included ports, ranges of ports,
+              e.g. ``["443","8000-8002"]``, will be ignored if
+              ``protocol`` is set to ``ICMP``.
             * keyword **excludedPorts** (`list[str]`): List of
-                excluded ports, ranges of ports,
-                e.g. ``["443","8000-8002"]``, will be ignored if
-                ``protocol`` is set to ``ICMP``.
+              excluded ports, ranges of ports,
+              e.g. ``["443","8000-8002"]``, will be ignored if
+              ``protocol`` is set to ``ICMP``.
             * keyword **includedGroups** (`list[str]`): List of
-                service groups to nest/include in this group,
-                e.g. ``["ServiceGroup1","ServiceGroup2"]``, will be
-                ignored if ``protocol`` is set to ``ICMP``.
+              service groups to nest/include in this group,
+              e.g. ``["ServiceGroup1","ServiceGroup2"]``, will be
+              ignored if ``protocol`` is set to ``ICMP``.
             * keyword **excludedGroups** (`list[str]`): List of
-                service groups to nest/include in this group,
-                e.g. ``["ServiceGroup1","ServiceGroup2"]``, will be
-                ignored if ``protocol`` is set to ``ICMP``.
+              service groups to nest/include in this group,
+              e.g. ``["ServiceGroup1","ServiceGroup2"]``, will be
+              ignored if ``protocol`` is set to ``ICMP``.
             * keyword **comment** (`str`): User comment for group
     :rtype: dict
     """

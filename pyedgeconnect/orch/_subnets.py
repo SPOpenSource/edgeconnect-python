@@ -140,7 +140,8 @@ def get_appliance_subnets(
             * keyword **regionName** (`str`): Region name, e.g.
               ``CENTRAL``
             * keyword **messageVersion** (`str`): "6",
-            * keyword **message** (`str`): "Submsg Ver6 (>= Rel9.0 or main)",
+            * keyword **message** (`str`): Submsg Ver6 (>= Rel9.0 or
+              main)
             * keyword **priorTxSec** (`str`): NEEDS DESCRIPTION
             * keyword **mainVerAndRegion** (`str`): Software version and
               region in (), e.g. ``9.1.1.0 (1)``
@@ -172,7 +173,7 @@ def get_appliance_subnets(
             * keyword **rx invalid msg** (`str`): NEEDS DESCRIPTION
             * keyword **rx unknown msg** (`str`): NEEDS DESCRIPTION
             * keyword **IP tracking** (`str`): NEEDS DESCRIPTION,
-            e.g. ``ENABLED``
+              e.g. ``ENABLED``
             * keyword **IP track delta** (`str`): NEEDS DESCRIPTION,
               e.g. ``0``
             * keyword **Active READER index** (`str`): NEEDS
@@ -309,7 +310,8 @@ def get_discovered_appliance_subnets(
             * keyword **regionName** (`str`): Region name, e.g.
               ``CENTRAL``
             * keyword **messageVersion** (`str`): "6",
-            * keyword **message** (`str`): "Submsg Ver6 (>= Rel9.0 or main)",
+            * keyword **message** (`str`): Submsg Ver6 (>= Rel9.0 or
+              main)
             * keyword **priorTxSec** (`str`): NEEDS DESCRIPTION
             * keyword **mainVerAndRegion** (`str`): Software version and
               region in (), e.g. ``9.1.1.0 (1)``
@@ -341,7 +343,7 @@ def get_discovered_appliance_subnets(
             * keyword **rx invalid msg** (`str`): NEEDS DESCRIPTION
             * keyword **rx unknown msg** (`str`): NEEDS DESCRIPTION
             * keyword **IP tracking** (`str`): NEEDS DESCRIPTION,
-            e.g. ``ENABLED``
+              e.g. ``ENABLED``
             * keyword **IP track delta** (`str`): NEEDS DESCRIPTION,
               e.g. ``0``
             * keyword **Active READER index** (`str`): NEEDS

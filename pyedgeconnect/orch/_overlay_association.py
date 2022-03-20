@@ -51,13 +51,14 @@ def add_appliance_overlay_association(
             * keyword **<overlay_id>** (`list[str]`): \n
                 * [`str`]: Appliance NePK ID's that are associated with
                   the overlay, e.g. ``["3.NE","5.NE"]``
-    Example Dictionary: \n
-    {"1": ["834.NE"], "2": ["834.NE"]} \n
-    This would add appliance ``834.NE`` to overlays with overlay ids of
-    ``1`` and ``2``.
     :type appliance_overlay_map: dict
     :return: Returns True/False based on successful call
     :rtype: bool
+
+    **Example Dictionary:** \n
+    {"1": ["834.NE"], "2": ["834.NE"]} \n
+    This would add appliance ``834.NE`` to overlays with overlay ids of
+    ``1`` and ``2``. \n
     """
     return self._post(
         "/gms/overlays/association",
@@ -89,13 +90,14 @@ def remove_appliance_overlay_association(
             * keyword **<overlay_id>** (`list[str]`): \n
                 * [`str`]: Appliance NePK ID's that are associated with
                   the overlay, e.g. ``["3.NE","5.NE"]``
-    Example Dictionary: \n
-    {"1": ["834.NE"], "2": ["834.NE"]} \n
-    This would add appliance ``834.NE`` to overlays with overlay ids of
-    ``1`` and ``2``.
     :type appliance_overlay_map: dict
     :return: Returns True/False based on successful call
     :rtype: bool
+
+    **Example Dictionary:** \n
+    {"1": ["834.NE"], "2": ["834.NE"]} \n
+    This would add appliance ``834.NE`` to overlays with overlay ids of
+    ``1`` and ``2``.
     """
     return self._post(
         "/gms/overlays/association/remove",

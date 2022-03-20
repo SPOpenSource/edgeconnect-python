@@ -1,7 +1,8 @@
 # MIT License
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
-# scheduleTimezone : Configure the timezone for the scheduled jobs and reports
+# scheduleTimezone : Configure the timezone for the scheduled jobs and
+# reports
 
 
 def get_schedule_timezone(

@@ -28,12 +28,12 @@ def get_appliance_bridge_interface_state(
     :type cached: bool
     :return: Returns dictionary of bridge interface configuration. If
         device is in router mode will return dictionary of single item
-        **router** with value of ``The appliance is currently in Router
-        Mode`` \n \n
+        ``router`` with value of ``The appliance is currently in Router
+        Mode`` \n
         * keyword **bridge** (`dict`): Container for each bridge
           interface \n
             * keyword **<interface_name>** (`dict`): Interface object,
-              e.g. ``lan0`` and it's underlying state
+              e.g. ``lan0`` and it's underlying state \n
                 * keyword **state** (`str`): Admin state of interface
                 * keyword **link_state** (`str`): Link state of
                   interface

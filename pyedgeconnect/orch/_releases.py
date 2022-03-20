@@ -28,7 +28,7 @@ def get_releases_for_orchestrator_and_ecos(
             * keyword **version** (`str`): Version of the release
             * keyword **product** (`str`): orchestrator or ECOS (vxoa)
             * keyword **releaseType** (`str`): Type of release,
-              e.g. ````
+              e.g. ``FCS`` or ``GA``
             * keyword **releaseDate** (`int`): Release date in Unix
               EPOCH in milliseconds
             * keyword **description** (`str`): Release description text
@@ -49,8 +49,8 @@ def get_releases_for_orchestrator_and_ecos(
                   to S3 in Unix EPOCH milliseconds
             * keyword **imageId** (`str`): Release ID hash, if image
               is included, otherwise ``null``
-            * keyword **imageS3Metadata** (`dict`): S3 metadata for image,
-              if applicable \n
+            * keyword **imageS3Metadata** (`dict`): S3 metadata for
+              image, if applicable \n
                 * keyword **ETag** (`str`): Entity tag of asset in S3,
                   hash of object content (not metadata)
                 * keyword **Location** (`str`): URL to asset
@@ -75,7 +75,7 @@ def get_releases_for_orchestrator_and_ecos(
             * keyword **version** (`str`): Version of the release
             * keyword **product** (`str`): orchestrator or ECOS (vxoa)
             * keyword **releaseType** (`str`): Type of release,
-              e.g. ````
+              e.g. ``FCS`` or ``GA``
             * keyword **releaseDate** (`int`): Release date in Unix
               EPOCH in milliseconds
             * keyword **description** (`str`): Release description text
@@ -96,8 +96,8 @@ def get_releases_for_orchestrator_and_ecos(
                   to S3 in Unix EPOCH milliseconds
             * keyword **imageId** (`str`): Release ID hash, if image
               is included, otherwise ``null``
-            * keyword **imageS3Metadata** (`dict`): S3 metadata for image,
-              if applicable \n
+            * keyword **imageS3Metadata** (`dict`): S3 metadata for
+              image, if applicable \n
                 * keyword **ETag** (`str`): Entity tag of asset in S3,
                   hash of object content (not metadata)
                 * keyword **Location** (`str`): URL to asset

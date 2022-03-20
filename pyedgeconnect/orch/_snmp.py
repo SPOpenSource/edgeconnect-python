@@ -35,8 +35,8 @@ def get_appliance_snmp(
               listening at SNMP port (161)
         * keyword **sysdescr** (`str`): SNMP MIB II object 'sysDescr'
           value
-        * keyword **syscontact** (`str`): SNMP MIB II object 'sysContact'
-          value
+        * keyword **syscontact** (`str`): SNMP MIB II object
+          'sysContact' value
         * keyword **syslocation** (`str`): SNMP MIB II object
           'sysLocation' value
         * keyword **v3** (`dict`): SNMP v3 user information \n
@@ -44,15 +44,15 @@ def get_appliance_snmp(
                 * keyword **admin** (`dict`): Admin object \n
                     * keyword **self** (`str`): admin user, only admin
                       user is available as an SNMP v3 user
-                    * keyword **enable (`bool`): Is admin user enabled
+                    * keyword **enable** (`bool`): Is admin user enabled
                       as SNMP v3 user
-                    * keyword **hash_type (`str`): Hashing algorithm
+                    * keyword **hash_type** (`str`): Hashing algorithm
                       used for encrypting authentication password
-                    * keyword **auth_key (`str`): Hashed authentication
+                    * keyword **auth_key** (`str`): Hashed authentication
                       password
-                    * keyword **privacy_type (`str`): Hashing algorithm
+                    * keyword **privacy_type** (`str`): Hashing algorithm
                       used for encrypting privacy password
-                    * keyword **privacy_key (`str`): Hashed privacy
+                    * keyword **privacy_key** (`str`): Hashed privacy
                       password
         * keyword **traps** (`dict`): SNMP Trap enable state and access
           information \n

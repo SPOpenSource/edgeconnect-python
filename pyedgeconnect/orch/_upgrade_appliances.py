@@ -31,8 +31,8 @@ def validate_appliance_upgrade(
         ``["9.1.0.2", "9.1.0.1"]``
     :type versions: list[str]
     :return: Returns dictionary of upgrade validation data \n
-        * keyword **versions** (`list[str]`): ECOS versions available for
-          upgrade
+        * keyword **versions** (`list[str]`): ECOS versions available
+          for upgrade
         * keyword **appliances** (`list[dict]`): Appliance details \n
             * [`dict`]: Appliance object \n
                 * keyword **nePk** (`str`): The appliance ID
@@ -40,12 +40,13 @@ def validate_appliance_upgrade(
                 * keyword **platform** (`str`): The appliance platform
                 * keyword **version** (`str`): The current appliance
                   version
-                * keyword **upgradable** (`list[list[int]]`): ECOS versions
-                  that the appliance can upgrade to from the versions
-                  list, each sub-list contains ordered list of integers
-                  as the version number, e.g. ``[...,[9,1,0,2],...`` if
-                  appliance can be upgraded to ``9.1.0.2``. If none
-                  available will be blank list ``[]``
+                * keyword **upgradable** (`list[list[int]]`): ECOS
+                  versions that the appliance can upgrade to from the
+                  versions list, each sub-list contains ordered list of
+                  integers as the version number,
+                  e.g. ``[...,[9,1,0,2],...`` if appliance can be
+                  upgraded to ``9.1.0.2``. If none available will be
+                  blank list ``[]``
         * keyword **orchestrator** (`str`): Current version of
           Orchestrator
         * keyword **orchSupports** (`str`): The maximum ECOS version

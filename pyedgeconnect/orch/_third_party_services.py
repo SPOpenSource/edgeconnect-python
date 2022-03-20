@@ -364,10 +364,10 @@ def clearpass_get_service_endpoint_status(
       status \n
         * keyword **context_server** (`int`): ``1`` if active, ``0`` if
           failed
-        * keyword **login_context_server_action** (`int`): ``1`` if active, ``0`` if
-          failed
-        * keyword **logout_context_server_action** (`int`): ``1`` if active, ``0`` if
-          failed
+        * keyword **login_context_server_action** (`int`): ``1`` if
+          active, ``0`` if failed
+        * keyword **logout_context_server_action** (`int`): ``1`` if
+          active, ``0`` if failed
     :rtype: dict
     """
     return self._get(
@@ -402,10 +402,10 @@ def clearpass_reset_service_endpoint(
       status \n
         * keyword **context_server** (`int`): ``1`` if active, ``0`` if
           failed
-        * keyword **login_context_server_action** (`int`): ``1`` if active, ``0`` if
-          failed
-        * keyword **logout_context_server_action** (`int`): ``1`` if active, ``0`` if
-          failed
+        * keyword **login_context_server_action** (`int`): ``1`` if
+          active, ``0`` if failed
+        * keyword **logout_context_server_action** (`int`): ``1`` if
+          active, ``0`` if failed
     :rtype: dict
     """
     return self._put(
@@ -630,7 +630,8 @@ def clearpass_filter_events(
           - /thirdPartyServices/clearpass/events/filter
 
     :param start_time: Long(Signed 64 bits) value of milliseconds since
-      EPOCH time indicating the starting time boundary of data time range
+      EPOCH time indicating the starting time boundary of data time
+      range
     :type start_time: int
     :param end_time: Long(Signed 64 bits) value of milliseconds since
       EPOCH time indicating the ending time boundary of data time range
@@ -640,7 +641,8 @@ def clearpass_filter_events(
     :type ip_address: str, optional
     :param username: Username to filter for, defaults to None
     :type username: str, optional
-    :param limit: Limit number of returned results, defaults to ``10000``
+    :param limit: Limit number of returned results, defaults to
+      ``10000``
     :type limit: int, optional
     :param event_type: Event filter type. Please specify one of these
       values ``All``, ``Active``, ``Historical``, defaults to None
@@ -791,7 +793,7 @@ def central_add_subscription(
     :type username: str
     :param password: The password of Aruba Central
     :type password: str
-    :param client_id:clientId to use for Orchestrator mapping
+    :param client_id: clientId to use for Orchestrator mapping
     :type client_id: str
     :param client_secret: clientSecret to use for Orchestrator mapping
     :type client_secret: str
@@ -861,8 +863,9 @@ def central_get_site_mapping(
     :return: Returns list of dictionaries with site mapping
       to Edge Connect appliance relationships \n
         * [`dict`]: List of site to appliance relationship objects \n
-          * keyword <site_id_#> (`list[dict]`): Key is Site ID string integer,
-            list of appliance object dictionaries related to site \n
+          * keyword <site_id_#> (`list[dict]`): Key is Site ID string
+            integer, list of appliance object dictionaries related to
+            site \n
             * keyword **nePk** (`str`): Appliance ID
             * keyword **applianceName** (`str`): Appliance hostname
             * keyword **recommendSite** (`str`): Recommended site ID

@@ -63,11 +63,11 @@ def get_appliance_system_deployment_info(
         * keyword **auto_tunnel** (`bool`): Enable auto tunnel
         * keyword **ipsec_override** (`bool`): SSL IPSec override
         * keyword **auto_ipid** (`bool`): Enable auto IP ID
-        * keyword **excess_flow (`dict`): Excess flow object \n
+        * keyword **excess_flow** (`dict`): Excess flow object \n
             * keyword **dscp_marking** (`bool`): Excess flow DSCP
               marking
             * keyword **policy** (`str`): Excess flow policy,
-              e.g. ``bypass`
+              e.g. ``bypass``
         * keyword **dpc** (`dict`): DPC object \n
             * keyword **tunfail** (`str`): DPC tunnel failover behavior,
               e.g. ``fail-stick``
@@ -212,11 +212,11 @@ def get_discovered_appliance_system_deployment_info(
         * keyword **auto_tunnel** (`bool`): Enable auto tunnel
         * keyword **ipsec_override** (`bool`): SSL IPSec override
         * keyword **auto_ipid** (`bool`): Enable auto IP ID
-        * keyword **excess_flow (`dict`): Excess flow object \n
+        * keyword **excess_flow** (`dict`): Excess flow object \n
             * keyword **dscp_marking** (`bool`): Excess flow DSCP
               marking
             * keyword **policy** (`str`): Excess flow policy,
-              e.g. ``bypass`
+              e.g. ``bypass``
         * keyword **dpc** (`dict`): DPC object \n
             * keyword **tunfail** (`str`): DPC tunnel failover behavior,
               e.g. ``fail-stick``
