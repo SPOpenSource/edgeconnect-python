@@ -48,10 +48,10 @@ def get_appliance_snmp(
                       as SNMP v3 user
                     * keyword **hash_type** (`str`): Hashing algorithm
                       used for encrypting authentication password
-                    * keyword **auth_key** (`str`): Hashed authentication
-                      password
-                    * keyword **privacy_type** (`str`): Hashing algorithm
-                      used for encrypting privacy password
+                    * keyword **auth_key** (`str`): Hashed
+                      authentication password
+                    * keyword **privacy_type** (`str`): Hashing
+                      algorithm used for encrypting privacy password
                     * keyword **privacy_key** (`str`): Hashed privacy
                       password
         * keyword **traps** (`dict`): SNMP Trap enable state and access
