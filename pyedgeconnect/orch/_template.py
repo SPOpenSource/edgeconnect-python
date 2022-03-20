@@ -402,6 +402,7 @@ def associate_template_group_to_appliance(
     return self._post(
         "/template/applianceAssociation/{}".format(ne_pk),
         data=data,
+        expected_status=[204],
         return_type="bool",
     )
 
