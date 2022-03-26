@@ -2,7 +2,6 @@
 
 [![Downloads](https://static.pepy.tech/personalized-badge/pyedgeconnect?period=total&units=none&left_color=grey&right_color=orange&left_text=PyPI%20Downloads)](https://pepy.tech/project/pyedgeconnect)
 
-
 This package is a python wrapper for leveraging the API for Aruba
 Orchestrator and Edge Connect SDWAN systems.
 
@@ -12,12 +11,7 @@ Edge Connect web interfaces under "Support > Rest API"
 Many, but not all API functions have been implemented yet. Development
 is underway to continue to add further functions.
 
-As of 0.14.0+ 64% of non-deprecated Swagger functions are covered.
-
-
-
 ## Install
-
 
 ### Python Version
 
@@ -62,7 +56,7 @@ Now you can install the package and run your python code
 ### Install from PyPI
 
 ```bash
-    $ pip install pyedgeconnect
+    pip install pyedgeconnect
 ```
 
 ### Install from GitHub
@@ -73,13 +67,13 @@ interactive shell and run:
 > **Note:** These commands assume you're within a Python 3.9 venv, or Python 3.9 is the exclusive Python version installed in regard to referencing the use of ``pip``. If that is not the case, you can specifically append ``python3.9 -m`` ahead of the ``pip install ...``
 
 ```bash
-    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python
+    pip install git+https://github.com/SPOpenSource/edgeconnect-python
 ```
 
 To install a specific branch use the @branch syntax
 
 ```bash
-    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python@<branch_name>
+    pip install git+https://github.com/SPOpenSource/edgeconnect-python@<branch_name>
 ```
 
 ### Install dev options
@@ -94,7 +88,7 @@ following syntax:
 ```bash
     $ pip install pyedgeconnect[dev]
     or
-    $ pip install  -e git+https://github.com/SPOpenSource/edgeconnect-python#egg=pyedgeconnect[dev]
+    $ pip install -e git+https://github.com/SPOpenSource/edgeconnect-python#egg=pyedgeconnect[dev]
 ```
 
 ## Docs
@@ -107,11 +101,11 @@ To build the documentation locally, clone the repository, install with ``[dev]``
 to include sphinx and related packages, then in the docs directory run ``make html``
 
 ```bash
-    $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
-    $ cd edgeconnect-python
-    $ pip install .[dev]
-    $ cd docs
-    $ make html
+    git clone https://github.com/SPOpenSource/edgeconnect-python.git
+    cd edgeconnect-python
+    pip install .[dev]
+    cd docs
+    make html
 ```
 
 ## Usage
@@ -216,15 +210,17 @@ In the [Examples](/examples) directory you can find scripts leveraging
 the Orchestrator class demonstrating some uses
 
 * [create_user.py](/examples/create_user.py)
-    * creates a new read-only user on Orchestrator and returns the
+  * creates a new read-only user on Orchestrator and returns the
       configured details
 * [print_appliance_info.py](/examples/print_appliance_info.py)
-    * retrieves all appliances, retrieves detailed attributes of the
+  * retrieves all appliances, retrieves detailed attributes of the
       appliances, and prints details in a table format
 * [run_packet_capture.py](/examples/run_packet_capture.py)
-    * runs a tcpdump packet capture on a specified appliance, once
+  * runs a tcpdump packet capture on a specified appliance, once
       completed, uploads to Orchestrator for user retrieval
-
+* [preconfig.py](/examples/generate_preconfig/preconfig.py)
+  * uses a CSV file as source data to generate Edge Connect YAML
+      preconfig from a Jinja template
 
 ## This is an alpha product
 
@@ -257,7 +253,6 @@ See contribution details at [Contributing](CONTRIBUTING.md)
 ## Release Notes
 
 Release notes are located in ``docs/source/release-notes`` directory [here](docs/source/release-notes)
-
 
 ## Authors
 
