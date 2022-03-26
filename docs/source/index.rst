@@ -3,49 +3,41 @@ Aruba Edge Connect Python SDK
 =============================
 
 
+.. raw:: html
+
+   <object data="https://static.pepy.tech/personalized-badge/pyedgeconnect?period=total&units=none&left_color=grey&right_color=orange&left_text=PyPI%20Downloads"></object>
+
 This package is a python wrapper for leveraging the API for Aruba
 Orchestrator and Edge Connect SDWAN systems.
 
-Install, Quickstart, and Logging
-================================
-
 .. toctree::
+   :caption: Introduction
+
    install
    quickstart
    logging
 
-
-Example Scripts
-===============
-
-This provides examples and documentation around use of a few methods
-interacting with Orchestrator.
-
-.. toctree::
-    examples
-
-Code Logic
-===============
-
-This section provides greater detail into how data is passed between
-functions in the SDK.
-
 .. toctree::
    :maxdepth: 2
+   :caption: Example Scripts
 
-   sdk_logic
+   examples/index
 
-Methods Documentation
-=====================
 .. toctree::
+   :caption: Package Structure and Logic
+
+   package_structure
+   sdk_logic
+   code_formatting
+
+.. toctree::
+   :caption: Module Documentation
+
    pyedgeconnect
 
-
-Release Notes
-=========================
-
 .. toctree::
    :maxdepth: 2
+   :caption: Release Notes
 
    release-notes/index
 

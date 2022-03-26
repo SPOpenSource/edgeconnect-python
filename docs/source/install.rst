@@ -77,15 +77,18 @@ To install a specific branch use the @branch syntax
 
     pip install git+https://github.com/SPOpenSource/edgeconnect-python@<branch_name>
 
-For editing the code and general testing you can specify the [dev]
-extras which will include ["black", "flake8", "flake8-rst-docstrings",
-"isort", "sphinx", "sphinx_rtd_theme"]
-
-To install from the remote repo with the [dev] extras option use the
-following syntax:
-
-.. code::
-
-    pip install  -e git+https://github.com/SPOpenSource/edgeconnect-python#egg=pyedgeconnect[dev]
 
 
+Build Documentation Locally
+---------------------------
+
+To build the documentation locally, clone the repository, install with ``[dev]`` option
+to include sphinx and related packages, then in the docs directory run ``make html``
+
+.. code:: bash
+
+    git clone https://github.com/SPOpenSource/edgeconnect-python.git
+    cd edgeconnect-python
+    pip install .[dev]
+    cd docs
+    make html

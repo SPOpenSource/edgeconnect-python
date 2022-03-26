@@ -1,53 +1,10 @@
-.. examples:
+.. basic_examples:
 
-
-================
- Example Usage
-================
 
 The following examples are also included as individual .py files in the
-repository in the `examples` directory.
-
-Each example file begins with the following code for setting up initial
-connection details for Orchestrator:
-
-.. code-block:: python
-    :linenos:
-
-    from getpass import getpass
-
-    from pyedgeconnect import Orchestrator
-
-    # set value for Orchestrator URL/IP address
-    orchestrator_url = input("Enter Orchestrator URL or IP address: ")
-    # set value for Orchestrator API key
-    orchestrator_api_key = input(
-        "Enter API key for Orchestrator (leave blank to use username/password): "
-    )
-
-    # obtain username password if not using API Key
-    if orchestrator_api_key == "":
-        orch_user = input("Enter Orchestrator username: ")
-        orch_password = getpass("Enter Orchestrator password: ")
-    else:
-        pass
-
-    # instantiate Orchestrator with debug enabled
-    # for printing log messages to terminal
-    orch = Orchestrator(
-        orchestrator_url,
-        api_key=orchestrator_api_key,
-        log_console=True,
-        verify_ssl=False,
-    )
-
-    # if not using API key, login to Orchestrator
-    if orchestrator_api_key == "":
-        orch.login(orch_user, orch_password)
-    else:
-        pass
-
-
+repository in the `examples` directory. Each example script contains
+logic to authenticate to the Orchestrator as documented in the
+authentication example.
 
 
 Print Appliance Information
@@ -58,7 +15,6 @@ and then prints the appliances and certain attributes into a table in
 the terminal output.
 
 .. code-block:: python
-    :linenos:
 
     # retrieve Orchestrator system information
     orch_info = orch.get_orchestrator_server_info()
@@ -131,7 +87,6 @@ appliance and then upload the file to Orchestrator so that it can be
 downloaded by the user or uploaded to support.
 
 .. code-block:: python
-    :linenos:
 
     # get appliance and filter information from user
     ne_pk = input("Appliance NePk (e.g. 77.NE) to run packet capture on: ")
@@ -208,7 +163,6 @@ locally on Orchestrator.
 
 
 .. code-block:: python
-    :linenos:
 
     # set user password details
     username = "API_CREATED_USER"
