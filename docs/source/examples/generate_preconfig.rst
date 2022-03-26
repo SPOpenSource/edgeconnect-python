@@ -18,6 +18,20 @@ partially or fully deployed in a Zero Touch Provisioning (ZTP) model
 where the appliance configuration is staged on Orchestrator prior to the
 appliance being approved into the SDWAN environment.
 
+Before running the code, make sure that the Python package ``jinja2`` is
+installed in your environment in addition to ``pyedgeconnect``.
+
+These are referenced in the ``requirements.txt`` file in the preconfig
+example directory
+
+.. code-block:: python
+
+    pip install -r requirements.txt
+    # OR
+    pip install pyedgeconnect
+    pip install jinja2
+
+
 EdgeConnect YAML Jinja Template
 ===============================
 
@@ -175,9 +189,21 @@ template correspond to the headers in the CSV file. If additional
 variables are added to the Jinja template, make sure to add appropriate
 columns in the CSV file.
 
-When leveraging default values and/or calculated values from source data
-you can limit the scope of how many unique values need to be provided
-in the CSV file.
+.. important::
+
+    The included CSV file has headers for all variables referenced in
+    the included Jinja template, however, due to default values and/or
+    other conditional logic, it may not be necessary to have columns
+    for every variable to generate a valid preconfig.
+
+Only a few example values are included in the CSV file in the
+repository as a starting point as valid values will vary from each
+Orchestrator environment, and many variables have default values that
+will be included via the Jinja template.
+
+Always reference the Orchestrator page ``Preconfigure Appliances`` with
+the built-in ``new`` preconfig to see acceptable values for specific
+preconfig options.
 
 Orchestrator API calls
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,0 +1,2 @@
+jinja2==3.0.3
+pyedgeconnect>=0.14.0a2
