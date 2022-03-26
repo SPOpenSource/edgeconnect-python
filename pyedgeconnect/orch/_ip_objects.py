@@ -234,6 +234,12 @@ def bulk_upload_address_group(
     """Upload CSV file for bulk address group creation. The API returns
     the status and list of groups that got imported.
 
+    .. warning::
+
+        This function in pyedgeconnect is currently returning a 500
+        error with the file upload, despite working in the UI.
+        Will be fixed in future update.
+
     .. list-table::
         :header-rows: 1
 
@@ -580,6 +586,12 @@ def bulk_upload_service_group(
 ) -> dict:
     """Upload CSV file for bulk service group creation. The API returns
     the status and list of groups that got imported.
+
+    .. warning::
+
+        This function in pyedgeconnect is currently returning a 500
+        error with the file upload, despite working in the UI.
+        Will be fixed in future update.
 
     .. list-table::
         :header-rows: 1
