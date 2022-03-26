@@ -719,6 +719,11 @@ class Orchestrator(HttpCommon):
         upload_appliance_debug_files_to_orchestrator,
         upload_appliance_debug_files_to_support,
     )
+    from .orch._deployment import (
+        get_all_appliance_deployment,
+        get_appliance_deployment,
+        get_single_appliance_deployment,
+    )
     from .orch._discovery import (
         get_appliance_discovery_emails,
         set_appliance_discovery_emails,
