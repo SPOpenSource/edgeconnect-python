@@ -10,13 +10,13 @@ sys.path.insert(0, os.path.abspath("../../pyedgeconnect/ecos/"))
 # -- Project information -----------------------------------------------------
 
 project = "pyedgeconnect"
-copyright = "2021 Hewlett Packard Enterprise Development LP"
+copyright = "2022 Hewlett Packard Enterprise Development LP"
 author = "Zach Camara"
 
 # Main version number
-version = "0.14"
+version = "0.15"
 # The full version, including alpha/beta/rc tags
-release = "0.14.0-a2"
+release = "0.15.0-a1"
 
 
 # -- General configuration ---------------------------------------------------
