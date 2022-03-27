@@ -208,3 +208,61 @@ def update_stats_collection(
         data=data,
         return_type="bool",
     )
+
+
+def get_stats_approximate_disk_space(
+    self,
+    appliance_count: int,
+    number_of_tunnels: int = None,
+    number_of_overlays: int = None,
+) -> dict:
+    """Get approximate disk space for stats
+
+    .. list-table::
+        :header-rows: 1
+
+        * - Swagger Section
+          - Method
+          - Endpoint
+        * - statsRetention
+          - GET
+          - /gms/stats/approximateDiskSpace
+
+    :param appliance_count:
+    :type appliance_count:
+
+    :return: Returns dictionary of aproximate disk space use for
+        statistics based on provided criteria of number of appliances,
+        number of tunnels per appliance, and number of overlays. All
+        units in KB \n
+        * keyword **interfacebyoverlay** (`int`):
+          Overlay-Interface-Transport Statistics
+        * keyword **dns** (`int`): Domain Name Server (DNS) Statistics
+        * keyword **flowapp** (`int`): Application Statistics
+        * keyword **interface** (`int`): Interface Statistics
+        * keyword **mos** (`int`): Mean Opinion Score (MOS) Statistics
+        * keyword **trafficclass** (`int`): Traffic Class Statistics
+        * keyword **toptalkers** (`int`): Top Talkers Statistics
+        * keyword **drops** (`int`): Drops Statistics
+        * keyword **dscp** (`int`): Differentiated Services Code Point
+          (DSCP) Statistics
+        * keyword **jitter** (`int`): Jitter Statistics
+        * keyword **shaper** (`int`): Shaper Statistics
+        * keyword **port** (`int`): Port Statistics
+        * keyword **behavioral** (`int`): Behavioral Statistics
+        * keyword **boost** (`int`): Boost Statistics
+        * keyword **tunnel** (`int`): Tunnels Statistics
+        * keyword **flow** (`int`): Flow Statistics
+        * keyword **actionlog** (`int`): Audit logs
+    :rtype: dict
+    """
+    path = "/gms/stats/approximateDiskSpace?applianceCount={}".format(
+        appliance_count
+    )
+
+    if number_of_tunnels is not None:
+        path = path + "&numberOfTunnels={}".format(number_of_tunnels)
+    if number_of_overlays is not None:
+        path = path + "&numberOfOverlays={}".format(number_of_overlays)
+
+    return self._get(path)

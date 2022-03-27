@@ -4,7 +4,10 @@
 # zones : Manage Zones
 
 
-def get_zones(self) -> dict:
+def get_zones(
+    self,
+    all_vrf_zones: bool = False,
+) -> dict:
     """Get all zones configured on Orchestrator
 
     .. list-table::
@@ -17,10 +20,17 @@ def get_zones(self) -> dict:
           - GET
           - /zones
 
-    :return: Returns dictionary of configured zones
+    :param all_vrf_zones: ``True`` will return all zones names assigned
+      to different Segments. ``False`` will return list of unique zone
+      names. There can be multiple zones with the same name with
+      different ID's that are applied to different segments.
+    :type all_vrf_zones: bool
+    :return: Returns dictionary of configured zones \n
+      * keyword **<zone_id>** (`dict`): Zone object \n
+        * keyword **name** (`str`): Zone name
     :rtype: dict
     """
-    return self._get("/zones")
+    return self._get("/zones?allVRFZones={}".format(all_vrf_zones))
 
 
 def update_zones(
@@ -57,7 +67,7 @@ def update_zones(
     :rtype: bool
     """
     return self._post(
-        "/zones",
+        "/zones?deleteDependencies={}".format(delete_dependencies),
         data=zones,
         expected_status=[204],
         return_type="bool",

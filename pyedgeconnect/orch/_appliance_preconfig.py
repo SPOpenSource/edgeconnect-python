@@ -96,7 +96,7 @@ def get_all_preconfig(
 
 def create_preconfig(
     self,
-    hostname: str,
+    preconfig_name: str,
     yaml_preconfig: str,
     auto_apply: bool,
     serial_number: str = "",
@@ -115,9 +115,9 @@ def create_preconfig(
           - POST
           - /gms/appliance/preconfiguration
 
-    :param hostname: Name of preconfig and tag to match, often the
+    :param preconfig_name: Name of preconfig and tag to match, often the
         hostname of the intended device
-    :type hostname: str
+    :type preconfig_name: str
     :param yaml_preconfig: YAML text of preconfig configuration, this
         will get base64 converted in this function before upload.
     :type yaml_preconfig: str
@@ -143,7 +143,7 @@ def create_preconfig(
     yaml_upload = yaml_upload[2:-1]
 
     data = {
-        "name": hostname,
+        "name": preconfig_name,
         "serialNum": serial_number,
         "tag": tag,
         "comment": comment,
@@ -158,7 +158,7 @@ def create_preconfig(
 
 def modify_preconfig(
     self,
-    hostname: str,
+    preconfig_name: str,
     yaml_preconfig: str,
     auto_apply: bool,
     preconfig_id: str,
@@ -178,9 +178,9 @@ def modify_preconfig(
           - POST
           - /gms/appliance/preconfiguration/{preconfigId}
 
-    :param hostname: Name of preconfig and tag to match, often the
+    :param preconfig_name: Name of preconfig and tag to match, often the
         hostname of the intended device
-    :type hostname: str
+    :type preconfig_name: str
     :param yaml_preconfig: YAML text of preconfig configuration, this
         will get base64 converted in this function before upload.
     :type yaml_preconfig: str
@@ -208,7 +208,7 @@ def modify_preconfig(
     yaml_upload = yaml_upload[2:-1]
 
     data = {
-        "name": hostname,
+        "name": preconfig_name,
         "serialNum": serial_number,
         "tag": tag,
         "comment": comment,
@@ -484,9 +484,9 @@ def get_default_preconfig(
 
 def validate_preconfig(
     self,
-    hostname: str,
+    preconfig_name: str,
     yaml_preconfig: str,
-    auto_apply: bool,
+    auto_apply: bool = False,
     serial_number: str = "",
     tag: str = "",
     comment: str = "",
@@ -504,16 +504,16 @@ def validate_preconfig(
           - POST
           - /gms/appliance/preconfiguration/validate
 
-    :param hostname: Name of preconfig and tag to match, often the
+    :param preconfig_name: Name of preconfig and tag to match, often the
         hostname of the intended device
-    :type hostname: str
+    :type preconfig_name: str
     :param yaml_preconfig: YAML text of preconfig configuration, this
         will get base64 converted in this function before upload.
     :type yaml_preconfig: str
-    :param auto_apply: When ``True``, Auto Apply will immediately
-        provision an appliance when discovered with matching criteria.
-        ``False`` will require manual approval of an appliance.
-    :type auto_apply: bool
+    :param auto_apply: Parameter exists, but does not have a function in
+        the validation process, only applys to a saved preconfig on
+        Orchestrator.
+    :type auto_apply: bool, optional
     :param serial_number: Serial number of the appliance to match
         against discovery criteria, defaults to ""
     :type serial_number: str, optional
@@ -532,7 +532,7 @@ def validate_preconfig(
     yaml_upload = yaml_upload[2:-1]
 
     data = {
-        "name": hostname,
+        "name": preconfig_name,
         "serialNum": serial_number,
         "tag": tag,
         "comment": comment,

@@ -19,6 +19,7 @@ class HttpCommon:
         self,
         url: str,
         data,
+        files,
     ) -> requests.Response:
         """Assemble and send Requests request for HTTP POST method
 
@@ -33,6 +34,7 @@ class HttpCommon:
         return self.session.post(
             self.url_prefix + url + apiSrcStr,
             json=data,
+            files=files,
             verify=self.verify,
             timeout=120,
             headers=self.headers,
@@ -190,6 +192,7 @@ class HttpCommon:
         self,
         api_path: str,
         data="",
+        files={},
         expected_status: list = [200],
         return_type: str = "json",
     ):
@@ -219,7 +222,7 @@ class HttpCommon:
                 )
             )
         try:
-            response = self._req_post(api_path, data)
+            response = self._req_post(api_path, data, files)
             return self._handle_response(
                 api_path, response, expected_status, return_type
             )
@@ -231,12 +234,6 @@ class HttpCommon:
                 )
             )
             return False
-
-        self.logger.error(
-            "Reached end without returning for POST "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
 
     def _get(
         self,
@@ -281,12 +278,6 @@ class HttpCommon:
             )
             return False
 
-        self.logger.error(
-            "Reached end without returning for GET "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
-
     def _delete(
         self,
         api_path: str,
@@ -329,12 +320,6 @@ class HttpCommon:
                 )
             )
             return False
-
-        self.logger.error(
-            "Reached end without returning for DELETE "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
 
     def _put(
         self,
@@ -381,12 +366,6 @@ class HttpCommon:
                 )
             )
             return False
-
-        self.logger.error(
-            "Reached end without returning for PUT "
-            + "{}, return_type '{}'".format(api_path, return_type)
-        )
-        return False
 
 
 # Aruba Orchestrator
@@ -519,6 +498,11 @@ class Orchestrator(HttpCommon):
     )
     from .orch._active_sessions import get_active_sessions_orchestrator
     from .orch._admin_distance import get_appliance_admin_distance
+    from .orch._advanced_properties import (
+        get_orchestrator_advanced_properties,
+        get_orchestrator_advanced_properties_metadata,
+        update_orchestrator_advanced_properties,
+    )
     from .orch._aggregate_stats import (
         get_aggregate_stats_active_flows,
         get_aggregate_stats_appliances,
@@ -613,9 +597,15 @@ class Orchestrator(HttpCommon):
         get_api_keys,
         update_api_key,
     )
+    from .orch._app_system_deploy_info import (
+        get_appliance_system_deployment_info,
+        get_discovered_appliance_system_deployment_info,
+    )
+    from .orch._app_system_state_info import get_appliance_system_state_info
     from .orch._appliance import (
         add_and_approve_discovered_appliances,
         add_discovered_appliances,
+        appliance_delete_api,
         appliance_get_api,
         appliance_post_api,
         change_appliance_credentials,
@@ -623,18 +613,19 @@ class Orchestrator(HttpCommon):
         default_appliance_stats_config,
         delete_appliance,
         delete_appliance_for_rediscovery,
+        delete_denied_appliances,
         deny_appliance,
         get_all_approved,
         get_all_denied_appliances,
         get_all_discovered,
         get_appliance_dns_cache_config,
-        get_appliance_extra_info,
         get_appliance_info,
         get_appliance_stats_config,
         get_appliances,
         get_appliances_queued_for_deletion,
         modify_appliance,
         modify_appliance_stats_config,
+        rediscover_denied_appliance,
         update_discovered_appliances,
     )
     from .orch._appliance_backup import (
@@ -644,6 +635,11 @@ class Orchestrator(HttpCommon):
         restore_appliance_from_backup,
     )
     from .orch._appliance_crash_history import appliance_crash_history
+    from .orch._appliance_extra_info import (
+        delete_appliance_extra_info,
+        get_appliance_extra_info,
+        set_appliance_extra_info,
+    )
     from .orch._appliance_preconfig import (
         apply_preconfig_to_existing,
         approve_and_apply_preconfig,
@@ -658,6 +654,8 @@ class Orchestrator(HttpCommon):
         validate_preconfig,
     )
     from .orch._appliance_reboot_history import get_appliance_reboot_history
+    from .orch._appliance_resync import appliance_resync
+    from .orch._appliance_upgrade import delete_ecos_image, get_ecos_images
     from .orch._appliances_software_versions import (
         get_appliance_software_version,
     )
@@ -693,6 +691,9 @@ class Orchestrator(HttpCommon):
         get_bonded_tunnels_for_physical_tunnel,
         get_bonded_tunnels_state,
     )
+    from .orch._bridge_interface_state import (
+        get_appliance_bridge_interface_state,
+    )
     from .orch._broadcast_cli import broadcast_cli
     from .orch._built_in_policies import get_built_in_policies
     from .orch._custom_appliance_tags import get_custom_appliance_tags
@@ -717,6 +718,11 @@ class Orchestrator(HttpCommon):
         set_debug_file_proxy_settings,
         upload_appliance_debug_files_to_orchestrator,
         upload_appliance_debug_files_to_support,
+    )
+    from .orch._deployment import (
+        get_all_appliance_deployment,
+        get_appliance_deployment,
+        get_single_appliance_deployment,
     )
     from .orch._discovery import (
         get_appliance_discovery_emails,
@@ -752,6 +758,10 @@ class Orchestrator(HttpCommon):
         delete_gms_notification,
         get_gms_notification,
         update_gms_notification,
+    )
+    from .orch._gms_registration import (
+        get_orchestrator_registration_setting,
+        set_orchestrator_registration_setting,
     )
     from .orch._gms_server import (
         get_orchestrator_hello,
@@ -814,6 +824,22 @@ class Orchestrator(HttpCommon):
         get_ip_allow_list_drops,
         update_ip_allow_list,
     )
+    from .orch._ip_objects import (
+        bulk_upload_address_group,
+        bulk_upload_service_group,
+        create_address_group,
+        create_service_group,
+        delete_address_group,
+        delete_service_group,
+        get_address_group,
+        get_all_address_groups,
+        get_all_service_groups,
+        get_service_group,
+        merge_address_groups,
+        merge_service_groups,
+        update_address_group,
+        update_service_group,
+    )
     from .orch._license import (
         change_appliance_license,
         delete_appliance_license_token,
@@ -824,11 +850,23 @@ class Orchestrator(HttpCommon):
         grant_appliance_base_license,
         revoke_appliance_base_license,
     )
-    from .orch._link_integrity import get_link_integrity_test_result
+    from .orch._link_aggregation import get_link_aggregation_data
+    from .orch._link_integrity import (
+        get_link_integrity_test_result,
+        link_integrity_test,
+    )
     from .orch._location import get_location_coordinates_from_address
     from .orch._logging import get_appliance_syslog_config
     from .orch._login import login, logout, send_mfa
     from .orch._loopback import get_loopback_interfaes
+    from .orch._loopback_orch import (
+        get_deleted_loopback_orchestration_ips,
+        get_loopback_orchestration,
+        get_loopback_orchestration_pool_detail,
+        reclaim_delete_loopback_orchestration_ips,
+        reclaim_single_deleted_loopback_orchestration_ip,
+        set_loopback_orchestration,
+    )
     from .orch._maintenance_mode import (
         get_maintenance_mode_appliances,
         update_maintenance_mode_appliances,
@@ -853,6 +891,10 @@ class Orchestrator(HttpCommon):
     )
     from .orch._net_flow import get_net_flow_configuration
     from .orch._network_memory import erase_appliance_network_memory
+    from .orch._network_role_and_site import (
+        get_appliance_network_role_and_site,
+        update_appliance_network_role_and_site,
+    )
     from .orch._optimization_policy import get_optimization_policy
     from .orch._ospf import (
         get_appliance_ospf_config,
@@ -860,6 +902,13 @@ class Orchestrator(HttpCommon):
         get_appliance_ospf_interfaces_state,
         get_appliance_ospf_neighbors_state,
         get_appliance_ospf_state,
+    )
+    from .orch._overlay_association import (
+        add_appliance_overlay_association,
+        get_all_appliance_overlay_association,
+        get_appliance_overlay_association,
+        remove_appliance_overlay_association,
+        remove_single_appliance_overlay_association,
     )
     from .orch._overlays import (
         configure_new_overlay,
@@ -884,6 +933,12 @@ class Orchestrator(HttpCommon):
     from .orch._peer_priority import get_peer_priority_configuration
     from .orch._port_forwarding import get_appliance_port_fowarding
     from .orch._qos_policy import get_qos_policy
+    from .orch._rbac_appliance_access_group import (
+        delete_appliance_access_group,
+        get_all_appliance_access_groups,
+        get_appliance_access_group,
+        update_appliance_access_group,
+    )
     from .orch._rbac_assignment import (
         delete_rbac_user_assignment,
         get_rbac_assignments,
@@ -914,6 +969,12 @@ class Orchestrator(HttpCommon):
         update_region_appliance_association,
         update_region_name,
     )
+    from .orch._releases import (
+        delay_release_notification,
+        dismiss_release_notification,
+        get_releases_for_orchestrator_and_ecos,
+        get_releases_notifications,
+    )
     from .orch._rest_api_config import get_rest_api_config, set_rest_api_config
     from .orch._rest_request_time_stats import (
         get_appliance_rest_stats,
@@ -923,6 +984,10 @@ class Orchestrator(HttpCommon):
     from .orch._save_changes import (
         save_changes_ne_pk_list,
         save_changes_single_appliance,
+    )
+    from .orch._schedule_timezone import (
+        get_schedule_timezone,
+        set_schedule_timezone,
     )
     from .orch._security_maps import get_appliance_security_maps
     from .orch._security_settings import (
@@ -934,8 +999,14 @@ class Orchestrator(HttpCommon):
         get_gms_third_party_services,
         update_gms_internet_policy_services,
     )
+    from .orch._session import get_orchestrator_sessions
+    from .orch._session_timeout import (
+        get_orch_session_timeout,
+        set_orch_session_timeout,
+    )
     from .orch._shaper import get_appliance_shaper
     from .orch._shell import get_shell_access_setting, set_shell_access_setting
+    from .orch._snmp import get_appliance_snmp
     from .orch._sp_portal import (
         assign_account_license_ecsp,
         create_case_with_portal,
@@ -983,13 +1054,24 @@ class Orchestrator(HttpCommon):
         update_portal_registration_config,
         update_portal_registration_status,
     )
+    from .orch._ssl import get_appliance_ssl_certs
+    from .orch._ssl_substitute_cert import (
+        get_appliance_ssl_substitute_certs,
+        validate_ssl_substitute_cert,
+    )
     from .orch._stats_retention import (
         get_all_nonstats_retention,
         get_all_stats_collection,
         get_all_stats_retention,
+        get_stats_approximate_disk_space,
         update_nonstats_retention,
         update_stats_collection,
         update_stats_retention,
+    )
+    from .orch._subnets import (
+        get_appliance_subnets,
+        get_discovered_appliance_subnets,
+        set_appliance_subnet_sharing_options,
     )
     from .orch._tca import get_appliance_tca, get_appliance_tunnel_tca
     from .orch._tcpdump import (
@@ -1013,6 +1095,29 @@ class Orchestrator(HttpCommon):
         select_templates_for_template_group,
         set_template_groups_priorities,
     )
+    from .orch._third_party_services import (
+        central_add_subscription,
+        central_assign_appliance_to_site,
+        central_delete_subscription,
+        central_get_site_mapping,
+        central_get_subscription,
+        clearpass_add_account,
+        clearpass_delete_account,
+        clearpass_filter_events,
+        clearpass_get_configured_account,
+        clearpass_get_configured_account_details,
+        clearpass_get_configured_accounts,
+        clearpass_get_connectivity,
+        clearpass_get_pause_orchestration_status,
+        clearpass_get_service_endpoint_status,
+        clearpass_get_user_roles_for_ip,
+        clearpass_pause_individual_orchestration,
+        clearpass_post_login_event,
+        clearpass_post_logout_event,
+        clearpass_reset_service_endpoint,
+        clearpass_set_pause_orchestration_status,
+        clearpass_update_account,
+    )
     from .orch._third_party_tunnels_configuration import (
         get_passthrough_tunnel_details,
         get_passthrough_tunnel_details_for_appliance,
@@ -1022,6 +1127,7 @@ class Orchestrator(HttpCommon):
     from .orch._timeseries_stats import (
         get_timeseries_stats_appliance_process_state,
         get_timeseries_stats_appliances,
+        get_timeseries_stats_appliances_ne_pk_list,
         get_timeseries_stats_appliances_single_appliance,
         get_timeseries_stats_application,
         get_timeseries_stats_application_ne_pk_list,
@@ -1065,6 +1171,10 @@ class Orchestrator(HttpCommon):
         initiate_tunnel_traceroute,
     )
     from .orch._ui_usage_stats import add_ui_usage_count
+    from .orch._upgrade_appliances import (
+        upgrade_appliances,
+        validate_appliance_upgrade,
+    )
     from .orch._user import (
         change_user_password,
         create_or_update_user,
@@ -1075,6 +1185,7 @@ class Orchestrator(HttpCommon):
         reset_user_password,
         user_forgot_password,
     )
+    from .orch._user_account import get_appliance_user_accounts
     from .orch._vrf import (
         add_routing_segmentation_segment,
         delete_routing_segmentation_maps_from_source_segment,

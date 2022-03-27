@@ -1,0 +1,280 @@
+0.15.0-a1 -- 2022-03-26
+-----------------------
+
+💥 Breaking Changes
+~~~~~~~~~~~~~~~~~~~~
+
+The first parameter for multiple Preconfig functions has been renamed to
+``preconfig_name`` to better represent that the name of the preconfnig does
+not need to be the hostname of the appliance it will be applied to. Existing
+code that does not use keyword arguments will be unaffected. For those
+explicitly assigning ``hostname=`` will need to update to ``preconfig_name=``
+
+The validate function no longer requires the ``auto_apply`` paramter as
+it now defaults to ``False``. The parameter has no effect on the validation
+call.
+
+.. code:: python
+
+    # OLD syntax
+    validate = orch.validate_preconfig(
+        hostname="edgeconnect-preconfig-01",
+        yaml_preconfig=yaml_preconfig,
+        auto_apply=auto_apply,
+    )
+
+    orch.create_preconfig(
+        hostname="edgeconnect-preconfig-01",
+        yaml_preconfig=yaml_preconfig,
+        auto_apply=auto_apply,
+        tag="tag value",
+        comment="New preconfig for appliance"
+        )
+
+    # NEW syntax
+    validate = orch.validate_preconfig(
+        preconfig_name="edgeconnect-preconfig-01",
+        yaml_preconfig=yaml_preconfig,
+    )
+
+    orch.create_preconfig(
+        preconfig_name="edgeconnect-preconfig-01",
+        yaml_preconfig=yaml_preconfig,
+        auto_apply=auto_apply,
+        tag="tag value",
+        comment="New preconfig for appliance"
+        )
+
+    # CODE REQUIRING NO CHANGE syntax
+    validate = orch.validate_preconfig(
+        "edgeconnect-preconfig-01",
+        yaml_preconfig=yaml_preconfig,
+    )
+
+    orch.create_preconfig(
+        "edgeconnect-preconfig-01",
+        yaml_preconfig=yaml_preconfig,
+        auto_apply=auto_apply,
+        tag="tag value",
+        comment="New preconfig for appliance"
+        )
+
+Affected functions:
+
+  - :func:`~pyedgeconnect.Orchestrator.create_preconfig`
+  - :func:`~pyedgeconnect.Orchestrator.modify_preconfig`
+  - :func:`~pyedgeconnect.Orchestrator.validate_preconfig`
+
+🚀 Features
+~~~~~~~~~~~~~
+
+Added the following Orchestrator functions from Swagger:
+
+from .orch._advanced_properties
+  - get_orchestrator_advanced_properties
+  - update_orchestrator_advanced_properties
+  - get_orchestrator_advanced_properties_metadata
+
+from .orch._app_system_deploy_info
+  - get_appliance_system_deployment_info
+  - get_discovered_appliance_system_deployment_info
+
+from .orch._app_system_state_info
+  - get_appliance_system_state_info
+
+from .orch._appliance
+  - appliance_delete_api
+  - delete_denied_appliances
+  - rediscover_denied_appliance
+
+from .orch._appliance_extra_info
+  - delete_appliance_extra_info
+  - get_appliance_extra_info
+  - set_appliance_extra_info
+
+from .orch._appliance_resync
+  - appliance_resync
+
+from .orch._appliance_upgrade
+  - get_ecos_images
+  - delete_ecos_image
+
+from .orch._bridge_interface_state
+  - get_appliance_bridge_interface_state
+
+from .orch._deployment
+  - get_appliance_deployment
+  - get_all_appliance_deployment
+  - get_single_appliance_deployment
+
+from .orch._gms_registration
+  - get_orchestrator_registration_setting
+  - set_orchestrator_registration_setting
+
+from .orch._link_aggregation
+  - get_link_aggregation_data
+
+from .orch._loopback_orch
+  - get_loopback_orchestration
+  - set_loopback_orchestration
+  - get_loopback_orchestration_pool_detail
+  - reclaim_delete_loopback_orchestration_ips
+  - reclaim_single_deleted_loopback_orchestration_ip
+  - get_deleted_loopback_orchestration_ips
+
+from .orch._network_role_and_site
+  - get_appliance_network_role_and_site
+  - update_appliance_network_role_and_site
+
+from .orch._overlay_association
+  - get_all_appliance_overlay_association
+  - add_appliance_overlay_association
+  - remove_appliance_overlay_association
+  - get_appliance_overlay_association
+  - remove_single_appliance_overlay_association
+
+from .orch._rbac_appliance_access_group
+  - get_all_appliance_access_groups
+  - update_appliance_access_group
+  - get_appliance_access_group
+  - delete_appliance_access_group
+
+from .orch._releases
+  - get_releases_for_orchestrator_and_ecos
+  - get_releases_notifications
+  - delay_release_notification
+  - dismiss_release_notification
+
+from .orch._schedule_timezone
+  - get_schedule_timezone
+  - set_schedule_timezone
+
+from .orch._session
+  - get_orchestrator_sessions
+
+from .orch._session_timeout
+  - get_orch_session_timeout
+  - set_orch_session_timeout
+
+from .orch._snmp
+  - get_appliance_snmp
+
+from .orch._ssl
+  - get_appliance_ssl_certs
+
+from .orch._ssl_substitute_cert
+  - get_appliance_ssl_substitute_certs
+  - validate_ssl_substitute_cert
+
+from .orch._stats_retention
+  - get_stats_approximate_disk_space
+
+from .orch._subnets
+  - get_appliance_subnets
+  - get_discovered_appliance_subnets
+  - set_appliance_subnet_sharing_options
+
+from .orch._upgrade_appliances
+  - validate_appliance_upgrade
+  - upgrade_appliances
+
+from .orch._user_account
+  - get_appliance_user_accounts
+
+
+
+IP Objects (Address Groups and Service Groups) introduced in Orchestrator 9.1+
+
+from .orch._ip_objects
+  - get_all_address_groups
+  - create_address_group
+  - update_address_group
+  - get_address_group
+  - delete_address_group
+
+  - merge_address_groups
+  - get_all_service_groups
+  - create_service_group
+  - update_service_group
+  - get_service_group
+  - delete_service_group
+  - merge_service_groups
+
+.. warning::
+
+  The following two functions for the _ip_objects submodule exprience
+  errors at this time. These function do work in the Orchestrator UI:
+  :func:`pyedgeconnect.Orchestrator.bulk_upload_address_group` and
+  :func:`pyedgeconnect.Orchestrator.bulk_upload_service_group`
+
+Clearpass id integration introduced in Orchestrator 9.1+
+
+from .orch._third_party_services
+  - clearpass_add_account
+  - clearpass_delete_account
+  - clearpass_filter_events
+  - clearpass_get_configured_account
+  - clearpass_get_configured_account_details
+  - clearpass_get_configured_accounts
+  - clearpass_get_connectivity
+  - clearpass_get_pause_orchestration_status
+  - clearpass_get_service_endpoint_status
+  - clearpass_get_user_roles_for_ip
+  - clearpass_pause_individual_orchestration
+  - clearpass_post_login_event
+  - clearpass_post_logout_event
+  - clearpass_reset_service_endpoint
+  - clearpass_set_pause_orchestration_status
+  - clearpass_update_account
+  - central_get_subscription
+  - central_add_subscription
+  - central_delete_subscription
+  - central_get_site_mapping
+  - central_assign_appliance_to_site
+
+Existing Function Updates:
+
+- :func:`pyedgeconnect.Orchestrator._post` and
+  :func:`pyedgeconnect.Orchestrator._req_post` updated to included
+  parameter ``files`` for file upload functions
+- :func:`~pyedgeconnect.Orchestrator.change_appliance_license` to
+  account for new Advance Security licensing
+- :func:`~pyedgeconnect.Orchestrator.get_zones` to account for new
+  option to filter for unique zone names vs. all zones accross segments
+
+
+📚 Documentation
+~~~~~~~~~~~~~~~~~~
+
+- Include PyPI download stats to README
+- Added .readthedocs.yaml configuration for hosted ReadTheDocs build
+  to account for python3.9 support in the online docs.
+- ✨ **Added new code example!** -> Generate YAML preconfig from
+  Jinja template from CSV file, validate, and upload to Orchestrator
+
+🐛 Bug Fixes
+~~~~~~~~~~~~~~
+
+- init.py was missing import of
+  :func:`~pyedgeconnect.Orchestrator.get_timeseries_stats_appliances_ne_pk_list`
+  from `_timeseries_stats` submodule
+- Functions in _timeseries_stats submodule with paramter ``traffic_type``
+  defaulting to ``None`` updated to proper value of ``all_traffic``
+- Fix missing orch.login() function in create_user.py in examples
+- Add query parameter delete_dependencies for
+  :func:`~pyedgeconnect.Orchestrator.update_zones`, variable was defined
+  but not included in POST
+- Fix function name (and import to init) for `_link_integrity` submodule
+  function to perform a link integrity test between appliances. New
+  function is :func:`~pyedgeconnect.Orchestrator.link_integrity_test`
+- Fix return type for
+  :func:`~pyedgeconnect.Orchestrator.get_orchestrator_hello` to text
+  instead of defaulting to JSON
+- Fix expected status for
+  :func:`~pyedgeconnect.Orchestrator.associate_template_group_to_appliance`
+  to 204 rather than default 200, would incorrectly log a successful
+  POST as an ERROR
+- Added .readthedocs.yaml configuration for hosted ReadTheDocs build
+  to account for python3.9 support in the online docs. This fixes the
+  autodoc module not building for per-function documentation in the
+  hosted docs.

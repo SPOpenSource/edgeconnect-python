@@ -29,7 +29,7 @@ def get_link_integrity_test_result(
     return self._get("/linkIntegrityTest/status/{}".format(ne_id))
 
 
-def update_user_defined_app_port_protocol(
+def link_integrity_test(
     self,
     ne_pk_1: str,
     bandwidth_1: str,

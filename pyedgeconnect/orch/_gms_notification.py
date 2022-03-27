@@ -5,7 +5,7 @@
 # the message
 
 
-def get_gms_notification(self) -> dict:
+def get_gms_notification(self) -> list:
     """Get current Orchestrator notification banner message
 
     .. list-table::
@@ -18,8 +18,18 @@ def get_gms_notification(self) -> dict:
           - GET
           - /notification
 
-    :return: Returns dictionary of current banner message
-    :rtype: dict
+    :return: Returns list of configured Banner Message \n
+        [`dict`]: Banner Message Config object \n
+            * keyword **resourceBase** (`str`):
+            * keyword **resourceKey** (`str`):
+            * keyword **configData** (`dict`): Banner Message object \n
+                * keyword **message** (`str`): Banner Message string
+                * keyword **author** (`str`): Author of Banner Message
+            * keyword **version** (`int`): Version of message,
+              increments on update
+            * keyword **timestamp** (`int`): Timestamp of update in unix
+              epoch time
+    :rtype: list
     """
     return self._get("/notification")
 

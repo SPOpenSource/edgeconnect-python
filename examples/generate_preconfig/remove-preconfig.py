@@ -1,4 +1,5 @@
 import argparse
+import csv
 import getpass
 import os
 
@@ -6,6 +7,13 @@ from pyedgeconnect import Orchestrator
 
 # Parse runtime arguments
 parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-c",
+    "--csv",
+    help="Specify source csv file for preconfigs",
+    type=str,
+    required=True,
+)
 parser.add_argument(
     "-o",
     "--orch",
@@ -75,64 +83,50 @@ else:
         print("Authentication to Orchestrator Failed")
         exit()
 
-# retrieve Orchestrator system information
-orch_info = orch.get_orchestrator_server_info()
-
-# print Orchestrator information
-print(
-    """
-Orchestrator Information:
--------------------------------------------------------
-Hostname: {}
-Version: {}
-Uptime: {}
--------------------------------------------------------
-
-    """.format(
-        orch_info["hostName"],
-        orch_info["release"],
-        orch_info["uptime"],
-    )
-)
-
-# retrieve all appliances in Orchestrator
-appliances = orch.get_appliances()
-
-print("Appliance Information:")
-
-# print headers for table
-print(
-    "\n{:^20}|{:^20}|{:^20}|{:^20}|{:^20}|{:^20}|".format(
-        "Hostname",
-        "Appliance ID",
-        "Serial Num",
-        "IP Address",
-        "Software",
-        "Bandwidth",
-    )
-)
-
-# print horizontal line before appliance data
-print("-" * 126)
-
-# print row for each appliance with particular info attributes
-for appliance in appliances:
-
-    print(
-        "{:^20}|{:^20}|{:^20}|{:^20}|{:^20}|{:^20}|".format(
-            appliance["hostName"],
-            appliance["nePk"],
-            appliance["serial"],
-            appliance["IP"],
-            appliance["softwareVersion"],
-            appliance["systemBandwidth"],
-        )
-    )
-
-print("\n")
-
-# if not using API key, logout from Orchestrator
-if orch_api_key is None:
-    orch.logout()
+# Specify CSV file for generating preconfigs
+# This is a mandatory runtime argument
+if vars(args)["csv"] is not None:
+    csv_filename = vars(args)["csv"]
 else:
-    pass
+    print("Source CSV file not specified, exiting")
+    exit()
+
+
+with open(csv_filename, encoding="utf-8-sig") as csvfile:
+    csv_dict = csv.DictReader(csvfile)
+
+    # Get all preconfigs from Orchestrator
+    all_preconfigs = orch.get_all_preconfig()
+    preconfigs_to_delete = []
+    ec_hostname_list = []
+
+    # Form list of preconfigs on Orchestrator matching preconfig
+    # names from the CSV file
+    for row in csv_dict:
+        ec_hostname_list.append(row["hostname"])
+        for preconfig in all_preconfigs:
+            if preconfig["name"] == row["hostname"]:
+                # Similar to appliances, preconfigs are identified by
+                # an id (e.g. 10) rather than the name/hostname
+                preconfigs_to_delete.append(preconfig["id"])
+            else:
+                pass
+
+# Show user pending preconfigs to be deleted
+print("The following Preconfigs are queued for deletion:")
+width = 10
+print(
+    "\n".join(
+        "".join(str(preconfigs_to_delete[i : i + width]))
+        for i in range(0, len(preconfigs_to_delete), width)
+    )
+)
+
+# Confirm with user to remove the specified preconfigs
+proceed = input("Delete these preconfigs from Orchestrator?(y/n): ")
+if proceed == "y" or proceed == "Y":
+    for preconfigId in preconfigs_to_delete:
+        orch.delete_preconfig(str(preconfigId))
+    print("All specified preconfigs deleted from Orchestrator")
+else:
+    print("Cancelled, no preconfigs deleted from Orchestrator")

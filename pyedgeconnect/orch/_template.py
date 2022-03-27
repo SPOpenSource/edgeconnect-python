@@ -155,7 +155,6 @@ def create_template_group(
 
     :param template_group_body: Nested dictionary of template group
         details\n
-        * keyword **name** (`str`): Name of template group
         * keyword **templates** (`list[dict]`): List of template detail
           dictionaries \n
             * keyword **name** (`str`): Name of template
@@ -375,7 +374,7 @@ def associate_template_group_to_appliance(
         The list of templates posted will be the complete association
         for the appliance. To add a tempalte group to existing
         associated templates, include existing template groups. Use
-        :func:`~silverpeak_python_sdk.Orchestrator.get_appliance_template_groups_association`
+        :func:`~pyedgeconnect.Orchestrator.get_appliance_template_groups_association`
         to retrieve current associated template groups to an appliance.
 
     **Example**: If you want to add the template group "NEW-TEMPLATE"
@@ -403,6 +402,7 @@ def associate_template_group_to_appliance(
     return self._post(
         "/template/applianceAssociation/{}".format(ne_pk),
         data=data,
+        expected_status=[204],
         return_type="bool",
     )
 

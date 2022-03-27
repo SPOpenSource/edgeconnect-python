@@ -1,0 +1,285 @@
+{# To reference all possible preconfig fields, values, and definitions
+in Orchestrator, navigate to the Preconfigure Appliances tab:
+Configuration->Overlays & Security->Discovery->Preconfiguration
+
+Click the "New" button and you will be presented with a heavily
+commented preconfiguration file with all possible fields for reference.
+
+In each commented section on Orchestrator, note the last component of
+``# Post-approval behavior:`` This describes what the resulting data
+will be should there be existing values for a section already on an
+appliance. The options are ``Merge`` or ``Replace``
+
+All the variable names referenced below from the dictionary ``data``
+are subjective as they only refer to the headers in the source CSV file.
+
+The conditional statements below are only one way to approach crafting
+your own template based on organizational standards.
+
+If there are fields that are always used and/or values that are always
+used they do not have to be wrapped in conditionals. Default values are
+very useful to limit required source data.
+#}
+
+applianceInfo:
+  {% if data['softwareVersion'] is defined and data['softwareVersion'] != "" %}
+  softwareVersion: {{ data['softwareVersion'] }}
+  {% endif %}
+  {% if data['hostname'] is defined and data['hostname'] != "" %}
+  hostname: {{ data['hostname'] }}
+  {% endif %}
+  group: {{ data['group'] | default("",false)}}
+  site: {{ data['site'] | default("",false)}}
+  networkRole: {{ data['networkRole'] | default("non-hub",true)}}
+  region: {{ data['region'] | default("",false) }}
+  location:
+    address: {{ data['address'] | default("",false) }}
+    address2: {{ data['address2'] | default("",false) }}
+    city: {{ data['city'] | default("",false)  }}
+    state: {{ data['state'] | default("",false)  }}
+    zipCode: {{ data['zipCode'] | default("",false)  }}
+    country: {{ data['country'] | default("",false)  }}
+    latitude: {{ data['latitude'] | default("",false)  }}
+    longitude: {{ data['longitude'] | default("",false)  }}
+  contact:
+    name: {{ data['name'] | default("",false) }}
+    email: {{ data['email'] | default("",false) }}
+    phoneNumber: {{ data['phoneNumber'] | default("",false) }}
+
+
+{#
+In this example, the CSV file has a column for templateGroups and
+businessIntentOverlays
+
+These values are comma separated lists within each cell as a string
+e.g. "CriticalApps,DefaultOverlay"
+
+The logic below, sets that if the columns are present, to set a new list
+object equal to the string split by commas
+e.g. ["CriticalApps", "DefaultOverlay"]
+
+Then for each item, the entry is written for applicable template groups
+and overlays
+#}
+{% if data['templateGroups'] is defined and data['templateGroups'] != "" %}
+{% set tg_list = data['templateGroups'].split(',') %}
+templateGroups:
+  groups:
+    {% for group in tg_list %}
+        - {{ group }}
+    {% endfor %}
+{% endif %}
+
+
+{% if data['businessIntentOverlays'] is defined and data['businessIntentOverlays'] != "" %}
+{% set overlay_list = data['businessIntentOverlays'].split(',') %}
+businessIntentOverlays:
+    overlays:
+    {% for bio in overlay_list %}
+        - {{ bio }}
+    {% endfor %}
+{% endif %}
+
+{#
+The total inbound/outbound bandwidths can be calculated by summing the
+individual WAN interface bandwidths. This logic would need to be
+augmented for additional or variable number of WAN interfaces
+
+Each WAN interface bandwidth (inbound or outbound) is set to a variable
+and then summed to find total. If a variable is not defined will default
+to value of 0
+#}
+
+{% set wan1_outbound = data['wan_interface_1_max_outbound_bw'] | default(0,true) | int %}
+{% set wan2_outbound = data['wan_interface_2_max_outbound_bw'] | default(0,true) | int %}
+{% set wan_total_outbound = wan1_outbound + wan2_outbound %}
+{% set wan1_inbound = data['wan_interface_1_max_inbound_bw'] | default(0,true) | int %}
+{% set wan2_inbound = data['wan_interface_2_max_inbound_bw'] | default(0,true) | int %}
+{% set wan_total_inbound = wan1_inbound + wan2_inbound %}
+
+deploymentInfo:
+  deploymentMode: {{ data['deploymentMode'] | default("inline-router",true) }}
+  totalOutboundBandwidth: {{ wan_total_outbound }}
+  totalInboundBandwidth: {{ wan_total_inbound }}
+  shapeInboundTraffic: {{ data['shapeInboundTraffic'] | default("true",true) }}
+  passThroughShapedTraffic:
+    {#
+    If a separate outboundMaxBandwidth is not supplied, use the total
+    WAN bandwidth specified by the interfaces
+    #}
+    outboundMaxBandwidth: {{ data['outboundMaxBandwidth'] | default(wan_total_outbound,true) }}
+
+{#
+In this particular template there are variables for 2 LAN and 2 WAN
+interfaces. The interface name can be physical or a subinterface
+e.g. lan0 or lan0.100.
+
+With unique variable names the below could be copied to account for
+more interfaces. In a scenario where the source data is from something
+other than a CSV file, logic could be written to process a dynamic list
+of interfaces within a for loop.
+#}
+  deploymentInterfaces:
+{% if data['lan_interface_1_name'] is defined and data['lan_interface_1_name'] != "" %}
+    - interfaceName: {{ data['lan_interface_1_name'] }}
+      interfaceType: lan
+      interfaceComment: {{ data['lan_interface_1_desc'] | default("",false) }}
+      ipAddressMask: {{ data['lan_interface_1_ipmask'] }}
+    {% if data['lan_interface_1_nexthop'] is defined and data['lan_interface_1_nexthop'] != "" %}
+      nextHop: {{ data['lan_interface_1_nexthop'] }}
+    {% endif %}
+    {% if data['lan_interface_1_segment'] is defined and data['lan_interface_1_segment'] != "" %}
+      segment: {{ data['lan_interface_1_segment'] }}
+    {% endif %}
+    {% if data['lan_interface_1_zone'] is defined and data['lan_interface_1_zone'] != "" %}
+      zone: {{ data['lan_interface_1_zone'] }}
+    {% endif %}
+{% endif %}
+
+{% if data['lan_interface_2_name'] is defined and data['lan_interface_2_name'] != "" %}
+    - interfaceName: {{ data['lan_interface_2_name'] }}
+      interfaceType: lan
+      interfaceComment: {{ data['lan_interface_2_desc'] | default("",false) }}
+      ipAddressMask: {{ data['lan_interface_2_ipmask'] }}
+    {% if data['lan_interface_2_nexthop'] is defined and data['lan_interface_2_nexthop'] != "" %}
+      nextHop: {{ data['lan_interface_2_nexthop'] }}
+    {% endif %}
+    {% if data['lan_interface_2_segment'] is defined and data['lan_interface_2_segment'] != "" %}
+      segment: {{ data['lan_interface_2_segment'] }}
+    {% endif %}
+    {% if data['lan_interface_2_zone'] is defined and data['lan_interface_2_zone'] != "" %}
+      zone: {{ data['lan_interface_2_zone'] }}
+    {% endif %}
+{% endif %}
+
+{#
+Conditional logic can be used on the WAN interfaces to determine
+firewall mode, nat detail, and possibly zone, by organizational standards
+
+e.g. if label is INET1, INET2, or LTE, then set firewall mode to
+statefulSNAT, nat to auto, and zone to "UNTRUSTED" etc. which helps
+limit number of variables supplied by the user
+#}
+
+{% if data['wan_interface_1_name'] is defined and data['wan_interface_1_name'] != "" %}
+    - interfaceName: {{ data['wan_interface_1_name'] }}
+      interfaceType: wan
+      interfaceComment: {{ data['wan_interface_1_desc'] | default("",false) }}
+      interfaceLabel: {{ data['wan_interface_1_label'] | default("",false) }}
+      outboundMaxBandwidth: {{ data['wan_interface_1_max_outbound_bw'] | default("0",false) }}
+      inboundMaxBandwidth: {{ data['wan_interface_1_max_inbound_bw'] | default("0",false) }}
+    {% if data['wan_interface_1_ipmask'] is defined and data['wan_interface_1_ipmask'] != "" %}
+      ipAddressMask: {{ data['wan_interface_1_ipmask'] }}
+      nextHop: {{ data['wan_interface_1_nexthop'] }}
+    {% endif %}
+      firewallMode: {{ data['wan_interface_1_firewall_mode'] | default("all",true) }}
+      behindNat: {{ data['wan_interface_1_behind_nat'] | default("none",true) }}
+      zone: {{ data['wan_interface_1_zone'] | default("",false) }}
+{% endif %}
+
+{% if data['wan_interface_2_name'] is defined and data['wan_interface_2_name'] != "" %}
+    - interfaceName: {{ data['wan_interface_2_name'] }}
+      interfaceType: wan
+      interfaceComment: {{ data['wan_interface_2_desc'] | default("",false) }}
+      interfaceLabel: {{ data['wan_interface_2_label'] | default("",false) }}
+      outboundMaxBandwidth: {{ data['wan_interface_2_max_outbound_bw'] | default("0",false) }}
+      inboundMaxBandwidth: {{ data['wan_interface_2_max_inbound_bw'] | default("0",false) }}
+    {% if data['wan_interface_2_ipmask'] is defined and data['wan_interface_2_ipmask'] != "" %}
+      ipAddressMask: {{ data['wan_interface_2_ipmask'] }}
+      nextHop: {{ data['wan_interface_2_nexthop'] }}
+    {% endif %}
+      firewallMode: {{ data['wan_interface_2_firewall_mode'] | default("all",true) }}
+      behindNat: {{ data['wan_interface_2_behind_nat'] | default("none",true) }}
+      zone: {{ data['wan_interface_2_zone'] | default("",false) }}
+{% endif %}
+
+
+{#
+Similar to apply different firewall zones based on assigned labels,
+conditional logic can be used to determine values that may differ
+between HA appliances at a site.
+
+e.g. if the hostname ends in "-01", apply local metric of 50, and for
+"-02" apply local metric of 60:
+
+  {% if data['hostname'][-3:] == "-01" %}
+    localMetric: 50
+  {% elif data['hostname'][-3:] == "-02" %}
+    localMetric: 60
+  {% endif %}
+#}
+
+localRoutes:
+  useSharedSubnetInfo: {{ data['useSharedSubnetInfo'] | default ("true",true) }}
+  advertiseLocalLanSubnets: {{ data['advertiseLocalLanSubnets'] | default ("true",true) }}
+  advertiseLocalWanSubnets: {{ data['advertiseLocalWanSubnets'] | default ("false",true) }}
+  localMetric: {{ data['localMetric'] | default ("50",true) }}
+  localCommunities: {{ data['localCommunities'] | default ("",false) }}
+  redistOspfToSubnetShare: {{ data['redistOspfToSubnetShare'] | default ("false",true) }}
+  ospfRedistMetric: {{ data['ospfRedistMetric'] | default ("0",true) }}
+  ospfRedistTag: {{ data['ospfRedistTag'] | default ("0",true) }}
+  filterRoutesWithLocalASN: {{ data['filterRoutesWithLocalASN'] | default ("true",true) }}
+  redistToSDwanFabricRouteMap: {{ data['redistToSDwanFabricRouteMap'] | default ("default_rtmap_to_subsh",true) }}
+
+{#
+# The bandwidth licensing level could be determined via conditionals
+based on aggregate WAN bandwidth crossing thresholds into the different
+bandwidth tier licenses.
+#}
+
+ecLicensing:
+
+  useDefaultAccount: {{ data['useDefaultAccount'] | default ("true", true) }}
+  bandwidthLevel: {{ data['license_bandwidth'] }}
+  boost: {{ data['license_boost'] | default ("0", true) }}
+
+
+
+{% if data['bgp_asn'] is defined and data['bgp_asn'] != "" %}
+bgpSystemConfig:
+  enable: true
+  asn: {{ data['bgp_asn'] }}
+  routerId: {{ data['routerId'] }}
+  enableGracefulRestart: false
+  maxRestartTime: 120
+  maxStalePathTime: 150
+  redistToSilverPeak: true
+  propagateAsPath: true
+  redistOspfToBgp: false
+  filterTag: 0
+
+  {#
+  Similar to the deployment interfaces, the below neighbor details
+  could be expanded with additional variables to account for defining
+  multiple bgp peers, or conditional logic to use different route maps
+  based on hostname etc. as documented with the localRoutes section.
+  #}
+
+  neighbors:
+    {% if data['bgp_peer1_ip'] is defined and data['bgp_peer1_ip'] != "" %}
+    - peerIpAddress: {{ data['bgp_peer1_ip'] }}
+      enableImports: true
+      peerAsn: {{ data['bgp_peer1_asn'] }}
+      peerType: {{ data['bgp_peer1_peer_type'] | default ("Branch",true)}}
+      enableNeighbor: true
+      nextHopSelf: false
+      inboundRouteMap : {{ data['bgp_peer1_inboundRouteMap'] | default ("default_rtmap_bgp_inbound_br",true) }}
+      outboundRouteMap : {{ data['bgp_peer1_outboundRouteMap'] | default ("default_rtmap_bgp_outbound_br",true) }}
+      keepAlive: {{ data['bgp_peer1_keepAlive']  | default ("30",true)}}
+      holdTime: {{ data['bgp_peer1_holdTime']  | default ("90",true)}}
+      sourceIpInterface: {{ data['bgp_peer1_sourceIpInterface']  | default ("any",true)}}
+      asPrependCount: {{ data['bgp_peer1_asPrependCount']  | default ("0",true)}}
+      password:
+    {% endif %}
+
+{% endif %}
+
+
+{% if data['loopback_interfaceId'] is defined and data['loopback_interfaceId'] != "" %}
+loopbackInterface:
+  loopbacks:
+    - interfaceId: {{ data['loopback_interfaceId'] }}
+      adminStatus: Up
+      ipAddressMask: {{ data['loopback_ipAddressMask'] }}
+      zone: {{ data['loopback_zone'] }}
+{% endif %}

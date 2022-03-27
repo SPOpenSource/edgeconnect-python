@@ -54,7 +54,7 @@ def create_tunnel_exceptions(
 
     The interface label is the numeric id (as a string) of the interface
     label. These can be retrieved with
-    :func:`silverpeak_python_sdk.Orchestrator.get_all_interface_labels`
+    :func:`pyedgeconnect.Orchestrator.get_all_interface_labels`
     The interface labels can also use the value of ``any`` to include
     all interface labels for that appliance. The description can be left
     as a blank string, but must be included in the body.
@@ -124,12 +124,12 @@ def update_tunnel_exceptions(
 
     The interface label is the numeric id (as a string) of the interface
     label. These can be retrieved with
-    :func:`silverpeak_python_sdk.Orchestrator.get_all_interface_labels`
+    :func:`pyedgeconnect.Orchestrator.get_all_interface_labels`
     The interface labels can also use the value of ``any`` to include
     all interface labels for that appliance. The description can be left
     as a blank string, but must be included in the body.
     The existing tunnel exception ids can be retrieved with
-    :func:`silverpeak_python_sdk.Orchestrator.get_tunnel_exceptions`
+    :func:`pyedgeconnect.Orchestrator.get_tunnel_exceptions`
 
     **Example:**
 

@@ -257,6 +257,8 @@ def change_appliance_license(
     tier_bw: int = None,
     mini: bool = None,
     plus: bool = None,
+    adv_sec_standard: bool = None,
+    adv_sec_unlimited: bool = None,
 ) -> bool:
     """Changes ec appliance license settings
 
@@ -279,11 +281,24 @@ def change_appliance_license(
     :param tier_bw: Tiered bandwidth to request, in Kbps. Accepted
         values are ``20000``, ``50000``, ``100000``, ``200000``,
         ``500000``, ``1000000``, ``2000000``, and for Unlimited use
-        ``1000000000``
+        ``1000000000``, defaults to None
     :type tier_bw: int, optional
     :param tier_name: Display name of tiered license to request. Not
-        required in presence of using tier_bw parameter.
+        required in presence of using tier_bw parameter. Defaults to
+        None
     :type tier_name: str, optional
+    :param mini: Apply legacy Mini license to appliance,
+      defaults to None
+    :type mini: bool, optional
+    :param plus: Apply legacy Plus license to appliance,
+      defaults to None
+    :type plus: bool, optional
+    :param adv_sec_standard: Apply Advanced Security Standard license
+      to appliance, defaults to None
+    :type adv_sec_standard: bool, optional
+    :param adv_sec_unlimited: Apply Advanced Security Unlimited license
+      to appliance, defaults to None
+    :type adv_sec_unlimited: bool, optional
     :return: Returns True/False based on successful call
     :rtype: bool
     """
@@ -293,6 +308,7 @@ def change_appliance_license(
             "plus": {},
             "tier": {},
             "boost": {"enable": boost, "bandwidth": boost_bw},
+            "feature": {},
         }
     }
 
@@ -304,6 +320,16 @@ def change_appliance_license(
         data["license"]["tier"]["display"] = tier_name
     if tier_bw is not None:
         data["license"]["tier"]["bandwidth"] = tier_bw
+    if adv_sec_standard is not None:
+        data["license"]["feature"]["adv_sec_standard"] = {
+            "reqValue": 1,
+            "display": "EC-AS",
+        }
+    if adv_sec_unlimited is not None:
+        data["license"]["feature"]["adv_sec_unlimited"] = {
+            "reqValue": 1,
+            "display": "EC-AS-UL",
+        }
 
     return self._post(
         "/license/portal/ec/{}".format(ne_pk),
