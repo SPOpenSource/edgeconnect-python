@@ -166,7 +166,7 @@ with open(csv_filename, encoding="utf-8-sig") as csvfile:
 
         # Validate preconfig via Orchestrator
         validate = orch.validate_preconfig(
-            hostname=row["hostname"],
+            preconfig_name=row["hostname"],
             yaml_preconfig=yaml_preconfig,
             auto_apply=auto_apply,
         )
@@ -192,7 +192,7 @@ with open(csv_filename, encoding="utf-8-sig") as csvfile:
                 # Additionally a comment is added with the current
                 # date
                 orch.create_preconfig(
-                    hostname=row["hostname"],
+                    preconfig_name=row["hostname"],
                     yaml_preconfig=yaml_preconfig,
                     auto_apply=auto_apply,
                     tag=row["hostname"],
