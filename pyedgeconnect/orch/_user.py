@@ -42,7 +42,7 @@ def get_all_users(
             * keyword **salt** (`str`): Usually left blank
     :rtype: list
     """
-    return self._post("/users")
+    return self._get("/users")
 
 
 def get_user(
