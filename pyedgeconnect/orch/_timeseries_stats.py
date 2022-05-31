@@ -137,7 +137,7 @@ def get_timeseries_stats_tunnel_single_appliance(
     """
     path = (
         "/stats/timeseries/tunnel/"
-        + "{}?startTime={}&endTime={}&granularity={}&tunnel_name={}".format(
+        + "{}?startTime={}&endTime={}&granularity={}&tunnelName={}".format(
             ne_pk, start_time, end_time, granularity, tunnel_name
         )
     )
@@ -2347,9 +2347,7 @@ def get_timeseries_stats_security_policy_single_appliance(
     """
     path = (
         "/stats/timeseries/securityPolicy/"
-        + "{}?startTime={}&endTime={}".format(
-            ne_pk, start_time, end_time
-        )
+        + "{}?startTime={}&endTime={}".format(ne_pk, start_time, end_time)
         + "&granularity={}&fromZone={}&toZone={}".format(
             granularity, from_zone, to_zone
         )

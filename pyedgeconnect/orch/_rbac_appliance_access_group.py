@@ -36,10 +36,13 @@ def get_all_appliance_access_groups(
 def update_appliance_access_group(
     self,
     appliance_access_group_name: str,
-    appliance_groups: list[str] = None,
-    appliance_regions: list[str] = None,
+    appliance_groups: list[str],
+    appliance_regions: list[str],
 ) -> bool:
-    """Create or update appliance access gropu / asset
+    """Create or update appliance access group / asset.
+    Both list of ``appliance_groups`` and ``appliance_regions``
+    must be specified, if no group or region is desired, provide
+    a blank list as input.
 
     .. list-table::
         :header-rows: 1
@@ -55,11 +58,11 @@ def update_appliance_access_group(
         appliance access group to create or update
     :type appliance_access_group_name: str
     :param appliance_groups: List of appliance group id's the access
-        group will allow access to, defaults to None
-    :type appliance_groups: list[str], optional
+        group will allow access to
+    :type appliance_groups: list[str]
     :param appliance_regions: List of region id's the access group will
-        allow access to, defaults to None
-    :type appliance_regions: list[str], optional
+        allow access to
+    :type appliance_regions: list[str]
     :return: Returns True/False based on successful call
     :rtype: bool
     """
