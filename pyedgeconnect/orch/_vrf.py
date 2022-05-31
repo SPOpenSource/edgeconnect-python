@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # vrf : Routing Segments
+from __future__ import annotations
 
 
 def get_routing_segmentation_enable_status(

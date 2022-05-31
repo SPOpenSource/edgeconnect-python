@@ -39,7 +39,7 @@ setup(
     keywords="silver peak, silverpeak, silver peak python, aruba edge connect, edge connect",
     packages=find_packages(),
     package_dir={"pyedgeconnect": "pyedgeconnect"},
-    python_requires=">=3.9, <4",
+    python_requires=">=3.7, <4",
     zip_safe=False,
     install_requires=["requests"],
     extras_require={

@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # thirdPartyTunnelsConfiguration : ECOS third party tunnel configuration
+from __future__ import annotations
 
 
 def get_passthrough_tunnel_details(

@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # tunnelsConfiguration : ECOS tunnel configuration
+from __future__ import annotations
 
 
 def get_total_tunnel_count(

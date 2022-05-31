@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # discovery : Get and modify the discovery configuration
+from __future__ import annotations
 
 
 def get_appliance_discovery_emails(

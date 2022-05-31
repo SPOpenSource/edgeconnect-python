@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # timeseriesStats : ECOS time series statistics
+from __future__ import annotations
 
 
 def get_timeseries_stats_appliance_process_state(

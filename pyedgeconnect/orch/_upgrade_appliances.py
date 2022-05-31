@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # upgradeAppliances : Validate and upgrade appliances
+from __future__ import annotations
 
 
 def validate_appliance_upgrade(
