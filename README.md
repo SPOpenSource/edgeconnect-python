@@ -15,13 +15,13 @@ is underway to continue to add further functions.
 
 ### Python Version
 
-> **Note:** Requires Python 3.9.0+ (due to PEP585 type-hinting e.g. ``def my_func(var1 = list[str]``)
+> **Note:** Requires Python 3.7+
 
-Once Python 3.9 is installed on the system, it's recommended to use a
+Once Python 3.7+ is installed on the system, it's recommended to use a
 virtual environment to install the package to.
 
 In the directory you'd like to write your project/script, setup a python
-virtual environment specifically with python3.9 and activate it. This
+virtual environment with the desired python version and activate it. This
 is important if you have other versions of python installed on your
 system.
 
@@ -29,34 +29,25 @@ system.
 
     :~$ python3.9 -m venv my_new_project
     :~$ source my_new_project/bin/activate
-    (my_new_project) :~$ python3 --version
-    Python 3.9.0+
+    (my_new_project) :~$ python --version
+    Python 3.9.13
 ```
 
-Now you can install the package and run your python code
+Now you are ready to install the package and run your python code.
 
-```bash
-
-    (my_new_project) :~$ pip install git+https://github.com/SPOpenSource/edgeconnect-python
-    ...
-    (my_new_project) :~$ pip list
-    Package               Version
-    --------------------- --------------------------------
-    certifi               2020.12.5
-    chardet               4.0.0
-    idna                  2.10
-    pip                   20.0.2
-    pkg-resources         0.0.0
-    requests              2.25.1
-    setuptools            44.0.0
-    pyedgeconnect         0.13.0a2.dev1+g45fd843.d20210428
-    urllib3               1.26.4
-```
+> **Note:** Going forward, these commands assume you're within a Python 3.7+ venv, or Python 3.7+ is the exclusive Python version installed in regard to referencing the use of ``pip``. If that is not the case, you can specifically append ``python3.x -m`` ahead of the ``pip install ...``
 
 ### Install from PyPI
 
 ```bash
-    pip install pyedgeconnect
+    $ pip install pyedgeconnect
+    ...
+    $ pip list
+    Package                       Version
+    ----------------------------- --------------------------------
+    ...                           ...
+    pyedgeconnect                 x.y.z
+    ...                           ...
 ```
 
 ### Install from GitHub
@@ -64,16 +55,25 @@ Now you can install the package and run your python code
 To install the most recent version of pyedgeconnect, open an
 interactive shell and run:
 
-> **Note:** These commands assume you're within a Python 3.9 venv, or Python 3.9 is the exclusive Python version installed in regard to referencing the use of ``pip``. If that is not the case, you can specifically append ``python3.9 -m`` ahead of the ``pip install ...``
-
 ```bash
-    pip install git+https://github.com/SPOpenSource/edgeconnect-python
+    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python
+    ...
+    $ pip list
+    Package                       Version
+    ----------------------------- --------------------------------
+    ...                           ...
+    pyedgeconnect                 x.y.z
+    ...                           ...
 ```
 
 To install a specific branch use the @branch syntax
 
 ```bash
-    pip install git+https://github.com/SPOpenSource/edgeconnect-python@<branch_name>
+    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python@<branch_name>
+    ...
+    # Install the Development branch
+    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python@Development
+    ...
 ```
 
 ### Install dev options
@@ -88,7 +88,7 @@ following syntax:
 ```bash
     $ pip install pyedgeconnect[dev]
     or
-    $ pip install -e git+https://github.com/SPOpenSource/edgeconnect-python#egg=pyedgeconnect[dev]
+    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python#egg=pyedgeconnect[dev]
 ```
 
 ## Docs
