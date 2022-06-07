@@ -3,6 +3,7 @@
 #
 # rbacApplianceAccessGroup : RBAC: Get, Add, Update, Delete appliance
 # access groups / assets
+from __future__ import annotations
 
 
 def get_all_appliance_access_groups(

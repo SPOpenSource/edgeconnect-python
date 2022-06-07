@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # saveChanges : ECOS save configuration changes
+from __future__ import annotations
 
 
 def save_changes_ne_pk_list(

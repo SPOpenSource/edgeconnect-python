@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # applianceBackup : ECOS backup and restore
+from __future__ import annotations
 
 
 def backup_appliance_config(

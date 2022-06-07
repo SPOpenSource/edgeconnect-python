@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # aggregateStats : ECOS aggregate statistics
+from __future__ import annotations
 
 
 def get_aggregate_stats_tunnels(
@@ -644,11 +645,9 @@ def get_aggregate_stats_applications(
         parameters
     :rtype: dict
     """
-    path = (
-        "/stats/aggregate/application2?"
-        + "startTime={}&endTime={}".format(
-            start_time, end_time,
-        )
+    path = "/stats/aggregate/application2?" + "startTime={}&endTime={}".format(
+        start_time,
+        end_time,
     )
 
     if group_pk is not None:
@@ -717,11 +716,9 @@ def get_aggregate_stats_applications_ne_pk_list(
         parameters
     :rtype: dict
     """
-    path = (
-        "/stats/aggregate/application2?"
-        + "startTime={}&endTime={}".format(
-            start_time, end_time,
-        )
+    path = "/stats/aggregate/application2?" + "startTime={}&endTime={}".format(
+        start_time,
+        end_time,
     )
 
     if application is not None:
@@ -791,7 +788,9 @@ def get_aggregate_stats_applications_single_appliance(
     path = (
         "/stats/aggregate/application2/"
         + "{}?startTime={}&endTime={}".format(
-            ne_pk, start_time, end_time,
+            ne_pk,
+            start_time,
+            end_time,
         )
     )
 
@@ -1321,7 +1320,7 @@ def get_aggregate_stats_flows_single_appliance(
     traffic_class: int = None,
     flow: str = None,
     ip: str = None,
-    data_format: str = None
+    data_format: str = None,
 ) -> dict:
     """Get aggregate flow stats data for a single appliance filter by
     query parameters
@@ -1745,7 +1744,8 @@ def get_aggregate_stats_dns_ne_pk_list(
     :rtype: dict
     """
     path = "/stats/aggregate/dns?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if is_source is not None:
@@ -1826,7 +1826,9 @@ def get_aggregate_stats_dns_single_appliance(
     :rtype: dict
     """
     path = "/stats/aggregate/dns/{}?startTime={}&endTime={}".format(
-        ne_pk, start_time, end_time,
+        ne_pk,
+        start_time,
+        end_time,
     )
 
     if is_source is not None:
@@ -1905,7 +1907,9 @@ def get_aggregate_stats_ports_single_appliance(
     :rtype: dict
     """
     path = "/stats/aggregate/ports/{}?startTime={}&endTime={}".format(
-        ne_pk, start_time, end_time,
+        ne_pk,
+        start_time,
+        end_time,
     )
 
     if is_source is not None:
@@ -1986,7 +1990,8 @@ def get_aggregate_stats_ports(
     :rtype: dict
     """
     path = "/stats/aggregate/ports?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if is_source is not None:
@@ -2069,7 +2074,8 @@ def get_aggregate_stats_ports_ne_pk_list(
     :rtype: dict
     """
     path = "/stats/aggregate/ports?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if is_source is not None:
@@ -2136,7 +2142,8 @@ def get_aggregate_stats_top_talkers(
     :rtype: dict
     """
     path = "/stats/aggregate/topTalkers?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if top is not None:
@@ -2194,7 +2201,8 @@ def get_aggregate_stats_top_talkers_ne_pk_list(
     :rtype: dict
     """
     path = "/stats/aggregate/topTalkers?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if top is not None:
@@ -2244,7 +2252,9 @@ def get_aggregate_stats_top_talkers_single_appliance(
     :rtype: dict
     """
     path = "/stats/aggregate/topTalkers/{}?startTime={}&endTime={}".format(
-        ne_pk, start_time, end_time,
+        ne_pk,
+        start_time,
+        end_time,
     )
 
     if top is not None:
@@ -2290,7 +2300,9 @@ def get_aggregate_stats_top_talkers_split_single_appliance(
     path = (
         "/stats/aggregate/topTalkers/split/"
         + "{}?startTime={}&endTime={}".format(
-            ne_pk, start_time, end_time,
+            ne_pk,
+            start_time,
+            end_time,
         )
     )
 
@@ -2343,7 +2355,8 @@ def get_aggregate_stats_traffic_behavior(
     :rtype: dict
     """
     path = "/stats/aggregate/trafficBehavior?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if group_pk is not None:
@@ -2366,7 +2379,7 @@ def get_aggregate_stats_traffic_behavior_ne_pk_list(
     data_format: str = None,
     top: int = None,
     last_hour: bool = None,
-    is_aggregated: bool = None
+    is_aggregated: bool = None,
 ) -> dict:
     """Get aggregate Traffic Behavioral stats data filter by query
     parameters
@@ -2413,7 +2426,8 @@ def get_aggregate_stats_traffic_behavior_ne_pk_list(
     :rtype: dict
     """
     path = "/stats/aggregate/trafficBehavior?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if behavioral_cat is not None:
@@ -2484,7 +2498,9 @@ def get_aggregate_stats_traffic_behavior_single_appliance(
     path = (
         "/stats/aggregate/trafficBehavior/"
         + "{}?startTime={}&endTime={}".format(
-            ne_pk, start_time, end_time,
+            ne_pk,
+            start_time,
+            end_time,
         )
     )
 
@@ -3584,9 +3600,7 @@ def get_aggregate_stats_security_policy_single_appliance(
         + "{}?startTime={}&endTime={}&granularity={}&".format(
             ne_pk, start_time, end_time, granularity
         )
-        + "fromZone={}&toZone={}".format(
-            from_zone, to_zone
-        )
+        + "fromZone={}&toZone={}".format(from_zone, to_zone)
     )
 
     if top is not None:
@@ -3732,11 +3746,8 @@ def get_aggregate_stats_top_talkers_ne_pk_tunnels(
         parameters
     :rtype: dict
     """
-    path = (
-        "/stats2/aggregate/topTalkers?"
-        + "startTime={}&endTime={}".format(
-            start_time, end_time
-        )
+    path = "/stats2/aggregate/topTalkers?" + "startTime={}&endTime={}".format(
+        start_time, end_time
     )
 
     if top is not None:
@@ -3900,7 +3911,8 @@ def get_aggregate_stats_ports_ne_pk_tunnels(
     :rtype: dict
     """
     path = "/stats/aggregate/ports?startTime={}&endTime={}".format(
-        start_time, end_time,
+        start_time,
+        end_time,
     )
 
     if is_source is not None:

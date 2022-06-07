@@ -3,6 +3,7 @@
 #
 # pauseOrchestration : Set or get appliances nePks which are paused from
 # orchestration
+from __future__ import annotations
 
 
 def get_pause_orchestration(self) -> dict:

@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # appliance : Add, delete and modify appliances
+from __future__ import annotations
 
 
 def get_appliances(self) -> list:

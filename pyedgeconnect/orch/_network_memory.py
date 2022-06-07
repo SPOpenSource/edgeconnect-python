@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # networkMemory : ECOS erase network memory
+from __future__ import annotations
 
 
 def erase_appliance_network_memory(
