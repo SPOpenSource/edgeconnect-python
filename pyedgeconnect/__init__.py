@@ -1339,3 +1339,7 @@ class EdgeConnect(HttpCommon):
     from .ecos._reboot import request_reboot
     from .ecos._save_changes import save_changes
     from .ecos._sp_portal import register_sp_portal, register_sp_portal_status
+    from .ecos._statistics import (
+        get_appliance_stats_minute_file,
+        get_appliance_stats_minute_range,
+    )
