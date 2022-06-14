@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # haGroups : High Availability (HA) appliance groups
+from __future__ import annotations
 
 
 def get_ha_groups(self) -> dict:

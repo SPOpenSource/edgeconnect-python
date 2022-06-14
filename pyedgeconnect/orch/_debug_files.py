@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # debugFiles : ECOS debug files like tcpdump, snapshots, sysdumps
+from __future__ import annotations
 
 
 def get_debug_files_from_appliance(

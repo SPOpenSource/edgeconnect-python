@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # spPortal : Silver Peak Portal
+from __future__ import annotations
 
 
 def register_sp_portal_status(self) -> dict:

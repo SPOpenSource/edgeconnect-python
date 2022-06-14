@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # spPortal : Silver Peak Portal related apis
+from __future__ import annotations
 
 
 def get_orchestrator_to_cloud_portal_status(

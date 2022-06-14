@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # ipObjects : IP address groups and service groups management
+from __future__ import annotations
 
 
 def get_all_address_groups(self) -> list:

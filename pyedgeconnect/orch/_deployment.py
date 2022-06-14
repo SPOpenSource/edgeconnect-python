@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # deployment : ECOS deployment configuration
+from __future__ import annotations
 
 
 def get_appliance_deployment(

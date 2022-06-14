@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # networkRoleAndSite : ECOS network role and site
+from __future__ import annotations
 
 
 def get_appliance_network_role_and_site(

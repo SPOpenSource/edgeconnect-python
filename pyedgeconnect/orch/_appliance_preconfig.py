@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # appliancePreconfig : Get and apply appliance preconfigurations
+from __future__ import annotations
 import base64
 
 

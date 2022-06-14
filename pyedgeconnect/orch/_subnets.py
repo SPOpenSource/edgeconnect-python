@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # subnets : ECOS subnet sharing
+from __future__ import annotations
 
 # Though not marked as deprecated in Swagger
 # /subnets/configured/{neId} only applies to appliances running ECOS

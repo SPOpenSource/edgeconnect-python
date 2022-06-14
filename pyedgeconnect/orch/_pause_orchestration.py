@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # pauseOrchestration : Set or get appliances nePks which are paused from
+from __future__ import annotations
 # orchestration
 
 

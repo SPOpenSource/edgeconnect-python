@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # overlays : Add, update, delete overlay configurations
+from __future__ import annotations
 
 
 def get_all_overlays_config(self) -> list:

@@ -15,10 +15,10 @@ is underway to continue to add further functions.
 
 ### Python Version
 
-> **Note:** Requires Python 3.9.0+ (due to PEP585 type-hinting e.g. ``def my_func(var1 = list[str]``)
+> **Note:** Requires Python 3.7.0b1+ (due to PEP585 type-hinting e.g. ``def my_func(var1 = list[str]``)
 
-Once Python 3.9 is installed on the system, it's recommended to use a
-virtual environment to install the package to.
+Once a required version of Python is installed on the system, it's recommended
+to use a virtual environment to install the package to.
 
 In the directory you'd like to write your project/script, setup a python
 virtual environment specifically with python3.9 and activate it. This
@@ -27,10 +27,10 @@ system.
 
 ```bash
 
-    :~$ python3.9 -m venv my_new_project
+    :~$ python3 -m venv my_new_project
     :~$ source my_new_project/bin/activate
     (my_new_project) :~$ python3 --version
-    Python 3.9.0+
+    Python 3.7.0b1+
 ```
 
 Now you can install the package and run your python code

@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # tcpdump : ECOS Packet capture
+from __future__ import annotations
 
 
 def tcpdump_run(

@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # flow : ECOS current flows
+from __future__ import annotations
 
 
 def get_appliance_flows(  # noqa: C901, silences flake8 complexity

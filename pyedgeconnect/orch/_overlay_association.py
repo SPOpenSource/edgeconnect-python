@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # overlayAssociation : Add and remove appliances from overlays
+from __future__ import annotations
 
 
 def get_all_appliance_overlay_association(

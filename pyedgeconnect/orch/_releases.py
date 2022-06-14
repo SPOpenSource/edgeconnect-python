@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # releases : Recommended ECOS and Orchestrator releases
+from __future__ import annotations
 
 
 def get_releases_for_orchestrator_and_ecos(

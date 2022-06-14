@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # aggregateStats : ECOS aggregate statistics
+from __future__ import annotations
 
 
 def get_aggregate_stats_tunnels(

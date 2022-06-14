@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # exception : Exception configuration
+from __future__ import annotations
 
 
 def get_tunnel_exceptions(

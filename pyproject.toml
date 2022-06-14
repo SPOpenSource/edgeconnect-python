@@ -15,6 +15,16 @@ exclude = '''
 )/
 '''
 
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py37, py38, py39, py310
+
+[testenv]
+deps = pytest
+commands = pytest
+"""
+
 [build-system]
 requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
 [tool.setuptools_scm]

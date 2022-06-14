@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # applicationDefinition : Application Definition
+from __future__ import annotations
 
 
 def get_user_defined_app_port_protocol(self) -> dict:
