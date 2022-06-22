@@ -59,7 +59,8 @@ def get_appliance_stats_minute_file(
     file has a header which describes the statistics contained in the
     file.
 
-    .. code:: python
+    .. code-block:: python
+
         import tarfile
         from pyedgeconnect import EdgeConnect
         ec = EdgeConnect(ec_ip)
