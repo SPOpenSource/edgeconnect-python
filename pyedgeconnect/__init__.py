@@ -1332,6 +1332,7 @@ class EdgeConnect(HttpCommon):
     from .ecos._interfaces import get_appliance_interfaces
     from .ecos._license import is_reboot_required
     from .ecos._login import login, logout
+    from .ecos._memory import get_appliance_memory
     from .ecos._network_interfaces import (
         get_appliance_network_interfaces,
         modify_network_interfaces,
