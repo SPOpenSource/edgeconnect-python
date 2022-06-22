@@ -27,9 +27,9 @@ def get_appliance_stats_minute_range(self) -> dict:
 
     :return: Dictionary of newest and oldest minute stat times \n
         * keyword **newest** (`int`): Epoch seconds timestamp of latest
-            available appliance minute data
+          available appliance minute data
         * keyword **oldest** (`int`): Epoch seconds timestamp of oldest
-            available appliance minute data
+          available appliance minute data
     :rtype: dict
     """
     return self._get("/stats/minuteRange")

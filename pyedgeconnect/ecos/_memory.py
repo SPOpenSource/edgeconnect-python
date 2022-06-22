@@ -21,14 +21,14 @@ def get_appliance_memory(
 
     :return: Returns dictionary of current memory utilization on
         appliance, all units in bytes \n
-        * keyword **total*** (`int`): Total memory
-        * keyword **free*** (`int`): Free memory
-        * keyword **buffers*** (`int`): Buffers memory
-        * keyword **cached*** (`int`): Cached memory
-        * keyword **used*** (`int`): Used memory
-        * keyword **swapTotal*** (`int`): Swap total memory
-        * keyword **swapFree*** (`int`): Swap free memory
-        * keyword **swapUsed*** (`int`): Swap used memory
+        * keyword **total** (`int`): Total memory
+        * keyword **free** (`int`): Free memory
+        * keyword **buffers** (`int`): Buffers memory
+        * keyword **cached** (`int`): Cached memory
+        * keyword **used** (`int`): Used memory
+        * keyword **swapTotal** (`int`): Swap total memory
+        * keyword **swapFree** (`int`): Swap free memory
+        * keyword **swapUsed** (`int`): Swap used memory
     :rtype: dict
     """
     return self._get("/memory")

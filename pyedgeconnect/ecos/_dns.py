@@ -21,12 +21,12 @@ def get_appliance_dns_config(
           - /resolver
 
     :return: Returns dictionary of current appliance dns configuration\n
-        * keyword **domain_search*** (`dict`): Domain search settings \n
+        * keyword **domain_search** (`dict`): Domain search settings \n
             * keyword **<Order of search 1-6>** (`dict`): \n
                 * keyword **self** (`int`): Order of Domain Name, which
                   should be the same as this entry's key
                 * keyword **domainname** (`str`): Search Domain
-        * keyword **nameserver*** (`dict`): Name server settings \n
+        * keyword **nameserver** (`dict`): Name server settings \n
             * keyword **1** (`dict`): Primary name server\n
                 * keyword **self** (`int`): Order of Name Server, which
                   should be the same as this entry's key
