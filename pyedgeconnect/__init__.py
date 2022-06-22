@@ -1345,3 +1345,4 @@ class EdgeConnect(HttpCommon):
         get_appliance_stats_minute_file,
         get_appliance_stats_minute_range,
     )
+    from .ecos._time import get_appliance_time
