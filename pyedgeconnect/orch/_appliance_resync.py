@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # applianceResync : Orchestrator appliance configuration synchronization
+from __future__ import annotations
 
 
 def appliance_resync(
