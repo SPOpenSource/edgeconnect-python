@@ -16,7 +16,7 @@ author = "Zach Camara"
 # Main version number
 version = "0.15"
 # The full version, including alpha/beta/rc tags
-release = "0.15.0-a1"
+release = "0.15.1-a1"
 
 
 # -- General configuration ---------------------------------------------------

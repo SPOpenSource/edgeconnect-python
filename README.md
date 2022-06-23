@@ -72,7 +72,7 @@ To install a specific branch use the @branch syntax
     $ pip install git+https://github.com/SPOpenSource/edgeconnect-python@<branch_name>
     ...
     # Install the Development branch
-    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python@Development
+    $ pip install git+https://github.com/SPOpenSource/edgeconnect-python@development
     ...
 ```
 
