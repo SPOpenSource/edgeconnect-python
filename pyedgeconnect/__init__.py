@@ -1328,10 +1328,13 @@ class EdgeConnect(HttpCommon):
             self.logger.addHandler(self.console_handler)
 
     # Imported methods
+    from .ecos._disk_usage import get_appliance_disk_usage
+    from .ecos._dns import get_appliance_dns_config, set_appliance_dns_config
     from .ecos._gms import assign_orchestrator, get_orchestrator
     from .ecos._interfaces import get_appliance_interfaces
     from .ecos._license import is_reboot_required
     from .ecos._login import login, logout
+    from .ecos._memory import get_appliance_memory
     from .ecos._network_interfaces import (
         get_appliance_network_interfaces,
         modify_network_interfaces,
@@ -1343,3 +1346,4 @@ class EdgeConnect(HttpCommon):
         get_appliance_stats_minute_file,
         get_appliance_stats_minute_range,
     )
+    from .ecos._time import get_appliance_time
