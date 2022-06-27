@@ -1,0 +1,54 @@
+0.15.1-a1 -- 2022-06-23
+-----------------------
+
+
+🚀 Features
+~~~~~~~~~~~~~
+
+**Backwards compatability**: Introduced support back to Python 3.7
+
+
+Added the following EdgeConnect functions from Swagger:
+
+from .ecos._disk_usage
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_disk_usage`
+
+from .ecos._dns
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_dns_config`
+  - :func:`~pyedgeconnect.EdgeConnect.set_appliance_dns_config`
+
+from .ecos._memory
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_memory`
+
+from .ecos._statistics
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_stats_minute_range`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_stats_minute_file`
+
+from .ecos._time
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_time`
+
+
+🐛 Bug Fixes
+~~~~~~~~~~~~~~
+
+- `#4 <https://github.com/SPOpenSource/edgeconnect-python/issues/4>`_ -
+  :func:`~pyedgeconnect.Orchestrator.get_all_users` was using POST
+  instead of GET
+- `#6 <https://github.com/SPOpenSource/edgeconnect-python/issues/6>`_ -
+  :func:`~pyedgeconnect.Orchestrator.update_appliance_access_group`
+  remove default values for appliance_groups and appliance_regions
+- `#7 <https://github.com/SPOpenSource/edgeconnect-python/issues/7>`_ -
+  :func:`~pyedgeconnect.Orchestrator.get_timeseries_stats_tunnel_single_appliance`
+  update tunnel_name query in URL to tunnelName
+
+
+🐛 Known Issues
+~~~~~~~~~~~~~~~
+
+.. warning::
+
+  The following two functions for the _ip_objects submodule exprience
+  errors at this time. These function do work in the Orchestrator UI:
+
+  - :func:`~pyedgeconnect.Orchestrator.bulk_upload_address_group`
+  - :func:`~pyedgeconnect.Orchestrator.bulk_upload_service_group`
