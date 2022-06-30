@@ -1328,6 +1328,19 @@ class EdgeConnect(HttpCommon):
             self.logger.addHandler(self.console_handler)
 
     # Imported methods
+    from .ecos._bonded_tunnel import (
+        configure_appliance_all_bonded_tunnels,
+        delete_appliance_multiple_bonded_tunnels,
+        delete_appliance_single_bonded_tunnel,
+        get_appliance_all_bonded_tunnel_ids,
+        get_appliance_bonded_tunnel_aliases,
+        get_appliance_bonded_tunnel_live_view_info,
+        get_appliance_bonded_tunnels_config,
+        get_appliance_bonded_tunnels_state,
+        get_appliance_multiple_bonded_tunnels_config,
+        get_appliance_multiple_bonded_tunnels_state,
+        get_appliance_single_bonded_tunnel_config,
+    )
     from .ecos._disk_usage import get_appliance_disk_usage
     from .ecos._dns import get_appliance_dns_config, set_appliance_dns_config
     from .ecos._gms import assign_orchestrator, get_orchestrator
@@ -1339,6 +1352,7 @@ class EdgeConnect(HttpCommon):
         get_appliance_network_interfaces,
         modify_network_interfaces,
     )
+    from .ecos._peers import get_appliance_peers, get_appliance_peers_ec_only
     from .ecos._reboot import request_reboot
     from .ecos._save_changes import save_changes
     from .ecos._sp_portal import register_sp_portal, register_sp_portal_status
@@ -1346,4 +1360,35 @@ class EdgeConnect(HttpCommon):
         get_appliance_stats_minute_file,
         get_appliance_stats_minute_range,
     )
+    from .ecos._third_party_tunnel import (
+        configure_appliance_multiple_3rdparty_tunnels,
+        delete_appliance_multiple_3rdparty_tunnels,
+        delete_appliance_single_3rdparty_tunnel,
+        get_appliance_3rdparty_tunnel_aliases,
+        get_appliance_3rdparty_tunnels_config,
+        get_appliance_3rdparty_tunnels_state,
+        get_appliance_all_3rdparty_tunnel_ids,
+        get_appliance_multiple_3rdparty_tunnels_config,
+        get_appliance_multiple_3rdparty_tunnels_state,
+        get_appliance_single_3rdparty_tunnel_config,
+    )
     from .ecos._time import get_appliance_time
+    from .ecos._tunnel import (
+        apply_appliance_tunnel_template,
+        configure_appliance_all_tunnels,
+        configure_appliance_multiple_tunnels,
+        configure_appliance_single_tunnel,
+        delete_appliance_multiple_tunnels,
+        delete_appliance_single_tunnel,
+        get_appliance_all_tunnel_ids,
+        get_appliance_multiple_tunnels_config,
+        get_appliance_multiple_tunnels_state,
+        get_appliance_passthrough_tunnel_source_endpoints,
+        get_appliance_single_tunnel_config,
+        get_appliance_tunnel_aliases,
+        get_appliance_tunnel_source_endpoints,
+        get_appliance_tunnels_config,
+        get_appliance_tunnels_config_and_state,
+        set_appliance_tunnels_ipsec_psk,
+        start_appliance_tunnel_mtu_discovery,
+    )
