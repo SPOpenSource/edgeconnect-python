@@ -49,7 +49,7 @@ def get_appliance_bonded_tunnels_state(
                 * keyword **ipsec_nat_port** (`str`): ``NONE`` for
                   bonded tunnels
     :rtype: dict
-    """
+    """  # noqa: W505
     path = "/bondedTunnels/state"
     if state_match is not None:
         path += f"?state={state_match}"
@@ -96,7 +96,7 @@ def get_appliance_multiple_bonded_tunnels_state(
                 * keyword **ipsec_nat_port** (`str`): ``NONE`` for
                   bonded tunnels
     :rtype: dict
-    """
+    """  # noqa: W505
     return self._post(
         "/bondedTunnels/getStateMultiple",
         data=tunnel_list,
@@ -595,7 +595,7 @@ def get_appliance_multiple_bonded_tunnels_config(
 def delete_appliance_multiple_bonded_tunnels(
     self,
     tunnel_list: list[str],
-) -> dict:
+) -> bool:
     """Delete multiple bonded tunnels from appliance
 
     .. list-table::
@@ -616,6 +616,7 @@ def delete_appliance_multiple_bonded_tunnels(
     return self._post(
         "/bondedTunnels/deleteMultiple",
         data=tunnel_list,
+        return_type="bool",
     )
 
 

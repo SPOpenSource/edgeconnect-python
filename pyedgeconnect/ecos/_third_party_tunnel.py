@@ -674,7 +674,7 @@ def get_appliance_multiple_3rdparty_tunnels_config(
 def delete_appliance_multiple_3rdparty_tunnels(
     self,
     tunnel_list: list[str],
-) -> dict:
+) -> bool:
     """Delete multiple passthrough tunnels from appliance
 
     .. list-table::
@@ -695,4 +695,5 @@ def delete_appliance_multiple_3rdparty_tunnels(
     return self._post(
         "/thirdPartyTunnels/deleteMultiple",
         data=tunnel_list,
+        return_type="bool",
     )
