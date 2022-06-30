@@ -1352,6 +1352,7 @@ class EdgeConnect(HttpCommon):
         get_appliance_network_interfaces,
         modify_network_interfaces,
     )
+    from .ecos._peers import get_appliance_peers, get_appliance_peers_ec_only
     from .ecos._reboot import request_reboot
     from .ecos._save_changes import save_changes
     from .ecos._sp_portal import register_sp_portal, register_sp_portal_status
