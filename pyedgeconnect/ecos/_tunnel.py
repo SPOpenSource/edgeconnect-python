@@ -840,7 +840,7 @@ def configure_appliance_multiple_tunnels(
 def delete_appliance_multiple_tunnels(
     self,
     tunnel_list: list[str],
-) -> dict:
+) -> bool:
     """Delete multiple tunnels from appliance
 
     .. list-table::
@@ -861,6 +861,7 @@ def delete_appliance_multiple_tunnels(
     return self._post(
         "/deleteMultipleTunnels",
         data=tunnel_list,
+        return_type="bool",
     )
 
 
