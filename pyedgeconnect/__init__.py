@@ -1355,6 +1355,17 @@ class EdgeConnect(HttpCommon):
     from .ecos._peers import get_appliance_peers, get_appliance_peers_ec_only
     from .ecos._reboot import request_reboot
     from .ecos._save_changes import save_changes
+    from .ecos._security_maps import (
+        configure_appliance_security_policies,
+        delete_appliance_security_policy_rule,
+        delete_appliance_security_policy_zone_pair,
+        get_appliance_security_policies,
+        get_appliance_security_policy_map,
+        get_appliance_security_policy_settings,
+        get_appliance_security_policy_settings_by_map_name,
+        get_appliance_security_policy_zone_pair,
+        set_appliance_security_policy_settings,
+    )
     from .ecos._sp_portal import register_sp_portal, register_sp_portal_status
     from .ecos._statistics import (
         get_appliance_stats_minute_file,
