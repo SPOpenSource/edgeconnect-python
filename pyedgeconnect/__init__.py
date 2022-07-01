@@ -1328,6 +1328,14 @@ class EdgeConnect(HttpCommon):
             self.logger.addHandler(self.console_handler)
 
     # Imported methods
+    from .ecos._alarm import (
+        acknowledge_appliance_alarms,
+        add_note_appliance_alarms,
+        clear_appliance_alarms,
+        delete_appliance_alarms,
+        get_appliance_alarm_descriptions,
+        get_appliance_alarms,
+    )
     from .ecos._bonded_tunnel import (
         configure_appliance_all_bonded_tunnels,
         delete_appliance_multiple_bonded_tunnels,
@@ -1340,6 +1348,10 @@ class EdgeConnect(HttpCommon):
         get_appliance_multiple_bonded_tunnels_config,
         get_appliance_multiple_bonded_tunnels_state,
         get_appliance_single_bonded_tunnel_config,
+    )
+    from .ecos._cli import (
+        perform_appliance_cli_command,
+        perform_appliance_multiple_cli_command,
     )
     from .ecos._disk_usage import get_appliance_disk_usage
     from .ecos._dns import get_appliance_dns_config, set_appliance_dns_config
