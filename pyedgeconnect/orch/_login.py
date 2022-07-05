@@ -69,21 +69,20 @@ def login(
         return_type="full_response",
     )
 
-    if response is False:
+    if response.status_code == 200:
+        # get and set X-XSRF-TOKEN
+        for cookie in response.cookies:
+            if cookie.name == "orchCsrfToken":
+                self.headers["X-XSRF-TOKEN"] = cookie.value
+                self.authenticated = True
+                return True
+        # HTTP/200 without a cookie
+        self.logger.error("Login failed: HTTP 200 but no CSRF Token cookie")
+        self.logger.error(response.cookies)
+        return False
+    else:
         self.logger.error("Login failed: see above response text for details")
         return False
-
-    # get and set X-XSRF-TOKEN
-    for cookie in response.cookies:
-        if cookie.name == "orchCsrfToken":
-            self.headers["X-XSRF-TOKEN"] = cookie.value
-            self.authenticated = True
-            return True
-
-    # HTTP/200 without a cookie
-    self.logger.error("Login failed: HTTP 200 but no CSRF Token cookie found")
-    self.logger.error(response.cookies)
-    return False
 
 
 def send_mfa(

@@ -35,19 +35,28 @@ def login(
             return_type="full_response",
         )
 
-        if response is False:
+        if response.status_code == 200:
+            # get and set X-XSRF-TOKEN
+            for cookie in response.cookies:
+                if cookie.name == "edgeosCsrfToken":
+                    self.headers["X-XSRF-TOKEN"] = cookie.value
+                    return True
+                elif cookie.name == "vxoaSessionID":
+                    self.headers["vxoaSessionID"] = cookie.value
+                    return True
+                else:
+                    pass
+            # HTTP/200 without a cookie
+            self.logger.error(
+                "Login failed: HTTP 200 but no CSRF Token cookie"
+            )
+            self.logger.error(response.cookies)
+            return False
+        else:
             self.logger.error(
                 "Login failed: see above response text for details"
             )
             return False
-
-        # get and set X-XSRF-TOKEN
-        for cookie in response.cookies:
-            if cookie.name == "edgeosCsrfToken":
-                self.headers["X-XSRF-TOKEN"] = cookie.value
-            if cookie.name == "vxoaSessionID":
-                self.headers["vxoaSessionID"] = cookie.value
-        return True
 
     except Exception as ex:
         self.logger.error("login error: {}".format(type(ex)))
