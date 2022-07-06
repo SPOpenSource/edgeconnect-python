@@ -1359,6 +1359,19 @@ class EdgeConnect(HttpCommon):
     from .ecos._gms import assign_orchestrator, get_orchestrator
     from .ecos._interfaces import get_appliance_interfaces
     from .ecos._license import is_reboot_required
+    from .ecos._local_subnets import (
+        add_appliance_locally_configured_routes,
+        appliance_find_preferred_route,
+        delete_appliance_locally_configured_routes,
+        get_appliance_locally_configured_subnets,
+        get_appliance_locally_configured_subnets_single_vrf,
+        get_appliance_routing_peers_info,
+        get_appliance_subnets,
+        get_appliance_subnets_all_vrfs,
+        get_appliance_subnets_single_vrf,
+        update_appliance_all_locally_configured_subnets,
+        update_appliance_all_locally_configured_subnets_single_vrf,
+    )
     from .ecos._login import login, logout
     from .ecos._memory import get_appliance_memory
     from .ecos._network_interfaces import (

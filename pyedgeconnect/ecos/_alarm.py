@@ -42,7 +42,7 @@ def get_appliance_alarms(
             * keyword **num_tunnel_outstanding** (`int`): Number of
               tunnel alarms outstanding
             * keyword **num_warning** (`int`): Number of warning alarms
-        * keyword **outstanding* (`list[dict]`): Outstanding alarms \n
+        * keyword **outstanding** (`list[dict]`): Outstanding alarms \n
             * [`dict`]: Outstanding Alarm detail object \n
                 * keyword **severity** (`int`): Alarm severity,
                   ``0`` translates to ``Info``,
@@ -164,7 +164,7 @@ def clear_appliance_alarms(
 
 def get_appliance_alarm_descriptions(
     self,
-    format: str,
+    response_format: str = None,
 ) -> list:
     """Get Orchestrator alarm descriptions
 
@@ -177,9 +177,11 @@ def get_appliance_alarm_descriptions(
         * - alarm
           - GET
           - /alarm/description2
-    :param format: Specify to ``csv`` to download CSV format, otherwise
-        will return information in list of dictionaries of JSON format
-    :type format: str
+
+    :param response_format: Specify to ``csv`` to download CSV format,
+        otherwise will return information in list of dictionaries of
+        JSON format, defaults to None
+    :type response_format: str, optional
     :return: Returns list of alarm descriptions and details \n
         * [`dict`]: List of alarm description dictionaries \n
             * keyword **typeId** (`int`): Alarm type id
@@ -201,7 +203,12 @@ def get_appliance_alarm_descriptions(
               alarm is clearable
     :rtype: dict
     """
-    return self._get("/alarm/description2")
+    path = "/alarm/description2"
+
+    if response_format is not None:
+        path += f"?format={response_format}"
+
+    return self._get(path)
 
 
 def add_note_appliance_alarms(
