@@ -126,21 +126,22 @@ class HttpCommon:
         :return: Requests Response object
         :rtype: requests.Response
         """
+        response_method = (
+            str(response.request)
+            .replace("<PreparedRequest ", "")
+            .replace(">", "")
+        )
         if response.status_code not in expected_status:
             self.logger.error(
-                "{} {} | Received HTTP {} | Response text: {}".format(
-                    response.request,
-                    api_path,
-                    response.status_code,
-                    response.text,
-                )
+                f"{response_method} {api_path} | Received HTTP "
+                f"{response.status_code} | Response text: {response.text}"
             )
             # return formatted data for the source method
             # for JSON data, return a dictionary with the details of
             # the response
             if return_type == "json":
                 return {
-                    "request": response.request,
+                    "request": response_method,
                     "api_path": api_path,
                     "status_code": response.status_code,
                     "text": response.text,
@@ -157,23 +158,16 @@ class HttpCommon:
         # text from log messages for successful API calls.
         if self.log_success:
             self.logger.info(
-                "{} {} | Received HTTP {} | Response text: {}".format(
-                    response.request,
-                    api_path,
-                    response.status_code,
-                    response.text,
-                )
+                f"{response_method} {api_path} | Received HTTP "
+                f"{response.status_code} | Response text: {response.text}"
             )
         else:
             # Log successful call, omit response text in case sensitive
             # data in response text
             self.logger.info(
-                (
-                    "{} {} | Received: HTTP {} ".format(
-                        response.request, api_path, response.status_code
-                    )
-                    + "| Response text omitted to avoid logging sensitive data"
-                )
+                f"{response_method} {api_path} | Received HTTP "
+                f"{response.status_code} "
+                "| Response omitted to avoid logging sensitive data"
             )
 
         # return formatted data for the source method
@@ -463,9 +457,9 @@ class Orchestrator(HttpCommon):
             )
 
         # Setup general log settings for messages and errors
-        self.logger = logging.getLogger("orchestrator")
+        self.logger = logging.getLogger(f"orch_{url}")
         self.formatter = logging.Formatter(
-            "%(asctime)s - %(levelname)s - %(message)s"
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
         self.logger.setLevel(logging.INFO)
 
@@ -1301,9 +1295,9 @@ class EdgeConnect(HttpCommon):
             )
 
         # Setup general log settings for messages and errors
-        self.logger = logging.getLogger("edgeconnect")
+        self.logger = logging.getLogger(f"ecos_{url}")
         self.formatter = logging.Formatter(
-            "%(asctime)s - %(levelname)s - %(message)s"
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
         self.logger.setLevel(logging.INFO)
 
