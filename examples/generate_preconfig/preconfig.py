@@ -20,15 +20,13 @@ parser.add_argument(
     "-u",
     "--upload",
     help="Upload created valid preconfigs to Orchestrator",
-    type=bool,
-    default=False,
+    action=argparse.BooleanOptionalAction,
 )
 parser.add_argument(
     "-aa",
     "--autoapply",
     help="Mark preconfigs for auto-approve",
-    type=bool,
-    default=False,
+    action=argparse.BooleanOptionalAction,
 )
 parser.add_argument(
     "-j",
@@ -171,14 +169,15 @@ with open(csv_filename, encoding="utf-8-sig") as csvfile:
             auto_apply=auto_apply,
         )
 
-        # If the validate function passes on Orchestrator write
-        # preconfig to local file and check if uploading to Orchestrator
-        if validate.status_code == 200:
+        # Write local YAML file to see resulting YAML file locally
+        # whether validate passes or fails
+        yaml_filename = f'{row["hostname"]}_preconfig.yml'
+        with open(output_directory + yaml_filename, "w") as preconfig_file:
+            write_data = preconfig_file.write(yaml_preconfig)
 
-            # Write local YAML file
-            yaml_filename = "{}_preconfig.yml".format(row["hostname"])
-            with open(output_directory + yaml_filename, "w") as preconfig_file:
-                write_data = preconfig_file.write(yaml_preconfig)
+        # If the validate function passes on Orchestrator, move on
+        # to check if uploading to Orchestrator option selected
+        if validate.status_code == 200:
 
             # If upload option was chosen, upload preconfig to
             # Orchestrator with selected auto-apply settings
@@ -191,26 +190,24 @@ with open(csv_filename, encoding="utf-8-sig") as csvfile:
                 # against a discovered appliance
                 # Additionally a comment is added with the current
                 # date
+                comment_timestamp = datetime.date.today().strftime("%d %B %Y")
                 orch.create_preconfig(
                     preconfig_name=row["hostname"],
                     yaml_preconfig=yaml_preconfig,
                     auto_apply=auto_apply,
                     tag=row["hostname"],
-                    comment="Created/Uploaded @ {}".format(
-                        datetime.date.today().strftime("%d %B %Y")
-                    ),
+                    comment=f"Created/Uploaded @ {comment_timestamp}",
                 )
-                print("Posted EC Preconfig {}".format(row["hostname"]))
+                print(f'Posted EC Preconfig {row["hostname"]}')
             else:
                 pass
         else:
             print(
-                "Preconfig for {} failed validation | error: {}".format(
-                    row["hostname"], validate.text
-                )
+                f'Preconfig for {row["hostname"]}'
+                f" failed validation | error: {validate.text}"
             )
             # Write local YAML file of failed config for reference
-            yaml_filename = "{}_preconfig-FAILED.yml".format(row["hostname"])
+            yaml_filename = f'{row["hostname"]}_preconfig-FAILED.yml'
             with open(output_directory + yaml_filename, "w") as preconfig_file:
                 write_data = preconfig_file.write(yaml_preconfig)
 
