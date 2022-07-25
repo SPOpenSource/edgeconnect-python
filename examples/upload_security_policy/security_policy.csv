@@ -1,0 +1,9 @@
+rule_priority,action,src_zone,dst_zone,acl,src_ip,dst_ip,either_ip,protocol,src_port,dst_port,either_port,vlan,application,logging,logging_priority,comment
+25000,allow,corp,corp,,192.0.2.0/29,192.0.2.10/32,,rdp,,,,lan0.100,,enable,1,vlan 100 rdp to host1
+25010,allow,corp,corp,,192.0.2.0/29,192.0.2.11/32,,rdp,,,,lan0.100,,enable,2,vlan 100 rdp to host2
+25020,allow,corp,corp,,192.0.2.0/29,192.0.2.12/32,,rdp,,,,lan0.100,,enable,3,vlan 100 rdp to host3
+25030,deny,corp,corp,,192.0.2.0/29,192.0.2.13/32,,,,443,,,,,,Deny HTTPS to .13
+25040,deny,corp,corp,,192.0.2.0/29,192.0.2.14/32,,,,443,,,,,,Deny HTTPS to .14
+25000,allow,corp,Public,,,,192.0.2.0/24,,,,,,Office365Common,,,Allow to O365
+25010,deny,corp,Public,,,,192.0.2.0/24,,,443,,,Salesforce,,,Allow HTTPS to Salesforce
+25020,allow,corp,Public,,,,192.0.2.0/24,,,,,,Zoom,,,Allow Zoom
