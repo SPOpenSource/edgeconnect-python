@@ -196,6 +196,7 @@ with open(csv_filename, encoding="utf-8-sig") as csvfile:
                     yaml_preconfig=yaml_preconfig,
                     auto_apply=auto_apply,
                     tag=row["hostname"],
+                    serial_number=appliance_serial,
                     comment=f"Created/Uploaded @ {comment_timestamp}",
                 )
                 print(f'Posted EC Preconfig {row["hostname"]}')
