@@ -195,9 +195,10 @@ def get_appliance_subnets_all_vrfs(self) -> dict:
         * keyword **subnets** (`dict`): Subnet object \n
             * keyword **<vrf_id>** (`dict`): Subnets in Segment/VRF \n
                 * keyword **count** (`int`): Count of all subnets
-                * keyword **max** (`int`): Max subnets IPv4 & IPv6, 60000
-                * keyword **entries** (`list[dict]`): List of subnet detail
-                  objects \n
+                * keyword **max** (`int`): Max subnets IPv4 & IPv6,
+                  60000
+                * keyword **entries** (`list[dict]`): List of subnet
+                  detail objects \n
                     * keyword **state** (`dict`): Subnet detail object\n
                         * keyword **version** (`int`): IP Version, e.g.
                           ``4`` or ``6``
@@ -235,8 +236,8 @@ def get_appliance_subnets_all_vrfs(self) -> dict:
                           OSPF
                         * keyword **learned_bgp** (`bool`): Learned from
                           BGP
-                        * keyword **learned_ospf** (`bool`): Learned from
-                          OSPF
+                        * keyword **learned_ospf** (`bool`): Learned
+                          from OSPF
                         * keyword **state** (`str`): State of route,
                           e.g. ``UP`` or ``DOWN``
                         * keyword **routeTag** (`str`): Tag on route,
@@ -259,7 +260,8 @@ def get_appliance_subnets_all_vrfs(self) -> dict:
                           message
                         * keyword **zone_id** (`str`): Firewall zone id
                           for route, e.g. ``0`` for Default
-                        * keyword **advOSPFTag** (`str`): Advertise OSPF tag
+                        * keyword **advOSPFTag** (`str`): Advertise OSPF
+                          tag
                         * keyword **routeType** (`str`): Type of route
                           e.g. ``EBGP``
                         * keyword **saasAppName** (`str`): SaaS
@@ -554,7 +556,8 @@ def get_appliance_locally_configured_subnets(self) -> dict:
         * keyword **prefix** (`dict`): Subnets object \n
             * keyword **<ip_and_mask>** (`dict`): Object for this
               prefix, e.g. key value ``10.1.1.0/24`` \n
-                * keyword **self** (`int`): Max subnets IPv4 & IPv6, 60000
+                * keyword **self** (`int`): Max subnets IPv4 & IPv6,
+                  60000
                 * keyword **advert** (`bool`): If route is advertised
                 * keyword **advert_bgp** (`bool`): If route is
                   advertised to BGP
@@ -686,7 +689,8 @@ def get_appliance_locally_configured_subnets_single_vrf(
         * keyword **prefix** (`dict`): Subnets object \n
             * keyword **<ip_and_mask>** (`dict`): Object for this
               prefix, e.g. key value ``10.1.1.0/24`` \n
-                * keyword **self** (`int`): Max subnets IPv4 & IPv6, 60000
+                * keyword **self** (`int`): Max subnets IPv4 & IPv6,
+                  60000
                 * keyword **advert** (`bool`): If route is advertised
                 * keyword **advert_bgp** (`bool`): If route is
                   advertised to BGP
