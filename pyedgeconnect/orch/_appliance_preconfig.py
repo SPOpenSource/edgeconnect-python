@@ -4,6 +4,8 @@
 # appliancePreconfig : Get and apply appliance preconfigurations
 import base64
 
+import requests
+
 
 def get_all_preconfig(
     self,
@@ -490,7 +492,7 @@ def validate_preconfig(
     serial_number: str = "",
     tag: str = "",
     comment: str = "",
-):
+) -> requests.Response:
     """Runs validation on a preconfig on Orchestrator to identify errors
     within the configuration
 
