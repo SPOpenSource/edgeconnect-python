@@ -1,0 +1,151 @@
+0.15.2-a1 -- 2022-07-29
+-----------------------
+
+
+🚀 Features
+~~~~~~~~~~~~~
+
+- New code example: **upload security policy** - Upload Firewall
+  Security Policies to an appliance or create a new Template Group to
+  be assigned to appliances
+
+  - Overview: :doc:`/examples/upload_security_policy`
+  - Code: `upload_security_policy <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples/upload_security_policy>`_
+
+- Updated logging messages (when using ``log_console`` and ``log_file``
+  parameters for EdgeConnect and Orchestrator) to include base Orch FQDN
+  or ECOS FQDN to be clear when logging statements across different
+  instances in a single script.
+
+
+Added the following EdgeConnect functions from Swagger:
+
+from .ecos._alarm
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_alarms`
+  - :func:`~pyedgeconnect.EdgeConnect.acknowledge_appliance_alarms`
+  - :func:`~pyedgeconnect.EdgeConnect.clear_appliance_alarms`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_alarm_descriptions`
+  - :func:`~pyedgeconnect.EdgeConnect.add_note_appliance_alarms`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_alarms`
+
+from .ecos._bonded_tunnel
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_bonded_tunnels_state`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_multiple_bonded_tunnels_state`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_all_bonded_tunnel_ids`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_bonded_tunnel_aliases`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_bonded_tunnels_config`
+  - :func:`~pyedgeconnect.EdgeConnect.configure_appliance_all_bonded_tunnels`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_single_bonded_tunnel_config`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_single_bonded_tunnel`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_multiple_bonded_tunnels_config`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_multiple_bonded_tunnels`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_bonded_tunnel_live_view_info`
+
+from .ecos._cli
+  - :func:`~pyedgeconnect.EdgeConnect.perform_appliance_cli_command`
+  - :func:`~pyedgeconnect.EdgeConnect.perform_appliance_multiple_cli_command`
+
+from .ecos._deployment
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_deployment`
+
+from .ecos._local_subnets
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_subnets`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_subnets_all_vrfs`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_subnets_single_vrf`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_locally_configured_subnets`
+  - :func:`~pyedgeconnect.EdgeConnect.update_appliance_all_locally_configured_subnets`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_locally_configured_subnets_single_vrf`
+  - :func:`~pyedgeconnect.EdgeConnect.update_appliance_all_locally_configured_subnets_single_vrf`
+  - :func:`~pyedgeconnect.EdgeConnect.add_appliance_locally_configured_routes`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_locally_configured_routes`
+  - :func:`~pyedgeconnect.EdgeConnect.appliance_find_preferred_route`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_routing_peers_info`
+
+from .ecos._peers
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_peers`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_peers_ec_only`
+
+from .ecos._security_maps
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_security_policies`
+  - :func:`~pyedgeconnect.EdgeConnect.configure_appliance_security_policies`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_security_policy_map`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_security_policy_zone_pair`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_security_policy_zone_pair`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_security_policy_rule`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_security_policy_settings`
+  - :func:`~pyedgeconnect.EdgeConnect.set_appliance_security_policy_settings`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_security_policy_settings_by_map_name`
+
+from .ecos._third_party_tunnel
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_3rdparty_tunnels_state`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_multiple_3rdparty_tunnels_state`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_all_3rdparty_tunnel_ids`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_3rdparty_tunnel_aliases`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_3rdparty_tunnels_config`
+  - :func:`~pyedgeconnect.EdgeConnect.configure_appliance_multiple_3rdparty_tunnels`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_single_3rdparty_tunnel_config`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_single_3rdparty_tunnel`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_multiple_3rdparty_tunnels_config`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_multiple_3rdparty_tunnels`
+
+from .ecos._tunnel
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_tunnels_config_and_state`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_tunnels_config`
+  - :func:`~pyedgeconnect.EdgeConnect.configure_appliance_all_tunnels`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_single_tunnel_config`
+  - :func:`~pyedgeconnect.EdgeConnect.configure_appliance_single_tunnel`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_single_tunnel`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_all_tunnel_ids`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_tunnel_aliases`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_multiple_tunnels_config`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_multiple_tunnels_state`
+  - :func:`~pyedgeconnect.EdgeConnect.configure_appliance_multiple_tunnels`
+  - :func:`~pyedgeconnect.EdgeConnect.delete_appliance_multiple_tunnels`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_tunnel_source_endpoints`
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_passthrough_tunnel_source_endpoints`
+  - :func:`~pyedgeconnect.EdgeConnect.start_appliance_tunnel_mtu_discovery`
+  - :func:`~pyedgeconnect.EdgeConnect.apply_appliance_tunnel_template`
+  - :func:`~pyedgeconnect.EdgeConnect.set_appliance_tunnels_ipsec_psk`
+
+
+🐛 Bug Fixes
+~~~~~~~~~~~~~~
+
+- `#10 <https://github.com/SPOpenSource/edgeconnect-python/issues/10>`_ -
+  :func:`~pyedgeconnect.Orchestrator.login` and
+  :func:`~pyedgeconnect.EdgeConnect.login` returned ``True`` even when
+  login failed
+- `#11 <https://github.com/SPOpenSource/edgeconnect-python/issues/11>`_ -
+  :func:`~pyedgeconnect.Orchestrator.appliance_resync` had incorrect
+  endpoint of ``/applianceResyncSynchronize``, corrected to
+  ``/applianceResync``
+- `#12 <https://github.com/SPOpenSource/edgeconnect-python/issues/12>`_ -
+  The preconfig generator example code had the option to look for a
+  column for appliance serial number to match preconfig to, however,
+  didn't include that information when creating the preconfig on
+  Orchestrator as the parameter wasn't specified.
+- `#13 <https://github.com/SPOpenSource/edgeconnect-python/issues/13>`_ -
+  Corrected return type-hint for methods that use `return_type="full_response"`
+  with hint of requests.Response object rather than `dict`
+
+
+🧰 Maintenance / Other
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Introduced initial automated tox testing for Python 3.7, 3.8, 3.9, 3.10
+- run pytest tests
+
+additional `testenv:format` environment
+- Check isort for imported packages
+- Check flake8
+
+
+🐛 Known Issues
+~~~~~~~~~~~~~~~
+
+.. warning::
+
+  The following two functions for the _ip_objects submodule exprience
+  errors at this time. These function do work in the Orchestrator UI:
+  :func:`~pyedgeconnect.Orchestrator.bulk_upload_address_group` and
+  :func:`~pyedgeconnect.Orchestrator.bulk_upload_service_group`

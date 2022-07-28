@@ -25,7 +25,10 @@ wheels/
 .installed.cfg
 *.egg
 
-# Dev Tests
+# Dev
+.vscode
+
+# Tests
 tests/dev
 .tox
 

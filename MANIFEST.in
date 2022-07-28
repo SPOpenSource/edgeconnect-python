@@ -1,7 +1,7 @@
 exclude *.nix
 exclude .pre-commit-config.yaml
 include *.py
-include testing/*.py
+include tests/test*.py
 include tox.ini
 include *.md
 include LICENSE
