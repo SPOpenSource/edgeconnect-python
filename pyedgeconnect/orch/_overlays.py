@@ -2,6 +2,7 @@
 # (C) Copyright 2021 Hewlett Packard Enterprise Development LP.
 #
 # overlays : Add, update, delete overlay configurations
+import requests
 
 
 def get_all_overlays_config(self) -> list:
@@ -26,7 +27,7 @@ def get_all_overlays_config(self) -> list:
 def configure_new_overlay(
     self,
     overlay_config: dict,
-) -> dict:
+) -> requests.Response:
     """Configure a new overlay on Orchestrator
 
     .. list-table::
@@ -82,7 +83,7 @@ def get_all_overlays_config_keyed(self) -> dict:
 def configure_regionalized_overlay(
     self,
     regional_overlay_config: list,
-) -> dict:
+) -> requests.Response:
     """Use this API to create an exhaustive representation of
     regionalized overlays. The body of this request should be an array
     of map which keyed by region id whose value is regional overlay
@@ -119,7 +120,7 @@ def configure_regionalized_overlay(
 def modify_regionalized_overlay(
     self,
     regional_overlay_config: list,
-) -> dict:
+) -> requests.Response:
     """Use this API to update an exhaustive representation of
     regionalized overlays. The body of this request should be a map
     keyed by overlayId whose value is a map of regionId to regional
@@ -180,7 +181,7 @@ def modify_overlay_config(
     self,
     overlay_id: int,
     overlay_config: dict,
-) -> dict:
+) -> requests.Response:
     """Use this API to update an existing overlay configuration. If you
     are using regions and have customized regional BIO per region, it
     will be overridden. To avoid this use the other PUT api which takes
@@ -201,8 +202,9 @@ def modify_overlay_config(
     :type overlay_id: int
     :param overlay_config: Full overlay configuration object
     :type overlay_config: dict
-    :return: Returns dictionary of overlay configuration
-    :rtype: dict
+    :return: Returns full response details. On successful call will
+        return newly created Overlay ID
+    :rtype: Requests.response object
     """
     return self._put(
         "/gms/overlays/config/{}".format(overlay_id),
@@ -276,7 +278,7 @@ def modify_overlay_config_for_region(
     overlay_id: int,
     region_id: int,
     overlay_config: dict,
-) -> dict:
+) -> requests.Response:
     """Use this API to update an existing overlay configuration, use
     region_id ``0`` to update global overlay configuration.
 
