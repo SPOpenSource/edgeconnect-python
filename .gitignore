@@ -25,8 +25,14 @@ wheels/
 .installed.cfg
 *.egg
 
-# Tests & Documentation
-tests/
+# Dev
+.vscode
+
+# Tests
+tests/dev
+.tox
+
+# Documentation
 docs/build/
 docs/source/_build
 examples/generate_preconfig/preconfig_outputs

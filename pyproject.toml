@@ -15,6 +15,30 @@ exclude = '''
 )/
 '''
 
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+line_length = 79
+profile = "black"
+
+[tool.tox]
+legacy_tox_ini = """
+
+[tox]
+envlist = py37, py38, py39, py310
+
+[testenv]
+deps = .[dev]
+commands =
+  pytest
+
+[testenv:format]
+commands =
+  isort pyedgeconnect/. --check-only
+  flake8 pyedgeconnect/.
+"""
+
 [build-system]
 requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
 [tool.setuptools_scm]

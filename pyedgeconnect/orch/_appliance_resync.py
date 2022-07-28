@@ -22,7 +22,7 @@ def appliance_resync(
           - Endpoint
         * - applianceResync
           - POST
-          - /applianceResyncSynchronize
+          - /applianceResync
 
     :param ne_pk_list: List of one or more appliance Network Primary
         Keys (nePk), e.g. ``["3.NE","5.NE"]``
@@ -34,6 +34,4 @@ def appliance_resync(
     """
     data = {"ids": ne_pk_list}
 
-    return self._post(
-        "/applianceResyncSynchronize", data=data, return_type="text"
-    )
+    return self._post("/applianceResync", data=data, return_type="text")

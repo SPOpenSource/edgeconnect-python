@@ -2,6 +2,7 @@
 # (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
 #
 # statistics : Get statistics related information
+import requests
 
 
 def get_appliance_stats_minute_range(self) -> dict:
@@ -38,7 +39,7 @@ def get_appliance_stats_minute_range(self) -> dict:
 def get_appliance_stats_minute_file(
     self,
     file: str,
-) -> dict:
+) -> requests.Response:
     """Get specific minute statistics file
 
     .. list-table::

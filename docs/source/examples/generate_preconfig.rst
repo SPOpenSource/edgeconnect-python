@@ -3,11 +3,18 @@
 
 .. important::
 
-    The following example is more complex code than the other examples,
+    The following example is more complex code than the general examples,
     generating data and interacting with Orchestrator. Using and
     modifying these examples requires a greater understanding of python
     functions, handling variables, and additional tools such as Jinja.
 
+
+.. note::
+
+    The code referenced in this document and all published examples
+    with pyedgeconnect are available from the GitHub repository within the
+    `examples <https://https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+    folder
 
 Generate EdgeConnect Preconfig
 ------------------------------
@@ -154,17 +161,19 @@ Additional availble runtime arguments are as follows:
 - ``-o`` or ``--orch``
     - Type: String
     - Desc: Specify the Orchestrator IP or FQDN
-    - Example values: ``10.100.1.90`` or ``orchestrator.<company>.com``
+    - Example values: ``192.0.2.100`` or ``orchestrator.<company>.com``
     - Default value: ``None``
 - ``-u`` or ``--upload``
     - Type: Boolean
-    - Desc: Upload the rendered YAML preconfig to Orchestrator
-    - Accepted values: ``True`` or ``False``
+    - Desc: Upload the rendered YAML preconfig to Orchestrator.
+      Including the ``-u`` will translate to ``True``, no option will
+      default to ``False``
     - Default value: ``False``
 - ``-aa`` or ``--autoapply``
     - Type: Boolean
-    - Desc: Auto-apply the YAML preconfig on Orchestrator to a discovered appliance
-    - Accepted values: ``True`` or ``False``
+    - Desc: Auto-apply the YAML preconfig on Orchestrator to a
+      discovered appliance. Including the ``-aa`` will translate to
+      ``True``, no option will default to ``False``
     - Default value: ``False``
 - ``-j`` or ``--jinja``
     - Type: String
@@ -209,7 +218,8 @@ Orchestrator API calls
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The two API calls to Orchestrator (outside of authentication) are
-``validate_preconfig`` and ``create_preconfig``.
+:func:`pyedgeconnect.Orchestrator.validate_preconfig` and
+:func:`pyedgeconnect.Orchestrator.create_preconfig`.
 
 The ``validate_preconfig`` function sends the preconfig YAML text to
 Orchestrator and will either return a success (HTTP 200 OK) or if

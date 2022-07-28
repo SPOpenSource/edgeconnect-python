@@ -2,12 +2,16 @@
 Module Documentation
 ===============================
 
-Module contents
----------------
-
-.. automodule:: pyedgeconnect
+Orchestrator
+----------------
+.. autoclass:: pyedgeconnect.Orchestrator
    :members:
-   :special-members: __init__
-   :undoc-members:
+   :show-inheritance:
+   :member-order: bysource
+
+EdgeConnect
+----------------
+.. autoclass:: pyedgeconnect.EdgeConnect
+   :members:
    :show-inheritance:
    :member-order: bysource

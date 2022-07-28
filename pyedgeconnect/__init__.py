@@ -126,21 +126,22 @@ class HttpCommon:
         :return: Requests Response object
         :rtype: requests.Response
         """
+        response_method = (
+            str(response.request)
+            .replace("<PreparedRequest ", "")
+            .replace(">", "")
+        )
         if response.status_code not in expected_status:
             self.logger.error(
-                "{} {} | Received HTTP {} | Response text: {}".format(
-                    response.request,
-                    api_path,
-                    response.status_code,
-                    response.text,
-                )
+                f"{response_method} {api_path} | Received HTTP "
+                f"{response.status_code} | Response text: {response.text}"
             )
             # return formatted data for the source method
             # for JSON data, return a dictionary with the details of
             # the response
             if return_type == "json":
                 return {
-                    "request": response.request,
+                    "request": response_method,
                     "api_path": api_path,
                     "status_code": response.status_code,
                     "text": response.text,
@@ -157,23 +158,16 @@ class HttpCommon:
         # text from log messages for successful API calls.
         if self.log_success:
             self.logger.info(
-                "{} {} | Received HTTP {} | Response text: {}".format(
-                    response.request,
-                    api_path,
-                    response.status_code,
-                    response.text,
-                )
+                f"{response_method} {api_path} | Received HTTP "
+                f"{response.status_code} | Response text: {response.text}"
             )
         else:
             # Log successful call, omit response text in case sensitive
             # data in response text
             self.logger.info(
-                (
-                    "{} {} | Received: HTTP {} ".format(
-                        response.request, api_path, response.status_code
-                    )
-                    + "| Response text omitted to avoid logging sensitive data"
-                )
+                f"{response_method} {api_path} | Received HTTP "
+                f"{response.status_code} "
+                "| Response omitted to avoid logging sensitive data"
             )
 
         # return formatted data for the source method
@@ -372,7 +366,7 @@ class HttpCommon:
 class Orchestrator(HttpCommon):
     """Orchestrator setup and imports related methods for making API
     calls to Orchestrator. Child class of :class:`HttpCommon`
-    """
+    """  # noqa RST304
 
     def __init__(
         self,
@@ -463,9 +457,9 @@ class Orchestrator(HttpCommon):
             )
 
         # Setup general log settings for messages and errors
-        self.logger = logging.getLogger("orchestrator")
+        self.logger = logging.getLogger(f"orch_{url}")
         self.formatter = logging.Formatter(
-            "%(asctime)s - %(levelname)s - %(message)s"
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
         self.logger.setLevel(logging.INFO)
 
@@ -1230,7 +1224,7 @@ class Orchestrator(HttpCommon):
 class EdgeConnect(HttpCommon):
     """Edge Connect setup and imports related methods for making API
     calls to Edge Connect appliances. Child class of :class:`HttpCommon`
-    """
+    """  # noqa RST304
 
     def __init__(
         self,
@@ -1301,9 +1295,9 @@ class EdgeConnect(HttpCommon):
             )
 
         # Setup general log settings for messages and errors
-        self.logger = logging.getLogger("edgeconnect")
+        self.logger = logging.getLogger(f"ecos_{url}")
         self.formatter = logging.Formatter(
-            "%(asctime)s - %(levelname)s - %(message)s"
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
         self.logger.setLevel(logging.INFO)
 
@@ -1328,22 +1322,104 @@ class EdgeConnect(HttpCommon):
             self.logger.addHandler(self.console_handler)
 
     # Imported methods
+    from .ecos._alarm import (
+        acknowledge_appliance_alarms,
+        add_note_appliance_alarms,
+        clear_appliance_alarms,
+        delete_appliance_alarms,
+        get_appliance_alarm_descriptions,
+        get_appliance_alarms,
+    )
+    from .ecos._bonded_tunnel import (
+        configure_appliance_all_bonded_tunnels,
+        delete_appliance_multiple_bonded_tunnels,
+        delete_appliance_single_bonded_tunnel,
+        get_appliance_all_bonded_tunnel_ids,
+        get_appliance_bonded_tunnel_aliases,
+        get_appliance_bonded_tunnel_live_view_info,
+        get_appliance_bonded_tunnels_config,
+        get_appliance_bonded_tunnels_state,
+        get_appliance_multiple_bonded_tunnels_config,
+        get_appliance_multiple_bonded_tunnels_state,
+        get_appliance_single_bonded_tunnel_config,
+    )
+    from .ecos._cli import (
+        perform_appliance_cli_command,
+        perform_appliance_multiple_cli_command,
+    )
+    from .ecos._deployment import get_appliance_deployment
     from .ecos._disk_usage import get_appliance_disk_usage
     from .ecos._dns import get_appliance_dns_config, set_appliance_dns_config
     from .ecos._gms import assign_orchestrator, get_orchestrator
     from .ecos._interfaces import get_appliance_interfaces
     from .ecos._license import is_reboot_required
+    from .ecos._local_subnets import (
+        add_appliance_locally_configured_routes,
+        appliance_find_preferred_route,
+        delete_appliance_locally_configured_routes,
+        get_appliance_locally_configured_subnets,
+        get_appliance_locally_configured_subnets_single_vrf,
+        get_appliance_routing_peers_info,
+        get_appliance_subnets,
+        get_appliance_subnets_all_vrfs,
+        get_appliance_subnets_single_vrf,
+        update_appliance_all_locally_configured_subnets,
+        update_appliance_all_locally_configured_subnets_single_vrf,
+    )
     from .ecos._login import login, logout
     from .ecos._memory import get_appliance_memory
     from .ecos._network_interfaces import (
         get_appliance_network_interfaces,
         modify_network_interfaces,
     )
+    from .ecos._peers import get_appliance_peers, get_appliance_peers_ec_only
     from .ecos._reboot import request_reboot
     from .ecos._save_changes import save_changes
+    from .ecos._security_maps import (
+        configure_appliance_security_policies,
+        delete_appliance_security_policy_rule,
+        delete_appliance_security_policy_zone_pair,
+        get_appliance_security_policies,
+        get_appliance_security_policy_map,
+        get_appliance_security_policy_settings,
+        get_appliance_security_policy_settings_by_map_name,
+        get_appliance_security_policy_zone_pair,
+        set_appliance_security_policy_settings,
+    )
     from .ecos._sp_portal import register_sp_portal, register_sp_portal_status
     from .ecos._statistics import (
         get_appliance_stats_minute_file,
         get_appliance_stats_minute_range,
     )
+    from .ecos._third_party_tunnel import (
+        configure_appliance_multiple_3rdparty_tunnels,
+        delete_appliance_multiple_3rdparty_tunnels,
+        delete_appliance_single_3rdparty_tunnel,
+        get_appliance_3rdparty_tunnel_aliases,
+        get_appliance_3rdparty_tunnels_config,
+        get_appliance_3rdparty_tunnels_state,
+        get_appliance_all_3rdparty_tunnel_ids,
+        get_appliance_multiple_3rdparty_tunnels_config,
+        get_appliance_multiple_3rdparty_tunnels_state,
+        get_appliance_single_3rdparty_tunnel_config,
+    )
     from .ecos._time import get_appliance_time
+    from .ecos._tunnel import (
+        apply_appliance_tunnel_template,
+        configure_appliance_all_tunnels,
+        configure_appliance_multiple_tunnels,
+        configure_appliance_single_tunnel,
+        delete_appliance_multiple_tunnels,
+        delete_appliance_single_tunnel,
+        get_appliance_all_tunnel_ids,
+        get_appliance_multiple_tunnels_config,
+        get_appliance_multiple_tunnels_state,
+        get_appliance_passthrough_tunnel_source_endpoints,
+        get_appliance_single_tunnel_config,
+        get_appliance_tunnel_aliases,
+        get_appliance_tunnel_source_endpoints,
+        get_appliance_tunnels_config,
+        get_appliance_tunnels_config_and_state,
+        set_appliance_tunnels_ipsec_psk,
+        start_appliance_tunnel_mtu_discovery,
+    )
