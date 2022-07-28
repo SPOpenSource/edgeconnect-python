@@ -366,7 +366,7 @@ class HttpCommon:
 class Orchestrator(HttpCommon):
     """Orchestrator setup and imports related methods for making API
     calls to Orchestrator. Child class of :class:`HttpCommon`
-    """
+    """  # noqa RST304
 
     def __init__(
         self,
@@ -1224,7 +1224,7 @@ class Orchestrator(HttpCommon):
 class EdgeConnect(HttpCommon):
     """Edge Connect setup and imports related methods for making API
     calls to Edge Connect appliances. Child class of :class:`HttpCommon`
-    """
+    """  # noqa RST304
 
     def __init__(
         self,
