@@ -34,11 +34,12 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3 :: Only",
         "Operating System :: OS Independent",
         "Natural Language :: English",
     ],
-    keywords="silver peak, silverpeak, silver peak python, aruba edge connect, edge connect",
+    keywords="silverpeak, silverpeak python, aruba edgeconnect, edgeconnect",
     packages=find_packages(),
     package_dir={"pyedgeconnect": "pyedgeconnect"},
     python_requires=">=3.7, <4",
@@ -52,10 +53,11 @@ setup(
             "isort",
             "sphinx",
             "sphinx_rtd_theme",
+            "pytest",
         ],
     },
     project_urls={
-        "Bug Reports": "https://github.com/SPOpenSource/edgeconnect-python/issues",
+        "Bug Reports": "https://github.com/SPOpenSource/edgeconnect-python/issues",  # noqa E501
         "Source": "https://github.com/SPOpenSource/edgeconnect-python/",
     },
 )
