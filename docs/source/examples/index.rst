@@ -4,7 +4,7 @@ Example Code from Repository
 
 All examples documented in this section are available from the
 GitHub repository within the
-`examples <https://https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+`examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
 folder:
 
 

@@ -23,12 +23,12 @@ related to authenticating to Orchestrator
 ``ORCH_USER``
 ``ORCH_PASSWORD``
 
-If ORCH_URL is specified, it will take precedence, otherwise user will
-be prompted for input to enter the Orchestrator IP or FQDN
+If ``ORCH_URL`` is specified, it will take precedence, otherwise user
+will be prompted for input to enter the Orchestrator IP or FQDN
 
-If ORCH_API_KEY is specified it will take precedence for an authentication
-method over user/password authentication. If not found, the user will be
-prompted for entering an API key.
+If ``ORCH_API_KEY`` is specified it will take precedence for an
+authentication method over user/password authentication. If not found,
+the user will be prompted for entering an API key.
 
 .. code-block:: python
 

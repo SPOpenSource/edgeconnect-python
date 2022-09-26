@@ -19,7 +19,7 @@
 
     The code referenced in this document and all published examples
     with pyedgeconnect are available from the GitHub repository within the
-    `examples <https://https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+    `examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
     folder:
 
 Upload EdgeConnect Security Policy

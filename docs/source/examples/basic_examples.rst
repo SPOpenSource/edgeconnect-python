@@ -1,10 +1,13 @@
 .. basic_examples:
 
 
-The following examples are also included as individual .py files in the
-repository in the `examples` directory. Each example script contains
-logic to authenticate to the Orchestrator as documented in the
-authentication example.
+.. note::
+
+    The code referenced in this document and all published examples
+    with pyedgeconnect are available from the GitHub repository within the
+    `examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+    folder. Each example script contains logic to authenticate to the
+    Orchestrator as documented in the authentication example.
 
 
 Print Appliance Information
