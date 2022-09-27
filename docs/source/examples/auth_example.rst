@@ -10,6 +10,19 @@ methods when connecting to an Aruba Orchestrator instance with pyedgeconnect.
 The example scripts provided in the repository use this process in
 addition to any other required logic for a particular use-case.
 
+.. note::
+
+    The code referenced in this document and all published examples
+    with pyedgeconnect are available from the GitHub repository within the
+    `examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+    folder. Each example script contains logic to authenticate to the
+    Orchestrator as documented in the authentication example.
+
+    Clone the repository and download the examples with:
+
+    .. code:: bash
+
+        $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
 
 
 Environment variables

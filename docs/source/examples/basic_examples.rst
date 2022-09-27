@@ -9,6 +9,12 @@
     folder. Each example script contains logic to authenticate to the
     Orchestrator as documented in the authentication example.
 
+    Clone the repository and download the examples with:
+
+    .. code:: bash
+
+        $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
+
 
 Print Appliance Information
 ===========================
