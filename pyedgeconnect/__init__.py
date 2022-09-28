@@ -1378,6 +1378,7 @@ class EdgeConnect(HttpCommon):
         perform_appliance_cli_command,
         perform_appliance_multiple_cli_command,
     )
+    from .ecos._cpu import get_appliance_cpu
     from .ecos._deployment import get_appliance_deployment
     from .ecos._disk_usage import get_appliance_disk_usage
     from .ecos._dns import get_appliance_dns_config, set_appliance_dns_config
@@ -1422,6 +1423,7 @@ class EdgeConnect(HttpCommon):
         get_appliance_stats_minute_file,
         get_appliance_stats_minute_range,
     )
+    from .ecos._system_info import get_appliance_system_info
     from .ecos._third_party_tunnel import (
         configure_appliance_multiple_3rdparty_tunnels,
         delete_appliance_multiple_3rdparty_tunnels,
