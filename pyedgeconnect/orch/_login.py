@@ -69,7 +69,7 @@ def login(
         return_type="full_response",
     )
 
-    if response.status_code == 200:
+    if response is not None and response.status_code == 200:
         # get and set X-XSRF-TOKEN
         for cookie in response.cookies:
             if cookie.name == "orchCsrfToken":

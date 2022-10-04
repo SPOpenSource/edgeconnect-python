@@ -35,7 +35,7 @@ def login(
             return_type="full_response",
         )
 
-        if response.status_code == 200:
+        if response is not None and response.status_code == 200:
             # get and set X-XSRF-TOKEN
             for cookie in response.cookies:
                 if cookie.name == "edgeosCsrfToken":
@@ -59,7 +59,7 @@ def login(
             return False
 
     except Exception as ex:
-        self.logger.error("login error: {}".format(type(ex)))
+        self.logger.error("login error: {}".format(ex))
         return False
 
 
