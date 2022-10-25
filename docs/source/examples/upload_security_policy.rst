@@ -30,7 +30,7 @@
         $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
 
 Upload EdgeConnect Security Policy
-----------------------------------
+************************************
 
 This example uses a CSV file as source data to generate a security
 policy for EdgeConnect. The security policy can be uploaded to a net-new

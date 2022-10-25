@@ -17,7 +17,7 @@
 
 
 Print Appliance Information
-===========================
+------------------------------
 
 This example retrieves all the appliances currently in Orchestrator
 and then prints the appliances and certain attributes into a table in
@@ -89,7 +89,7 @@ the terminal output.
 
 
 Run Packet Capture
-==================
+-----------------------
 
 This example will run a tcpdump packet capture on the specified
 appliance and then upload the file to Orchestrator so that it can be
@@ -158,8 +158,8 @@ downloaded by the user or uploaded to support.
         pass
 
 
-Create User
-==================
+Create Local Orchestrator User
+--------------------------------
 
 This example will create a new user read-only user
 locally on Orchestrator.

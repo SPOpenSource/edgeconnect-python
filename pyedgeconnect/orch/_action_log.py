@@ -60,7 +60,7 @@ def get_audit_log(
               the action in milliseconds since epoch
             * keyword **percentComplete** (`int`): Percentage completion
               of the action
-            * keyword **completionStatus** (boolean): Show if action
+            * keyword **completionStatus** (`bool`): Show if action
               succeeded or failed
             * keyword **result** (`str`): Opaque blob of data related to
               action. Typically, this is the result of the action.

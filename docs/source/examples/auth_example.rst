@@ -1,8 +1,8 @@
 .. auth_example:
 
-============================
- Authentication
-============================
+
+Authentication
+********************************
 
 The following code snippet is an example of handling multiple authentication
 methods when connecting to an Aruba Orchestrator instance with pyedgeconnect.
