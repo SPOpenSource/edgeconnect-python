@@ -24,7 +24,7 @@
         $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
 
 Generate EdgeConnect Preconfig
-------------------------------
+********************************
 
 This example uses a Jinja template to generate the YAML text for an
 EdgeConnect preconfig. The YAML preconfig allows for an appliance to be
