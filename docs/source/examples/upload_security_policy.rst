@@ -19,11 +19,18 @@
 
     The code referenced in this document and all published examples
     with pyedgeconnect are available from the GitHub repository within the
-    `examples <https://https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
-    folder:
+    `examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+    folder. Each example script contains logic to authenticate to the
+    Orchestrator as documented in the authentication example.
+
+    Clone the repository and download the examples with:
+
+    .. code:: bash
+
+        $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
 
 Upload EdgeConnect Security Policy
-----------------------------------
+************************************
 
 This example uses a CSV file as source data to generate a security
 policy for EdgeConnect. The security policy can be uploaded to a net-new

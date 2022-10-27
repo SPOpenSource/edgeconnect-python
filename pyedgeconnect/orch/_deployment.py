@@ -141,7 +141,7 @@ def get_appliance_deployment(
             * keyword **maxInBWEnabled** (`bool`): Enable inbound
               bandwidth shaping (if this is true, you must specify
               maxInBW)
-            * keyword **licence** (`dict`): Appliance EC license
+            * keyword **license** (`dict`): Appliance EC license
               information (only valid for EC models) \n
                 * keyword **ecMini** (`bool`): Is EC Mini license
                   enabled

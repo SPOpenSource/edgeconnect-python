@@ -33,6 +33,10 @@ def get_appliance_flows(  # noqa: C901, silences flake8 complexity
     edge_ha: bool = False,
     built_in: bool = False,
     uptime: str = None,
+    active_uptime_start: int = None,
+    active_uptime_end: int = None,
+    term_uptime_start: int = None,
+    term_uptime_end: int = None,
     bytes_transferred: str = "total",
     duration: str = None,
     anytime_slow_flows: str = None,
@@ -89,7 +93,7 @@ def get_appliance_flows(  # noqa: C901, silences flake8 complexity
     :param application_group: Filter for application-group flows,
         defaults to None
     :type application_group: str, optional
-    :param protocl: Filter by protocol, e.g. ``ip``, ``icmp``, ``bgp``,
+    :param protocol: Filter by protocol, e.g. ``ip``, ``icmp``, ``bgp``,
         etc., defaults to None
     :type protocol: str, optional
     :param vlan: Filter for VLAN ID, defaults to None
@@ -133,8 +137,27 @@ def get_appliance_flows(  # noqa: C901, silences flake8 complexity
     :param uptime: Filter for uptime of flow. Term for ended within.
         Accepted values include ``anytime``, ``last5m``, ``term5m``,
         ``term``, ``last1hr``, ``term1hr``, ``last4hr``, ``term4h``,
-        ``last24hr``, ``term24hr``, defaults to None
+        ``last24hr``, ``term24hr``. ``last`` implies started, ``term``
+        implies ended. Values can be combined with ``%7C``, e.g.,
+        value of ``anytime%7Cterm24hr`` would implie started anytime or
+        ended within past 24 hours. Defaults to None
     :type uptime: str, optional
+    :param active_uptime_start: Custom start time filter for active
+      flows, units in epoch milliseconds, must be used along with
+      ``active_uptime_end``, otherwise ignored. Defaults to None
+    :type active_uptime_start: int, optional
+    :param active_uptime_end: Custom end time filter for active
+      flows, units in epoch milliseconds, must be used along with
+      ``active_uptime_start``, otherwise ignored. Defaults to None
+    :type active_uptime_end: int, optional
+    :param term_uptime_start: Custom start time filter for ended
+      flows, units in epoch milliseconds, must be used along with
+      ``term_uptime_end``, otherwise ignored. Defaults to None
+    :type term_uptime_start: int, optional
+    :param term_uptime_end: Custom end time filter for ended
+      flows, units in epoch milliseconds, must be used along with
+      ``term_uptime_start``, otherwise ignored. Defaults to None
+    :type term_uptime_end: int, optional
     :param bytes_transferred: Bytes transfered, accepted values are
         ``total`` and ``last5m``, defaults to "total"
     :type bytes_transferred: str, optional
@@ -345,6 +368,12 @@ def get_appliance_flows(  # noqa: C901, silences flake8 complexity
 
     if uptime is not None:
         path = path + "&uptime={}".format(uptime)
+    if active_uptime_start is not None and active_uptime_end is not None:
+        path += f"&anyStartTime={active_uptime_start}&anyEndTime={active_uptime_end}"
+    if term_uptime_start is not None and term_uptime_end is not None:
+        path += (
+            f"&termStartTime={term_uptime_start}&termEndTime={term_uptime_end}"
+        )
 
     path = path + "&bytes={}".format(bytes_transferred)
     path = path + "&duration={}".format(duration)

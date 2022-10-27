@@ -1,14 +1,23 @@
 .. basic_examples:
 
 
-The following examples are also included as individual .py files in the
-repository in the `examples` directory. Each example script contains
-logic to authenticate to the Orchestrator as documented in the
-authentication example.
+.. note::
+
+    The code referenced in this document and all published examples
+    with pyedgeconnect are available from the GitHub repository within the
+    `examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+    folder. Each example script contains logic to authenticate to the
+    Orchestrator as documented in the authentication example.
+
+    Clone the repository and download the examples with:
+
+    .. code:: bash
+
+        $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
 
 
 Print Appliance Information
-===========================
+------------------------------
 
 This example retrieves all the appliances currently in Orchestrator
 and then prints the appliances and certain attributes into a table in
@@ -80,7 +89,7 @@ the terminal output.
 
 
 Run Packet Capture
-==================
+-----------------------
 
 This example will run a tcpdump packet capture on the specified
 appliance and then upload the file to Orchestrator so that it can be
@@ -149,8 +158,8 @@ downloaded by the user or uploaded to support.
         pass
 
 
-Create User
-==================
+Create Local Orchestrator User
+--------------------------------
 
 This example will create a new user read-only user
 locally on Orchestrator.

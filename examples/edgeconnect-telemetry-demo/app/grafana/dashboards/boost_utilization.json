@@ -1,0 +1,467 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 1,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "datasource": {
+                "type": "datasource",
+                "uid": "grafana"
+            },
+            "description": "This example code serves to demonstrate the possibilities in\nretrieving telemetry data from Orchestrator and EdgeConnect and\nvisuzalize it. The demo is simple to run, however, modifying\nand/or incorporating components of this work into your own solution\nrequires a greater understanding of Python, Docker, InfluxDB,\nGrafana, and Redis.\n\n\nAll of these components are not necessarily required for developing\nyour own solution as there may be pieces of data you don't need\nto collect, some additional others that you want to add,\nsubstitude alternative tools for task queuing, database, and\nvisualization or alerting needs.",
+            "gridPos": {
+                "h": 2,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 19,
+            "options": {
+                "content": "<h1 style=\"color:red;text-align:center;\">THIS DEMO IS NOT MEANT TO BE A PRODUCTION MONITORING SOLUTION</h1>",
+                "mode": "html"
+            },
+            "pluginVersion": "9.1.6",
+            "transparent": true,
+            "type": "text"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "ec_telem_influx"
+            },
+            "description": "Calculating Boost Utilization normalized over all appliances. Calculates percentage utilization comparing real utilization against configured max on appliance. Administrator would need to determine if an appliance reaching high utilization has enough resources and/or large enough hardware to support increasing the maximum value if running high.",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "scaleDistribution": {
+                            "type": "linear"
+                        }
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 0,
+                "y": 2
+            },
+            "id": 92,
+            "interval": "1m",
+            "options": {
+                "calculate": false,
+                "cellGap": 1,
+                "cellValues": {
+                    "unit": "percentunit"
+                },
+                "color": {
+                    "exponent": 0.5,
+                    "fill": "dark-orange",
+                    "max": 1,
+                    "min": 0,
+                    "mode": "scheme",
+                    "reverse": false,
+                    "scale": "exponential",
+                    "scheme": "Spectral",
+                    "steps": 64
+                },
+                "exemplars": {
+                    "color": "rgba(255,0,255,0.7)"
+                },
+                "filterValues": {
+                    "le": 1e-9
+                },
+                "legend": {
+                    "show": true
+                },
+                "rowsFrame": {
+                    "layout": "auto"
+                },
+                "tooltip": {
+                    "show": true,
+                    "yHistogram": false
+                },
+                "yAxis": {
+                    "axisPlacement": "left",
+                    "reverse": false
+                }
+            },
+            "pluginVersion": "9.1.6",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "ec_telem_influx"
+                    },
+                    "query": "boost = from(bucket: \"ECTELEM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"boost_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"boost_bytes\")\n  |> map(fn: (r) => ({r with _value: r._value / 8}))\n\nconfigured = from(bucket: \"ECTELEM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"boost_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"boost_configured_kbps\")\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n\n// Calculate Utilization of Boost Used vs Configured Boost\njoin(tables:{boost:boost, configured:configured}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ _time: r._time, hostname: r.hostname,\n   _value: float(v: r._value_boost) / float(v: r._value_configured) }))\n  |> yield(name: \"boost\")",
+                    "refId": "Boost Bytes"
+                }
+            ],
+            "title": "Boost Bytes - Normalized %",
+            "transformations": [],
+            "transparent": true,
+            "type": "heatmap"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "ec_telem_influx"
+            },
+            "description": "Actual Boost Utilization over all appliances. Keep in mind some appliances may be capable of much higher Boost throughputs so good to reference the Normalized chart when comparing appliances against each other",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "scaleDistribution": {
+                            "type": "linear"
+                        }
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 12,
+                "y": 2
+            },
+            "id": 93,
+            "interval": "1m",
+            "options": {
+                "calculate": false,
+                "cellGap": 1,
+                "cellValues": {
+                    "unit": "decbytes"
+                },
+                "color": {
+                    "exponent": 0.5,
+                    "fill": "dark-orange",
+                    "min": 0,
+                    "mode": "scheme",
+                    "reverse": false,
+                    "scale": "exponential",
+                    "scheme": "Spectral",
+                    "steps": 64
+                },
+                "exemplars": {
+                    "color": "rgba(255,0,255,0.7)"
+                },
+                "filterValues": {
+                    "le": 1e-9
+                },
+                "legend": {
+                    "show": true
+                },
+                "rowsFrame": {
+                    "layout": "auto"
+                },
+                "tooltip": {
+                    "show": true,
+                    "yHistogram": true
+                },
+                "yAxis": {
+                    "axisPlacement": "left",
+                    "reverse": false
+                }
+            },
+            "pluginVersion": "9.1.6",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "ec_telem_influx"
+                    },
+                    "query": "from(bucket: \"ECTELEM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"boost_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"boost_bytes\")\n  |> keep(columns: [\"_value\", \"_time\", \"boost_bytes\",\"hostname\"])",
+                    "refId": "Boost Bytes"
+                }
+            ],
+            "title": "Boost Bytes - Actual",
+            "transformations": [],
+            "transparent": true,
+            "type": "heatmap"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "ec_telem_influx"
+            },
+            "description": "Cumulative sum of Boosted Bytes per appliance in the fabric",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "fixedColor": "dark-blue",
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": [],
+                    "unit": "decbytes"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 0,
+                "y": 12
+            },
+            "id": 87,
+            "interval": "1m",
+            "options": {
+                "legend": {
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Value",
+                    "sortDesc": false,
+                    "values": [
+                        "value"
+                    ]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "9.1.6",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "ec_telem_influx"
+                    },
+                    "query": "from(bucket: \"ECTELEM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"boost_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"boost_bytes\")\n  |> cumulativeSum()\n  |> keep(columns: [\"_value\", \"_time\", \"boost_bytes\",\"hostname\"])",
+                    "refId": "Boost Bytes"
+                }
+            ],
+            "title": "Total Boost Bytes",
+            "transformations": [],
+            "transparent": true,
+            "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "ec_telem_influx"
+            },
+            "description": "Monitor for any appliances logging time where insufficient Boost was experienced between traffic matching Boost and hitting the configured maximum on the appliance",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 12,
+                "y": 12
+            },
+            "id": 89,
+            "interval": "1m",
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "max"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Max",
+                    "sortDesc": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "9.1.6",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "ec_telem_influx"
+                    },
+                    "query": "from(bucket: \"ECTELEM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"boost_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"seconds_not_boosted_in_minute\")",
+                    "refId": "Boost Bytes"
+                }
+            ],
+            "title": "Time Insufficient Boost",
+            "transformations": [
+                {
+                    "id": "renameByRegex",
+                    "options": {
+                        "regex": "(.*)(hostname=\")(.*)(.*?\")(.*)",
+                        "renamePattern": "$3"
+                    }
+                }
+            ],
+            "transparent": true,
+            "type": "timeseries"
+        }
+    ],
+    "refresh": "1m",
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "current": {
+                    "selected": false,
+                    "text": "ECTELEM",
+                    "value": "ECTELEM"
+                },
+                "datasource": {
+                    "type": "influxdb",
+                    "uid": "ec_telem_influx"
+                },
+                "definition": "buckets() ",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Database Bucket",
+                "multi": false,
+                "name": "db_bucket",
+                "options": [],
+                "query": "buckets() ",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            },
+            {
+                "current": {
+                    "selected": true,
+                    "text": [
+                        "All"
+                    ],
+                    "value": [
+                        "$__all"
+                    ]
+                },
+                "datasource": {
+                    "type": "influxdb",
+                    "uid": "ec_telem_influx"
+                },
+                "definition": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${db_bucket}\",\n    tag: \"hostname\",\n    predicate: (r) => true,\n)",
+                "description": "Hostname of EdgeConnect",
+                "hide": 0,
+                "includeAll": true,
+                "label": "Appliance",
+                "multi": true,
+                "name": "ec_hostname",
+                "options": [],
+                "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${db_bucket}\",\n    tag: \"hostname\",\n    predicate: (r) => true,\n)",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-1h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Boost Utilization",
+    "uid": "all-appliance-boost",
+    "version": 1,
+    "weekStart": ""
+}

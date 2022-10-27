@@ -24,21 +24,30 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+_version.py
 
 # Dev
 .vscode
 
 # Tests
-tests/dev
 .tox
 
 # Documentation
 docs/build/
 docs/source/_build
-examples/generate_preconfig/preconfig_outputs
 
 # dotenv
 *.env
+
+# Code Examples
+examples/generate_preconfig/preconfig_outputs
+examples/edgeconnect-telemetry-demo/app/grafana/data
+examples/edgeconnect-telemetry-demo/app/influxdb/data
+examples/edgeconnect-telemetry-demo/app/influxdb/config
+examples/edgeconnect-telemetry-demo/app/redis
+examples/edgeconnect-telemetry-demo/app/worker
+examples/edgeconnect-telemetry-demo/app/logging/
+!example.env
 
 # Virtual Environment
 .venv/

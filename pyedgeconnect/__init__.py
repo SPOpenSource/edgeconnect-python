@@ -36,7 +36,7 @@ class HttpCommon:
             json=data,
             files=files,
             verify=self.verify,
-            timeout=120,
+            timeout=self.timeout,
             headers=self.headers,
         )
 
@@ -55,7 +55,7 @@ class HttpCommon:
         return self.session.get(
             self.url_prefix + url + apiSrcStr,
             verify=self.verify,
-            timeout=120,
+            timeout=self.timeout,
             headers=self.headers,
         )
 
@@ -74,7 +74,7 @@ class HttpCommon:
         return self.session.delete(
             self.url_prefix + url + apiSrcStr,
             verify=self.verify,
-            timeout=120,
+            timeout=self.timeout,
             headers=self.headers,
         )
 
@@ -97,7 +97,7 @@ class HttpCommon:
             self.url_prefix + url + apiSrcStr,
             json=data,
             verify=self.verify,
-            timeout=120,
+            timeout=self.timeout,
             headers=self.headers,
         )
 
@@ -221,6 +221,11 @@ class HttpCommon:
                 api_path, response, expected_status, return_type
             )
 
+        except requests.exceptions.ConnectTimeout:
+            self.logger.error(
+                f"POST {api_path} | Request Timed Out - "
+                f"Timeout values (connect/read): {self.timeout}"
+            )
         except Exception as ex:
             self.logger.error(
                 "Exception {} when calling POST {}. Traceback: {}".format(
@@ -263,7 +268,11 @@ class HttpCommon:
             return self._handle_response(
                 api_path, response, expected_status, return_type
             )
-
+        except requests.exceptions.ConnectTimeout:
+            self.logger.error(
+                f"GET {api_path} | Request Timed Out - "
+                f"Timeout values (connect/read): {self.timeout}"
+            )
         except Exception as ex:
             self.logger.error(
                 "Exception {} when calling GET {}. Traceback: {}".format(
@@ -306,7 +315,11 @@ class HttpCommon:
             return self._handle_response(
                 api_path, response, expected_status, return_type
             )
-
+        except requests.exceptions.ConnectTimeout:
+            self.logger.error(
+                f"DELETE {api_path} | Request Timed Out - "
+                f"Timeout values (connect/read): {self.timeout}"
+            )
         except Exception as ex:
             self.logger.error(
                 "Exception {} when calling DELETE {}. Traceback: {}".format(
@@ -352,7 +365,11 @@ class HttpCommon:
             return self._handle_response(
                 api_path, response, expected_status, return_type
             )
-
+        except requests.exceptions.ConnectTimeout:
+            self.logger.error(
+                f"PUT {api_path} | Request Timed Out - "
+                f"Timeout values (connect/read): {self.timeout}"
+            )
         except Exception as ex:
             self.logger.error(
                 "Exception {} when calling PUT {}. Traceback: {}".format(
@@ -377,6 +394,7 @@ class Orchestrator(HttpCommon):
         log_console: bool = False,
         log_success: bool = False,
         verify_ssl: bool = True,
+        timeout: tuple = (9.15, 12),
     ):
         """Setup Orchestrator instance
 
@@ -409,6 +427,11 @@ class Orchestrator(HttpCommon):
         :param verify_ssl: Set to ``False`` to ignore certificate
             warnings within requests, defaults to ``True``
         :type verify_ssl: bool, optional
+        :param timeout: Timeout values (in seconds) for requests, first
+            value is for initial connection, second value is for read
+            timeouts. Defaults to ``(9.15, 12)``, 9.15 seconds for
+            connection, 12 seconds for server data response.
+        :type timeout: tuple, optional
         :raises ValueError: If Orchestrator auth_mode specified not in
             supported_auth_modes
         """
@@ -420,6 +443,7 @@ class Orchestrator(HttpCommon):
             )
 
         self.url_prefix = "https://" + url + "/gms/rest"
+        self.timeout = timeout
         self.session = requests.Session()
         if api_key != "":
             self.headers = {"X-Auth-Token": api_key}
@@ -1233,6 +1257,7 @@ class EdgeConnect(HttpCommon):
         log_console: bool = False,
         log_success: bool = False,
         verify_ssl: bool = True,
+        timeout: tuple = (9.15, 12),
     ):
         """Setup Edge Connect instance
 
@@ -1264,9 +1289,15 @@ class EdgeConnect(HttpCommon):
         :type log_success: bool, optional
         :param verify_ssl: Set to ``False`` to ignore certificate
             warnings within requests, defaults to ``True``
+        :param timeout: Timeout values (in seconds) for requests, first
+            value is for initial connection, second value is for read
+            timeouts. Defaults to ``(9.15, 12)``, 9.15 seconds for
+            connection, 12 seconds for server data response.
+        :type timeout: tuple, optional
         :type verify_ssl: bool, optional
         """
         self.url_prefix = "https://" + url + ":443/rest/json"
+        self.timeout = timeout
         self.session = requests.Session()
         self.headers = {}
         # for API calls w/ just source as query param
@@ -1347,6 +1378,7 @@ class EdgeConnect(HttpCommon):
         perform_appliance_cli_command,
         perform_appliance_multiple_cli_command,
     )
+    from .ecos._cpu import get_appliance_cpu
     from .ecos._deployment import get_appliance_deployment
     from .ecos._disk_usage import get_appliance_disk_usage
     from .ecos._dns import get_appliance_dns_config, set_appliance_dns_config
@@ -1388,9 +1420,11 @@ class EdgeConnect(HttpCommon):
     )
     from .ecos._sp_portal import register_sp_portal, register_sp_portal_status
     from .ecos._statistics import (
+        get_appliance_realtime_stats,
         get_appliance_stats_minute_file,
         get_appliance_stats_minute_range,
     )
+    from .ecos._system_info import get_appliance_system_info
     from .ecos._third_party_tunnel import (
         configure_appliance_multiple_3rdparty_tunnels,
         delete_appliance_multiple_3rdparty_tunnels,

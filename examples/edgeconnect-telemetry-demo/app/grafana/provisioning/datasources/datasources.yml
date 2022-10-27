@@ -1,0 +1,32 @@
+# config file version
+apiVersion: 1
+
+datasources:
+  - access: "server"
+    editable: true
+    is_default: true
+    name: "Influxdb"
+    org_id: 1
+    type: "influxdb"
+    url: "${DB_URL}"
+    database: "db2"
+    version: 1
+    uid: "ec_telem_influx"
+    secureJsonData:
+      token: ${DB_TOKEN}
+    jsonData:
+      version: Flux
+      organization: ${DB_ORG}
+      defaultBucket: ${DB_BUCKET}
+      tlsSkipVerify: true
+
+  - name: "prometheus"
+    uid: "prometheus"
+    type: prometheus
+    access: "server"
+    orgId: 1
+    url: http://prometheus:9090
+    isDefault: false
+    version: 1
+    editable: true
+    exemplar: false

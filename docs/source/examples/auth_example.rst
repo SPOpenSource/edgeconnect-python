@@ -1,8 +1,8 @@
 .. auth_example:
 
-============================
- Authentication
-============================
+
+Authentication
+********************************
 
 The following code snippet is an example of handling multiple authentication
 methods when connecting to an Aruba Orchestrator instance with pyedgeconnect.
@@ -10,6 +10,19 @@ methods when connecting to an Aruba Orchestrator instance with pyedgeconnect.
 The example scripts provided in the repository use this process in
 addition to any other required logic for a particular use-case.
 
+.. note::
+
+    The code referenced in this document and all published examples
+    with pyedgeconnect are available from the GitHub repository within the
+    `examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+    folder. Each example script contains logic to authenticate to the
+    Orchestrator as documented in the authentication example.
+
+    Clone the repository and download the examples with:
+
+    .. code:: bash
+
+        $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
 
 
 Environment variables
@@ -23,12 +36,12 @@ related to authenticating to Orchestrator
 ``ORCH_USER``
 ``ORCH_PASSWORD``
 
-If ORCH_URL is specified, it will take precedence, otherwise user will
-be prompted for input to enter the Orchestrator IP or FQDN
+If ``ORCH_URL`` is specified, it will take precedence, otherwise user
+will be prompted for input to enter the Orchestrator IP or FQDN
 
-If ORCH_API_KEY is specified it will take precedence for an authentication
-method over user/password authentication. If not found, the user will be
-prompted for entering an API key.
+If ``ORCH_API_KEY`` is specified it will take precedence for an
+authentication method over user/password authentication. If not found,
+the user will be prompted for entering an API key.
 
 .. code-block:: python
 

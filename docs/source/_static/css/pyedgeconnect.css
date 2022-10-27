@@ -1,0 +1,143 @@
+/* Nav Search Background */
+.wy-side-nav-search {
+    background-color: #FF8300
+}
+
+.wy-side-nav-search .wy-dropdown>a img.logo,
+.wy-side-nav-search>a img.logo {
+    width: 125px;
+}
+
+/* Menu Title Color */
+.wy-menu-vertical p.caption {
+    color: #FF8300;
+}
+
+/* Content background */
+.wy-nav-content {
+    margin: 0;
+    background: #0F3250;
+}
+
+/* Outer background */
+.wy-nav-content-wrap {
+    background: #343131;
+}
+
+/* Body Text Color */
+body {
+    color: #dbdce1;
+}
+
+dd {
+    display: block;
+    margin-inline-start: 0px;
+}
+
+/* Header Text Color */
+.rst-content .toctree-wrapper>p.caption,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend {
+    color: #FFFFFF;
+}
+
+/* Notes, Warnings, Important Colors */
+.rst-content .note .admonition-title {
+    background: rgba(53, 139, 193, 1)
+}
+
+.rst-content .note {
+    background: rgba(53, 139, 193, 0.5)
+}
+
+.rst-content .warning .admonition-title {
+    background: rgba(193, 53, 53, 1)
+}
+
+.rst-content .warning {
+    background: rgba(193, 53, 53, 0.5)
+}
+
+.rst-content .important .admonition-title {
+    background: rgba(255, 131, 0, 1)
+}
+
+.rst-content .important {
+    background: rgba(255, 131, 0, 0.7)
+}
+
+
+/* Code Highlight */
+.highlight {
+    color: #ADE1F0;
+    background: #04121e;
+}
+
+.highlight .s1 {
+    color: #FF8300;
+}
+
+.highlight .s2 {
+    color: #FF8300;
+}
+
+.highlight .sd {
+    color: #FF8300;
+}
+
+.rst-content div[class^=highlight],
+.rst-content pre.literal-block {
+    border: none
+}
+
+
+.rst-content code.literal,
+.rst-content tt.literal {
+    color: #ADE1F0;
+    background: #04121e;
+    border: none;
+}
+
+.rst-content code.xref,
+.rst-content tt.xref,
+a .rst-content code,
+a .rst-content tt {
+    font-weight: 900;
+}
+
+
+/* Table Text */
+.rst-content table.docutils caption,
+.rst-content table.field-list caption,
+.wy-table caption {
+    color: #ADE1F0;
+}
+
+.rst-content table.docutils thead,
+.rst-content table.field-list thead,
+.wy-table thead {
+    color: #ADE1F0;
+}
+
+.rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td,
+.wy-table-backed,
+.wy-table-odd td,
+.wy-table-striped tr:nth-child(2n-1) td {
+    background-color: #184369;
+}
+
+/* Module Content */
+
+html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) .descname,
+html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) .sig-name {
+    color: #0F3250;
+}
+
+strong {
+    color: #ADE1F0;
+}

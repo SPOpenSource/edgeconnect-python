@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  cadvisor:
+    image: google/cadvisor
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.0.0
+    container_name: prometheus
+    volumes:
+      - ./app/prometheus/:/etc/prometheus/:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention=3d'
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+
+  rqdashboard:
+    container_name: redis_rq_dashboard
+    image: ec-telemetry-image:latest
+    # dns: ${DNS_SERVER}
+    ports:
+      - "9181:9181"
+    depends_on:
+      - redis
+    command: rq-dashboard -H redis
+    links:
+      - redis
+    restart: unless-stopped
