@@ -104,7 +104,7 @@ def create_preconfig(
     serial_number: str = "",
     tag: str = "",
     comment: str = "",
-) -> bool:
+) -> dict:
     """Upload a YAML Preconfig to Orchestrator
 
     .. list-table::
@@ -135,8 +135,10 @@ def create_preconfig(
     :type tag: str, optional
     :param comment: Comment field / notes on preconfig, defaults to ""
     :type comment: str, optional
-    :return: Returns True/False based on successful call
-    :rtype: bool
+    :return: Returns assigned ID value of newly created preconfig \n
+        * keyword **id** (`int`): Id of the new preconfiguration to be
+          referenced in other API calls
+    :rtype: dict
     """
     yaml_byte = yaml_preconfig.encode("utf-8")
     yaml_b64 = base64.b64encode(yaml_byte)
@@ -154,7 +156,8 @@ def create_preconfig(
     }
 
     return self._post(
-        "/gms/appliance/preconfiguration", data=data, return_type="bool"
+        "/gms/appliance/preconfiguration",
+        data=data,
     )
 
 
