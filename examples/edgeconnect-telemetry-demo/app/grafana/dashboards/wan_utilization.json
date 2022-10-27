@@ -1,0 +1,428 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 4,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "datasource": {
+                "type": "datasource",
+                "uid": "grafana"
+            },
+            "description": "This example code serves to demonstrate the possibilities in\nretrieving telemetry data from Orchestrator and EdgeConnect and\nvisuzalize it. The demo is simple to run, however, modifying\nand/or incorporating components of this work into your own solution\nrequires a greater understanding of Python, Docker, InfluxDB,\nGrafana, and Redis.\n\n\nAll of these components are not necessarily required for developing\nyour own solution as there may be pieces of data you don't need\nto collect, some additional others that you want to add,\nsubstitude alternative tools for task queuing, database, and\nvisualization or alerting needs.",
+            "gridPos": {
+                "h": 2,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 19,
+            "options": {
+                "content": "<h1 style=\"color:red;text-align:center;\">THIS DEMO IS NOT MEANT TO BE A PRODUCTION MONITORING SOLUTION</h1>",
+                "mode": "html"
+            },
+            "pluginVersion": "9.1.6",
+            "transparent": true,
+            "type": "text"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "ec_telem_influx"
+            },
+            "description": "Normalized view comparing all appliance system-level WAN utilization against configured max system deployment values and license values to identify appliances in the fabric running high.\n\n\nTable defaults to sorting by Last highest value",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "area"
+                        }
+                    },
+                    "decimals": 2,
+                    "mappings": [],
+                    "max": 1,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.6
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 0.7
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.8
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.9
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 12,
+                "w": 24,
+                "x": 0,
+                "y": 2
+            },
+            "id": 171,
+            "interval": "1m",
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "mean",
+                        "max",
+                        "lastNotNull"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Last *",
+                    "sortDesc": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "9.0.4",
+            "repeatDirection": "h",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "ec_telem_influx"
+                    },
+                    "hide": false,
+                    "query": "lic = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"appliance_metadata\")\n  // exclude showing license for Unlimited as value is irrelevent\n  |> filter(fn: (r) => r[\"_field\"] == \"license_bw\" and r._value < 1000000000 and r._value > 0)\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n  \ndatarx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"flow_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_rx_bytes\")\n  |> filter(fn: (r) => r[\"traffic_type\"] == \"all_traffic\")\n  |> map(fn: (r) => ({r with _value: r._value / 8}))\n  |> drop(columns: [\"flow_type\"])\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\ndeprx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"deployment_info\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_inbound_bw\")\n  |> filter(fn: (r) => r[\"interface_name\"] == \"SYSTEM\")\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\n// Calculate Utilization of DataRX vs Deployment\njoin(tables:{deprx:deprx, datarx:datarx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ _time: r._time, hostname: r.hostname,\n    \"RX Deployment -\": float(v: r._value_datarx) / float(v: r._value_deprx) }))\n  |> yield(name: \"inbound dep\")\n\n// Calculate Utilization of DataRX vs License\njoin(tables:{lic:lic, datarx:datarx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ _time: r._time, hostname: r.hostname,\n    \"RX License -\": float(v: r._value_datarx) / float(v: r._value_lic) }))\n  |> yield(name: \"inbound lic\")\n\n\ndatatx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"flow_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_tx_bytes\")\n  |> filter(fn: (r) => r[\"traffic_type\"] == \"all_traffic\")\n  |> map(fn: (r) => ({r with _value: r._value / 8}))\n  |> drop(columns: [\"flow_type\"])\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\ndeptx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"deployment_info\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_outbound_bw\")\n  |> filter(fn: (r) => r[\"interface_name\"] == \"SYSTEM\")\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\n// Calculate Utilization of DataTX vs Deployment\njoin(tables:{deptx:deptx, datatx:datatx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ _time: r._time, hostname: r.hostname,\n    \"TX Deployment -\": float(v: r._value_datatx) / float(v: r._value_deptx) }))\n  |> yield(name: \"outbound dep\")\n\n// Calculate Utilization of DataTX vs License\njoin(tables:{lic:lic, datatx:datatx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ _time: r._time, hostname: r.hostname,\n    \"TX License -\": float(v: r._value_datatx) / float(v: r._value_lic) }))\n  |> yield(name: \"outbound lic\")",
+                    "refId": "DataRX"
+                }
+            ],
+            "title": "WAN Utilization",
+            "transformations": [],
+            "transparent": true,
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "ec_telem_influx"
+            },
+            "description": "Histogram view comparing all appliance maximum system-level WAN utilization observed in the time period. Percentage utilization is calculated via configured system deployment values and license values to identify trends in fabric utilization against appliance configurations",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineWidth": 0
+                    },
+                    "mappings": [],
+                    "max": 1,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.6
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 0.7
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.8
+                            },
+                            {
+                                "color": "dark-red",
+                                "value": 0.9
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 0,
+                "y": 14
+            },
+            "id": 169,
+            "interval": "1m",
+            "options": {
+                "bucketOffset": 0,
+                "bucketSize": 0.01,
+                "combine": true,
+                "legend": {
+                    "calcs": [
+                        "max"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Max",
+                    "sortDesc": true
+                }
+            },
+            "pluginVersion": "9.0.4",
+            "repeatDirection": "h",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "ec_telem_influx"
+                    },
+                    "hide": false,
+                    "query": "lic = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"appliance_metadata\")\n  // exclude showing license for Unlimited as value is irrelevent\n  |> filter(fn: (r) => r[\"_field\"] == \"license_bw\" and r._value < 1000000000 and r._value > 0)\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n  \ndatarx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"flow_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_rx_bytes\")\n  |> filter(fn: (r) => r[\"traffic_type\"] == \"all_traffic\")\n  |> map(fn: (r) => ({r with _value: r._value / 8}))\n  |> drop(columns: [\"flow_type\"])\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\ndeprx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"deployment_info\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_inbound_bw\")\n  |> filter(fn: (r) => r[\"interface_name\"] == \"SYSTEM\")\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\n// Calculate Utilization of DataRX vs Deployment\njoin(tables:{deprx:deprx, datarx:datarx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ hostname: r.hostname,\n    \"RX Deployment -\": float(v: r._value_datarx) / float(v: r._value_deprx) }))\n  |> max(column: \"RX Deployment -\")\n  |> yield(name: \"inbound dep\")\n\n// Calculate Utilization of DataRX vs License\njoin(tables:{lic:lic, datarx:datarx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({hostname: r.hostname,\n    \"RX License -\": float(v: r._value_datarx) / float(v: r._value_lic) }))\n  |> max(column: \"RX License -\")\n  |> yield(name: \"inbound lic\")\n\n\ndatatx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"flow_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_tx_bytes\")\n  |> filter(fn: (r) => r[\"traffic_type\"] == \"all_traffic\")\n  |> map(fn: (r) => ({r with _value: r._value / 8}))\n  |> drop(columns: [\"flow_type\"])\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\ndeptx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"deployment_info\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_outbound_bw\")\n  |> filter(fn: (r) => r[\"interface_name\"] == \"SYSTEM\")\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\n// Calculate Utilization of DataTX vs Deployment\njoin(tables:{deptx:deptx, datatx:datatx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ hostname: r.hostname,\n    \"TX Deployment -\": float(v: r._value_datatx) / float(v: r._value_deptx) }))\n  |> max(column: \"TX Deployment -\")\n  |> yield(name: \"outbound dep\")\n\n// Calculate Utilization of DataTX vs License\njoin(tables:{lic:lic, datatx:datatx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ hostname: r.hostname,\n    \"TX License -\": float(v: r._value_datatx) / float(v: r._value_lic) }))\n  |> max(column: \"TX License -\")\n  |> yield(name: \"outbound lic\")",
+                    "refId": "DataRX"
+                }
+            ],
+            "title": "Max WAN Utilization (vs Deployment & License)",
+            "transformations": [],
+            "transparent": true,
+            "type": "histogram"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "ec_telem_influx"
+            },
+            "description": "Histogram view comparing all appliance 95th percentile system-level WAN utilization observed in the time period. Percentage utilization is calculated via configured system deployment values and license values to identify trends in fabric utilization against appliance configurations",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineWidth": 0
+                    },
+                    "decimals": 0,
+                    "mappings": [],
+                    "max": 1,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 0.6
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 0.7
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.8
+                            },
+                            {
+                                "color": "dark-red",
+                                "value": 0.9
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 12,
+                "y": 14
+            },
+            "id": 172,
+            "interval": "1m",
+            "options": {
+                "bucketOffset": 0,
+                "bucketSize": 0.01,
+                "combine": true,
+                "legend": {
+                    "calcs": [
+                        "max"
+                    ],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Max",
+                    "sortDesc": true
+                }
+            },
+            "pluginVersion": "9.0.4",
+            "repeatDirection": "h",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "ec_telem_influx"
+                    },
+                    "hide": false,
+                    "query": "lic = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"appliance_metadata\")\n  // exclude showing license for Unlimited as value is irrelevent\n  |> filter(fn: (r) => r[\"_field\"] == \"license_bw\" and r._value < 1000000000 and r._value > 0)\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n  \ndatarx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"flow_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_rx_bytes\")\n  |> filter(fn: (r) => r[\"traffic_type\"] == \"all_traffic\")\n  |> map(fn: (r) => ({r with _value: r._value / 8}))\n  |> drop(columns: [\"flow_type\"])\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\ndeprx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"deployment_info\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_inbound_bw\")\n  |> filter(fn: (r) => r[\"interface_name\"] == \"SYSTEM\")\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\n// Calculate Utilization of DataRX vs Deployment\njoin(tables:{deprx:deprx, datarx:datarx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ hostname: r.hostname,\n    \"RX Deployment -\": float(v: r._value_datarx) / float(v: r._value_deprx) }))\n  |> quantile(q: 0.95, column: \"RX Deployment -\")\n  |> yield(name: \"inbound dep\")\n\n// Calculate Utilization of DataRX vs License\njoin(tables:{lic:lic, datarx:datarx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({hostname: r.hostname,\n    \"RX License -\": float(v: r._value_datarx) / float(v: r._value_lic) }))\n  |> quantile(q: 0.95, column: \"RX License -\")\n  |> yield(name: \"inbound lic\")\n\n\ndatatx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"flow_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_tx_bytes\")\n  |> filter(fn: (r) => r[\"traffic_type\"] == \"all_traffic\")\n  |> map(fn: (r) => ({r with _value: r._value / 8}))\n  |> drop(columns: [\"flow_type\"])\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\ndeptx = from(bucket: \"${db_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"deployment_info\")\n  |> filter(fn: (r) => r[\"_field\"] == \"wan_outbound_bw\")\n  |> filter(fn: (r) => r[\"interface_name\"] == \"SYSTEM\")\n  |> map(fn: (r) => ({r with _value: r._value * 1000}))\n  |> aggregateWindow(every:1m,fn:last)\n  |> fill(column: \"_value\", usePrevious: true)\n\n// Calculate Utilization of DataTX vs Deployment\njoin(tables:{deptx:deptx, datatx:datatx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ hostname: r.hostname,\n    \"TX Deployment -\": float(v: r._value_datatx) / float(v: r._value_deptx) }))\n  |> quantile(q: 0.95, column: \"TX Deployment -\")\n  |> yield(name: \"outbound dep\")\n\n// Calculate Utilization of DataTX vs License\njoin(tables:{lic:lic, datatx:datatx}, on:[\"_time\", \"hostname\"])\n  |> map(fn:(r) => ({ hostname: r.hostname,\n    \"TX License -\": float(v: r._value_datatx) / float(v: r._value_lic) }))\n  |> quantile(q: 0.95, column: \"TX License -\")\n  |> yield(name: \"outbound lic\")",
+                    "refId": "DataRX"
+                }
+            ],
+            "title": "95th Percentile WAN Utilization (vs Deployment & License)",
+            "transformations": [],
+            "transparent": true,
+            "type": "histogram"
+        }
+    ],
+    "refresh": "1m",
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "current": {
+                    "selected": false,
+                    "text": "ECTELEM",
+                    "value": "ECTELEM"
+                },
+                "datasource": {
+                    "type": "influxdb",
+                    "uid": "ec_telem_influx"
+                },
+                "definition": "buckets() ",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Database Bucket",
+                "multi": false,
+                "name": "db_bucket",
+                "options": [],
+                "query": "buckets() ",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            },
+            {
+                "current": {
+                    "selected": true,
+                    "text": [
+                        "All"
+                    ],
+                    "value": [
+                        "$__all"
+                    ]
+                },
+                "datasource": {
+                    "type": "influxdb",
+                    "uid": "ec_telem_influx"
+                },
+                "definition": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${db_bucket}\",\n    tag: \"hostname\",\n    predicate: (r) => true,\n)",
+                "description": "Hostname of EdgeConnect",
+                "hide": 0,
+                "includeAll": true,
+                "label": "Appliance",
+                "multi": true,
+                "name": "ec_hostname",
+                "options": [],
+                "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${db_bucket}\",\n    tag: \"hostname\",\n    predicate: (r) => true,\n)",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-1h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "WAN Utilization",
+    "uid": "all-appliance-wan",
+    "version": 1,
+    "weekStart": ""
+}

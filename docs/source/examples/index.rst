@@ -23,3 +23,4 @@ Example script documentation and instructions
    basic_examples
    generate_preconfig
    upload_security_policy
+   ec_telemetry_demo

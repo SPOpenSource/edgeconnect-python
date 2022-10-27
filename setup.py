@@ -54,6 +54,7 @@ setup(
             "sphinx",
             "sphinx_rtd_theme",
             "pytest",
+            "tox",
         ],
     },
     project_urls={

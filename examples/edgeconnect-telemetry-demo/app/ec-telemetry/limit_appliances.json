@@ -1,0 +1,9 @@
+{
+    "appliance_subset": [],
+    "example": [
+        "Hostname-01",
+        "SITE-HQ-02",
+        "MyAppliance-A"
+    ],
+    "comment": "List of appliance hostnames to limit telemetry collection to"
+}
