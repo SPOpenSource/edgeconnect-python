@@ -1,0 +1,133 @@
+# THIS DEMO IS NOT MEANT TO BE A PRODUCTION MONITORING SOLUTION
+
+# This example code serves to demonstrate the possibilities in
+# retrieving telemetry data from Orchestrator and EdgeConnect and
+# visuzalize it. The demo is simple to run, however, modifying
+# and/or incorporating components of this work into your own solution
+# requires a greater understanding of Python, Docker, InfluxDB,
+# Grafana, and Redis.
+
+# All of these components are not necessarily required for developing
+# your own solution as there may be pieces of data you don't need
+# to collect, some additional others that you want to add,
+# substitude alternative tools for task queuing, database, and
+# visualization or alerting needs.
+
+version: '3'
+
+services:
+
+  influxdb:
+    container_name: influxdb
+    image: influxdb:2.4
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${DB_USER}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${DB_PW}
+      - DOCKER_INFLUXDB_INIT_ORG=${DB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${DB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_RETENTION=${DB_RETENTION}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${DB_TOKEN}
+    volumes:
+      - ./app/influxdb/data:/var/lib/influxdb
+      - ./app/influxdb/config/:/etc/influxdb/
+    ports:
+      - "8086:8086"
+    restart: unless-stopped
+
+  redis:
+    container_name: redis
+    image: redis:4.0.6-alpine
+    volumes:
+      - ./app/redis:/redis
+    restart: unless-stopped
+
+  ec-telemetry:
+    image: ec-telemetry-image
+    container_name: ec-telemetry-discover
+    build: .
+    # dns: ${DNS_SERVER}
+    entrypoint: [ "python3", "/app/ec-telemetry/ec_discover.py" ]
+    restart: unless-stopped
+    volumes:
+      - ./app/logging:/logging
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL}
+      - ORCH_URL=${ORCH_URL}
+      - ORCH_API_KEY=${ORCH_API_KEY}
+      - DB_TOKEN=${DB_TOKEN}
+      - DB_ORG=${DB_ORG}
+      - DB_URL=${DB_URL}
+      - DB_BUCKET=${DB_BUCKET}
+      - LOG_MAX_BYTES=${LOG_MAX_BYTES}
+      - LOG_MAX_BACKUPS=${LOG_MAX_BACKUPS}
+    depends_on:
+      - influxdb
+
+  ec-telemetry-worker:
+    image: ec-telemetry-image:latest
+    # dns: ${DNS_SERVER}
+    command: rq worker ectelem --url redis://redis:6379 --with-scheduler --path /app/ec-telemetry/
+    volumes:
+      - ./app/logging:/logging
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL}
+      - ORCH_URL=${ORCH_URL}
+      - ORCH_API_KEY=${ORCH_API_KEY}
+      - EC_USER=${EC_USER}
+      - EC_PW=${EC_PW}
+      - EC_TIMEOUT=${EC_TIMEOUT}
+      - DB_TOKEN=${DB_TOKEN}
+      - DB_ORG=${DB_ORG}
+      - DB_URL=${DB_URL}
+      - DB_BUCKET=${DB_BUCKET}
+      - LOG_MAX_BYTES=${LOG_MAX_BYTES}
+      - LOG_MAX_BACKUPS=${LOG_MAX_BACKUPS}
+    deploy:
+      mode: replicated
+      replicas: ${WORKER_COUNT}
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 300M
+    depends_on:
+      - redis
+      - ec-telemetry
+      - influxdb
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-enterprise:9.1.6
+    container_name: grafana
+    entrypoint:
+      - /run.sh
+    volumes:
+      - ./app/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./app/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_RENDERING_SERVER_URL=http://grafana-renderer:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana:3000/
+      - GF_SECURITY_ADMIN_USER=${DB_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${DB_PW}
+      # CUSTOM ENV VARS
+      - DB_TOKEN=${DB_TOKEN}
+      - DB_ORG=${DB_ORG}
+      - DB_URL=${DB_URL}
+      - DB_BUCKET=${DB_BUCKET}
+    logging:
+      driver: json-file
+      options: {}
+    ports:
+      - 3000:3000/tcp
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+
+  grafana-renderer:
+    container_name: grafana_renderer
+    image: grafana/grafana-image-renderer:latest
+    volumes:
+      - ./app/grafana_render/config.json:/usr/src/app/config.json
+    depends_on:
+      - grafana
+    restart: unless-stopped
