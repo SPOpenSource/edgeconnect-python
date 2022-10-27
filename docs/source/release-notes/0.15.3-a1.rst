@@ -1,0 +1,115 @@
+0.15.3-a1 -- 2022-10-27
+-----------------------
+
+
+🚀 Features
+~~~~~~~~~~~~~
+
+EdgeConnect Telemetry Demo Example
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+✨ **Added new code example!**: A fully automated telemetry demo showing
+the potential for visualizing EdgeConnect metrics in tools external to
+Orchestrator.
+
+Easily deployed via docker-compose with minimal inputs required, the
+demo connects to Orchestrator to discover appliances and then worker
+nodes directly retrieve data and metrics from EdgeConnect appliances.
+The data is written to a database and then visualized in Grafana
+dashboards.
+
+Detailed documentation in the Examples section :ref:`ec_telemetry_demo`
+
+As with all examples, the code referenced is available from the GitHub
+repository within the `examples <https://github.com/SPOpenSource/edgeconnect-python/tree/main/examples>`_
+folder.
+
+Clone the repository and download the examples with:
+
+  .. code:: bash
+
+      $ git clone https://github.com/SPOpenSource/edgeconnect-python.git
+
+Init Requests Timeout for Orchestrator & EdgeConnect
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Introduced user-defined timeout settings for requests to Orchestrator
+and EdgeConnect. Previous behavior had a fixed timeout setting of
+120 seconds for all requests.
+
+New init variable for Orchestrator and EdgeConnect classes ``timeout``
+as a tuple to define initial connect and read timeout values
+for underlying requests. Defaults to conservative values of 9.15s for
+connect and 12s for read. This allows users to turndown timeout timers
+more applicable to their environment rather than having to wait
+for connection to fail on previous default 120s timeout value inherited
+from the Requests library.
+
+.. code:: python
+
+    # Instantiate Orchestrator with shorter timeout values of
+    # 3.05 seconds for connect and 10 seconds for read
+    orch = Orchestrator(
+      url="192.0.2.100",
+      api_key="abc123",
+      timeout=(3.05,10)
+    )
+
+Updated the following Orchestrator functions from Swagger:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- New parameters for :func:`~pyedgeconnect.Orchestrator.get_appliance_flows`
+
+Added additional query parameters supporting custom time range filters
+for retrieving flows from appliances. ``active_uptime_start`` and
+``active_uptime_end`` to support active flows, along with
+``term_uptime_start`` and ``term_uptime_end`` to support ended flows.
+
+- Updated return data for :func:`~pyedgeconnect.Orchestrator.create_preconfig`
+
+Previously function only returned boolean for success/failure. Now on
+success returns dictionary including assigned ID of the created
+preconfig, e.g., ``{ "id": 118 }``
+
+Added the following EdgeConnect functions from Swagger:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+from .ecos._cpu
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_cpu`
+
+from .ecos._system_info
+  - :func:`~pyedgeconnect.EdgeConnect.get_appliance_system_info`
+
+📚 Documentation
+~~~~~~~~~~~~~~~~~~
+
+Added additional CSS for Sphinx docs to fit Aruba palette in a dark theme
+
+
+🐛 Bug Fixes
+~~~~~~~~~~~~~~
+
+📚 Docs Typo fixes:
+^^^^^^^^^^^^^^^^^^^
+
+- Example docs linking back to GitHub repository had ``https://https://``
+- Docstring typo - :func:`~pyedgeconnect.Orchestrator.get_appliance_deployment`
+  docstring reponse used key of "licence" vs. "license"
+- Docstring typo - :func:`~pyedgeconnect.Orchestrator.get_appliance_inbound_shaper`
+  docstring response was copy/paste from DNS proxy. Replaced with
+  accurate inbound shaper response contents.
+- Docstring typo - :func:`~pyedgeconnect.Orchestrator.get_appliance_flows`
+  docstring parameter typo of "protocl" vs. "protocol"
+- Docstring typo - :func:`~pyedgeconnect.Orchestrator.get_audit_log`
+  docstring parameter typo of return parameter type "(`boolean`)" vs.
+  "(`bool`)"
+
+🐛 Known Issues
+~~~~~~~~~~~~~~~
+
+.. warning::
+
+  The following two functions for the _ip_objects submodule exprience
+  errors at this time. These function do work in the Orchestrator UI:
+  :func:`~pyedgeconnect.Orchestrator.bulk_upload_address_group` and
+  :func:`~pyedgeconnect.Orchestrator.bulk_upload_service_group`

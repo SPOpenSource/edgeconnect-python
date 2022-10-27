@@ -1,4 +1,4 @@
-.. ec_telemetry_demo:
+.. _ec_telemetry_demo:
 
 EdgeConnect Telemetry API Demo
 ********************************
@@ -216,7 +216,7 @@ Resource Utilization Examples
    * - On-Prem VM
      - Ubuntu 20.04
      - 2 vCPU
-     - 4GiB
+     - 4GB
 
 Equivalent cloud instances would be an AWS t2.medium or Azure
 Standard_B2s.

@@ -8,6 +8,7 @@ All of the release notes for pyedgeconnect are organized below
 ==================
 
 .. toctree::
+    0.15.3-a1
     0.15.2-a1
     0.15.1-a1
     0.15.0-a1
