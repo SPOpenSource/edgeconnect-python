@@ -569,6 +569,9 @@ properly reaching Orchestrator, InfluxDB, and the EdgeConnect appliances.
 
 The message levels and max file size will be determined by the
 environment variables outlined in the Environment Variables section.
+
+Valid log levels are CRITICAL, ERROR, WARNING, INFO, or DEBUG.
+
 These default to logging evel of ``ERROR``, max file size of ``1MB``,
 and rotating maximum of ``5`` log files as documented in the ``.env``
 file.
