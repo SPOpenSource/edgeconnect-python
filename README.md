@@ -1,4 +1,4 @@
-# ⚠️ This repository of pyedgeconnect is no longer be maintained ⚠️
+# ⚠️ This repository of pyedgeconnect is no longer maintained ⚠️
 # Active development of pyedgeconnect can be found at [Aruba GitHub](https://github.com/aruba/pyedgeconnect)
 
 
