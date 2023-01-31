@@ -1,3 +1,13 @@
+# ⚠️ This repository of pyedgeconnect is no longer be maintained ⚠️
+# Active development of pyedgeconnect can be found at [Aruba GitHub](https://github.com/aruba/pyedgeconnect)
+
+
+----------------
+----------------
+----------------
+
+
+
 # Aruba Edge Connect Python SDK
 
 [![Downloads](https://static.pepy.tech/personalized-badge/pyedgeconnect?period=total&units=none&left_color=grey&right_color=orange&left_text=PyPI%20Downloads)](https://pepy.tech/project/pyedgeconnect)
